@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.getViewModel
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadListViewModel
 
 @ExperimentalAnimationApi
 @Composable
-fun TestThinkpadList(viewModel: ThinkpadListViewModel = hiltViewModel()) {
+fun TestThinkpadList(viewModel: ThinkpadListViewModel = getViewModel()) {
 
     val thinkpadListState by viewModel.uiState.collectAsState()
     val thinkpadListData = thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen

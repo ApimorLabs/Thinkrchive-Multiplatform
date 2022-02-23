@@ -13,12 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
+import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.viewModel
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.billing.qonversion.qonPurchase
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.DonateScreenState
@@ -70,7 +71,7 @@ fun ThinkrchiveNavHost(
                 scaleOutPopExitTransition()
             }
         ) {
-            val viewModel: ThinkpadListViewModel = hiltViewModel()
+            val viewModel: ThinkpadListViewModel = getViewModel()
             val thinkpadListState by viewModel.uiState.collectAsState()
             val thinkpadListScreenData =
                 thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen
@@ -133,9 +134,12 @@ fun ThinkrchiveNavHost(
             popExitTransition = {
                 scaleOutPopExitTransition()
             }
-        ) {
+        ) { backStackEntry ->
+            val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
 
-            val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()
+            val thinkpadDetailsViewModel: ThinkpadDetailsViewModel by viewModel()
+            thinkpadDetailsViewModel.getThinkpad(thinkpadModel)
+
             val thinkpadDetail = thinkpadDetailsViewModel.uiState.collectAsState()
             val context = LocalContext.current
 
@@ -178,7 +182,7 @@ fun ThinkrchiveNavHost(
                 scaleOutPopExitTransition()
             }
         ) {
-            val viewModel: ThinkpadSettingsViewModel = hiltViewModel()
+            val viewModel: ThinkpadSettingsViewModel = getViewModel()
             val settingsScreenState by viewModel.uiState.collectAsState()
             if (settingsScreenState is ThinkpadSettingsScreenState.ThinkpadSettings) {
                 val settingsScreenData =
@@ -243,7 +247,7 @@ fun ThinkrchiveNavHost(
             }
         ) {
             val currentActivity = LocalContext.current as Activity
-            val viewModel: DonateViewModel = hiltViewModel()
+            val viewModel: DonateViewModel = getViewModel()
             val donateScreenState by viewModel.uiState.collectAsState()
             val donateScreenData = donateScreenState as DonateScreenState.Donate
 

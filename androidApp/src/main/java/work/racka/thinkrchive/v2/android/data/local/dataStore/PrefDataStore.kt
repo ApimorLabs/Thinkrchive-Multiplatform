@@ -5,20 +5,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import work.racka.thinkrchive.v2.android.di.IoDispatcher
 import work.racka.thinkrchive.v2.android.utils.Constants
-import javax.inject.Inject
-import javax.inject.Singleton
 
-// This is provided by Hilt for easy usage throughout the app
-@Singleton
-class PrefDataStore @Inject constructor(
-    @ApplicationContext private val context: Context,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+// This is provided by Koin for easy usage throughout the app
+class PrefDataStore(
+    context: Context,
+    dispatcher: CoroutineDispatcher
 ) {
     private object PreferenceKeys {
         val themeOption = intPreferencesKey(name = "theme_option")

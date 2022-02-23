@@ -6,6 +6,4 @@ object Constants {
 
     const val THINKPAD_DATABASE = "thinkpad.db"
 
-
-    const val POLL_INTERVAL = 10000L
 }

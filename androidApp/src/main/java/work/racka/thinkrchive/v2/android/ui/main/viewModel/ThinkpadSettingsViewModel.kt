@@ -2,16 +2,13 @@ package work.racka.thinkrchive.v2.android.ui.main.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadSettingsScreenState
-import javax.inject.Inject
 
-@HiltViewModel
-class ThinkpadSettingsViewModel @Inject constructor(
+class ThinkpadSettingsViewModel(
     private val prefDataStore: PrefDataStore
 ) : ViewModel() {
 

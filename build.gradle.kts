@@ -9,7 +9,6 @@ buildscript {
         classpath(BuildPlugins.android)
         classpath(BuildPlugins.kotlin)
         //classpath(BuildPlugins.kotlinxSerialization)
-        classpath(BuildPlugins.daggerHilt)
         classpath(BuildPlugins.sqlDelight)
         classpath(BuildPlugins.composeDesktop)
 

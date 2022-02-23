@@ -4,19 +4,15 @@ import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.LifecycleObserver
 import com.android.billingclient.api.*
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import javax.inject.Inject
 
-@ActivityScoped
-class BillingManager @Inject constructor(
-    @ActivityContext private val context: Context
+class BillingManager(
+    context: Context
 ) : LifecycleObserver, PurchasesUpdatedListener, AcknowledgePurchaseResponseListener {
 
     private val billingClient = BillingClient.newBuilder(context)

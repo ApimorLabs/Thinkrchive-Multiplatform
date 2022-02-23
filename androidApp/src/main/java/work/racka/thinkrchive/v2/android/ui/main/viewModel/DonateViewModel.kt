@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.SkuDetails
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -13,10 +12,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.repository.BillingRepository
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.DonateScreenState
-import javax.inject.Inject
 
-@HiltViewModel
-class DonateViewModel @Inject constructor(
+class DonateViewModel(
     private val billingRepository: BillingRepository
 ) : ViewModel() {
 

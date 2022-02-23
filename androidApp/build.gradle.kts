@@ -6,7 +6,6 @@ plugins {
     id("kotlin-parcelize")
     id("kotlin-kapt")
     kotlin("plugin.serialization") version Versions.kotlin
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -103,14 +102,6 @@ dependencies {
     androidTestImplementation(Dependencies.Android.mockitoKotlin)
     androidTestImplementation(Dependencies.Android.turbine)
 
-    // Hilt Testing
-    // Local Unit Tests
-    testImplementation(Dependencies.Android.hiltTest)
-    kaptTest(Dependencies.Android.hiltCompiler)
-    // Instrumentation Test
-    androidTestImplementation(Dependencies.Android.hiltTest)
-    kaptAndroidTest(Dependencies.Android.hiltCompiler)
-
     // Testing Compose
     androidTestImplementation(Dependencies.Android.junitCompose)
     debugImplementation(Dependencies.Android.composeTooling)
@@ -143,10 +134,9 @@ dependencies {
     // Timber
     implementation(Dependencies.Android.timber)
 
-    // Hilt
-    implementation(Dependencies.Android.hilt)
-    implementation(Dependencies.Android.hiltNavigationCompose)
-    kapt(Dependencies.Android.hiltCompiler)
+    // Dependency Injection
+    implementation(Dependencies.Koin.android)
+    implementation(Dependencies.Koin.compose)
 
     // Coil Image loader
     implementation(Dependencies.Android.coilImage)

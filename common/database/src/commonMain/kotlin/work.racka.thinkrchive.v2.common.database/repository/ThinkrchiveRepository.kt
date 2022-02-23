@@ -8,4 +8,9 @@ interface ThinkrchiveRepository {
     suspend fun refreshThinkpadList()
     suspend fun getAllThinkpads(): Flow<List<Thinkpad>>
     suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad>?
+    suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>>
+    suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
 }

@@ -17,6 +17,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(project(":common:platform"))
+                implementation(project(":common:database"))
                 implementation(compose.desktop.currentOs)
             }
         }

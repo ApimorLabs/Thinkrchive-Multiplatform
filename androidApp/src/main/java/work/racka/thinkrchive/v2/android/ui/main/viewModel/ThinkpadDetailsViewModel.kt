@@ -1,9 +1,7 @@
 package work.racka.thinkrchive.v2.android.ui.main.viewModel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -11,15 +9,10 @@ import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.android.data.dataTransferObjects.asThinkpad
 import work.racka.thinkrchive.v2.android.repository.ThinkpadRepository
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadDetailsScreenState
-import javax.inject.Inject
 
-@HiltViewModel
-class ThinkpadDetailsViewModel @Inject constructor(
-    private val thinkpadRepository: ThinkpadRepository,
-    savedStateHandle: SavedStateHandle
+class ThinkpadDetailsViewModel(
+    private val thinkpadRepository: ThinkpadRepository
 ) : ViewModel() {
-
-    private val thinkpadName = savedStateHandle.get<String>("thinkpad")
 
     private val _uiState = MutableStateFlow<ThinkpadDetailsScreenState>(
         value = ThinkpadDetailsScreenState.EmptyState
@@ -27,13 +20,9 @@ class ThinkpadDetailsViewModel @Inject constructor(
     val uiState: StateFlow<ThinkpadDetailsScreenState>
         get() = _uiState
 
-    init {
-        getThinkpad()
-    }
-
-    private fun getThinkpad() {
+    fun getThinkpad(thinkpadModel: String?) {
         viewModelScope.launch {
-            thinkpadRepository.getThinkpad(thinkpadName!!).collect {
+            thinkpadRepository.getThinkpad(thinkpadModel!!).collect {
                 _uiState.value = ThinkpadDetailsScreenState.ThinkpadDetail(it.asThinkpad())
             }
         }

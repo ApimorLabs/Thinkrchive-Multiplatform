@@ -70,3 +70,28 @@ DELETE FROM ThinkpadListTable;
 getThinkpad:
 SELECT * FROM ThinkpadListTable
 WHERE model = ?;
+
+getThinkpadsAlphaAscending:
+SELECT * FROM ThinkpadListTable
+WHERE model LIKE :query
+ORDER BY model ASC;
+
+getThinkpadsNewestFirst:
+SELECT * FROM ThinkpadListTable
+WHERE model LIKE :query
+ORDER BY subtr (releaseDate, 6, 9) DESC;
+
+getThinkpadsOldestFirst:
+SELECT * FROM ThinkpadListTable
+WHERE model LIKE :query
+ORDER BY subtr (releaseDate, 6, 9) ASC;
+
+getThinkpadsLowPriceFirst:
+SELECT * FROM ThinkpadListTable
+WHERE model LIKE :query
+ORDER BY marketPriceStart ASC;
+
+getThinkpadsHighPriceFirst:
+SELECT * FROM ThinkpadListTable
+WHERE model LIKE :query
+ORDER BY marketPriceStart DESC;

@@ -36,7 +36,7 @@ object Versions {
     // Dependency Injection
     const val hilt = "2.40.5"
     const val hiltNavigationCompose = "1.0.0"
-    const val koin = "3.1.4"
+    const val koin = "3.1.5"
 
     // Testing
     const val junit = "4.13.2"

@@ -14,6 +14,10 @@ import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 import work.racka.thinkrchive.v2.common.database.remote.ThinkrchiveApi
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getAllThinkpadsFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadFromDb
+import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsAlphaAscendingFromDb
+import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsLowPriceFromDb
+import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsNewestFromDb
+import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsOldestFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.insertAllThinkpadsToDb
 
 class ThinkrchiveRepositoryImpl(
@@ -55,4 +59,24 @@ class ThinkrchiveRepositoryImpl(
             ?.asFlow()
             ?.mapToOne(context = coroutineScope.coroutineContext)
     }
+
+    override suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDatabaseQueries?.getThinkpadsAlphaAscendingFromDb(thinkpadModel)
+            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+
+    override suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDatabaseQueries?.getThinkpadsNewestFromDb(thinkpadModel)
+            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+
+    override suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDatabaseQueries?.getThinkpadsOldestFromDb(thinkpadModel)
+            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+
+    override suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDatabaseQueries?.getThinkpadsLowPriceFromDb(thinkpadModel)
+            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+
+    override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDatabaseQueries?.getThinkpadsLowPriceFromDb(thinkpadModel)
+            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
 }

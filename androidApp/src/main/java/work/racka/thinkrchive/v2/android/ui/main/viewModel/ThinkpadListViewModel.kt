@@ -2,7 +2,6 @@ package work.racka.thinkrchive.v2.android.ui.main.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -13,10 +12,8 @@ import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreen
 import work.racka.thinkrchive.v2.android.utils.Resource
 import work.racka.thinkrchive.v2.android.utils.getChipNamesList
 import work.racka.thinkrchive.v2.common.database.model.Thinkpad
-import javax.inject.Inject
 
-@HiltViewModel
-class ThinkpadListViewModel @Inject constructor(
+class ThinkpadListViewModel(
     private val thinkpadRepository: ThinkpadRepository,
     private val prefDataStore: PrefDataStore
 ) : ViewModel() {

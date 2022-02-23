@@ -4,21 +4,41 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import com.qonversion.android.sdk.Qonversion
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
-import javax.inject.Inject
+import work.racka.thinkrchive.v2.android.di.BillingModule
+import work.racka.thinkrchive.v2.android.di.DataModule
+import work.racka.thinkrchive.v2.android.di.NetworkModule
+import work.racka.thinkrchive.v2.android.di.ViewModelModule
 
-@HiltAndroidApp
 class ThinkrchiveApplication : Application() {
-    @Inject
-    lateinit var prefDataStore: PrefDataStore
+
     override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger(Level.ERROR)
+            androidContext(this@ThinkrchiveApplication)
+            modules(
+                NetworkModule.module,
+                DataModule.databaseModule,
+                DataModule.dataStoreModule,
+                DataModule.repositoryModule,
+                BillingModule.module,
+                ViewModelModule.module
+            )
+        }
+
+        val prefDataStore by inject<PrefDataStore>()
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {
             prefDataStore.readThemeSetting.collect {
@@ -29,7 +49,6 @@ class ThinkrchiveApplication : Application() {
                 }
             }
         }
-        super.onCreate()
         Timber.plant(Timber.DebugTree())
         Qonversion.setDebugMode()
         Qonversion.launch(

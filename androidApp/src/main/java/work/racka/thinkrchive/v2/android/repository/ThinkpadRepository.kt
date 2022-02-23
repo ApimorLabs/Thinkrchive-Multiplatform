@@ -8,15 +8,11 @@ import work.racka.thinkrchive.v2.android.data.local.database.ThinkpadDao
 import work.racka.thinkrchive.v2.android.data.local.database.ThinkpadDatabaseObject
 import work.racka.thinkrchive.v2.android.data.remote.api.ThinkrchiveApi
 import work.racka.thinkrchive.v2.android.data.remote.responses.ThinkpadResponse
-import work.racka.thinkrchive.v2.android.di.IoDispatcher
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ThinkpadRepository @Inject constructor(
+class ThinkpadRepository(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao,
-    @IoDispatcher val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ) {
 
     // Get all the Thinkpads from the network

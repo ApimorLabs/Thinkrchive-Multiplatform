@@ -3,13 +3,10 @@ package work.racka.thinkrchive.v2.android.repository
 import android.app.Activity
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsResult
-import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.flow.collect
 import work.racka.thinkrchive.v2.android.billing.BillingManager
-import javax.inject.Inject
 
-@ActivityScoped
-class BillingRepository @Inject constructor(
+class BillingRepository(
     private val billingManager: BillingManager
 ) {
     val billingResponse = billingManager.billingResponse
