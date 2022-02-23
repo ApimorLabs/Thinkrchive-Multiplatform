@@ -7,5 +7,5 @@ interface ThinkrchiveRepository {
     suspend fun getAllThinkpadsFromNetwork(): List<Thinkpad>
     suspend fun refreshThinkpadList()
     suspend fun getAllThinkpads(): Flow<List<Thinkpad>>
-    suspend fun getThinkpad(thinkpad: String): Flow<Thinkpad>
+    suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad>?
 }

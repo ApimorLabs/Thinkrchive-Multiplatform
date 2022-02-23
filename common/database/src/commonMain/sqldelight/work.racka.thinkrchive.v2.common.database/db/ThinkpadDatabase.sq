@@ -3,8 +3,8 @@ model TEXT NOT NULL PRIMARY KEY,
 imageUrl TEXT NOT NULL,
 releaseDate TEXT NOT NULL,
 series TEXT NOT NULL,
-marketPriceStart INTEGER NOT NULL ,
-marketPriceEnd INTEGER NOT NULL ,
+marketPriceStart INTEGER AS Int NOT NULL ,
+marketPriceEnd INTEGER AS Int NOT NULL ,
 processorPlatforms TEXT NOT NULL,
 processors TEXT NOT NULL,
 graphics TEXT NOT NULL,
@@ -63,3 +63,10 @@ ports
 
 getAllThinkpads:
 SELECT * FROM ThinkpadListTable;
+
+deleteAll:
+DELETE FROM ThinkpadListTable;
+
+getThinkpad:
+SELECT * FROM ThinkpadListTable
+WHERE model = ?;
