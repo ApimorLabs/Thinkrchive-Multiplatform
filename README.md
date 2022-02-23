@@ -48,7 +48,7 @@
 
 | Component       | Thinkrchive                   | Thinkrchive-Multiplaform                |
 |----------------	|------------------------------	|-----------------------------------------|
-| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   |   |
+| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   | [Compose Mulitplatform](https://www.jetbrains.com/lp/compose-mpp/)  |
 | 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)  |  [MVI](https://github.com/MostafaBorjali/MVI-Architecture/wiki/MVI-Architecture-Wiki) - Not Completed Yet |
 | 🧠  Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server) | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)  |
 | 💉  DI                | [Hilt](https://dagger.dev/hilt/)  | [Koin](https://insert-koin.io/)  |
