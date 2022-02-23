@@ -9,6 +9,7 @@
 </a>
 
 > An app showing all details for various Lenovo Thinkpad models. Made to try out Jepack Compose for Android.
+> This repo is a Mutliplatform version of the initial [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
 
 ### ✨ Demo
 
@@ -21,11 +22,16 @@
 |![](https://i.imgur.com/jg1VClv.png)|![](https://i.imgur.com/llz2peN.png)|![](https://i.imgur.com/RRsKGOG.png)|
 |![](https://i.imgur.com/2yVTC6l.png)|![](https://i.imgur.com/6MDKZYj.png)|![](https://i.imgur.com/4aYBsCi.png)|
 
+- [More Coming Soon]()
+
 ## 💻 Install
 
 | Platform | Download | Status |
 |----------|----------|--------|
-| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-beta01&color=blue)](https://drive.google.com/file/d/1S09YR-SSyazV9-Z3U89rKysXPX6LnMXL/view?usp=sharing)| 🧪 Beta |
+| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-alpha01&color=blue)](https://drive.google.com/file/d/1S09YR-SSyazV9-Z3U89rKysXPX6LnMXL/view?usp=sharing)| 🧪 Beta |
+| Desktop - Windows  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=green)]()| 🧪 Experimental |
+| Desktop - macOS  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=yellow)]()| 🧪 Experimental |
+| Desktop - Linux  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=purple)]()| 🧪 Experimental |
 
 > ℹ️ Compose Debug apks are sometimes laggy as they contain a lot of debug code.
 > 
@@ -34,25 +40,27 @@
 ## 🏋 Dependency
 
 - Java 11 or above
-- Android Studio Arctic Fox | 2020.3+
+- Android Studio Bumblebee | 2021.1+
 
 ## 🏗️️ Built with
 
-| Component       | Tool                          |
-|----------------	|------------------------------	|
-| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)                |
-| 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)                            |
-| 🧠  Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)                            |
-| 💉  DI                | [Hilt](https://dagger.dev/hilt/)                        |
-| 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)                        |
-| 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/)                |
-| 🌐  Networking        | [Ktor Client](https://ktor.io/docs/client.html)                        |
-| 📄  JSON            | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization)                            |
-| 💾  Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   |
-| ⌨️  Logging            | [Timber](https://github.com/JakeWharton/timber)                            |
-| 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/)                            |
-| 🔧  Supplimentary   | [Accompanist](https://github.com/google/accompanist)  |
-| 🧪  Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   |
+### Compared to [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
+
+| Component       | Thinkrchive                   | Thinkrchive-Multiplaform                |
+|----------------	|------------------------------	|-----------------------------------------|
+| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   |   |
+| 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)  |  [MVI](https://github.com/MostafaBorjali/MVI-Architecture/wiki/MVI-Architecture-Wiki) - Not Completed Yet |
+| 🧠  Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server) | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)  |
+| 💉  DI                | [Hilt](https://dagger.dev/hilt/)  | [Koin](https://insert-koin.io/)  |
+| 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)   | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation), [Decompose](https://arkivanov.github.io/Decompose/)  |
+| 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) |
+| 🌐  Networking        | [Ktor Client](https://ktor.io/docs/client.html) | [Ktor Client](https://ktor.io/docs/client.html)  |
+| 📄  JSON            | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization) | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization)  |
+| 💾  Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   | [SQLDelight](https://cashapp.github.io/sqldelight/), [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore), [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) - Future Plan  |
+| ⌨️  Logging            | [Timber](https://github.com/JakeWharton/timber) | [Timber](https://github.com/JakeWharton/timber) - Android, [slf4j + logback](https://www.baeldung.com/kotlin/logging), [Kermit](https://github.com/touchlab/Kermit) |
+| 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/) | [Coil](https://coil-kt.github.io/coil/) |
+| 🔧  Supplimentary   | [Accompanist](https://github.com/google/accompanist)  | [Accompanist](https://github.com/google/accompanist) |
+| 🧪  Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   | Not Setup Yet  |
 
 ## 🧐 Fun Facts
 
@@ -68,12 +76,12 @@
 
 - Add more Tests (Unit Tests, UI Tests, Integration Tests)
 - Add more features
-- Make a Compose for Desktop version
-- Adapt project to KMM
+- Support for more platform
+- Fully switch to MVI
 
 ## 🙇 Credits
 
-- Special thanks to [@theapache64](https://github.com/theapache64) for [Retrosheet](https://github.com/theapache64/retrosheet) and [readgen](https://github.com/theapache64/readgen)
+- Special thanks to [@theapache64](https://github.com/theapache64) for [readgen](https://github.com/theapache64/readgen)
 - Thanks to all amazing people at Twitter for inspiring me to continue the development of this project.
 
 ## 🤝 Contributing
