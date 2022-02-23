@@ -4,15 +4,13 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
     compileSdk = AppConfig.compileSdkVersion
 
     defaultConfig {
-        applicationId = "work.racka.thinkrchive.v2.common.database.android"
+        applicationId = "work.racka.thinkrchive.v2"
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion
         versionCode = AppConfig.versionCode
@@ -121,16 +119,6 @@ dependencies {
     implementation(Dependencies.Android.composeConstraintLayout)
     implementation(Dependencies.Android.composeMaterial3)
 
-    // Kotlin Json Serialization
-    implementation(Dependencies.Kotlin.kotlinJsonSerialization)
-
-    // Ktor
-    implementation(Dependencies.Ktor.ktorCore)
-    implementation(Dependencies.Ktor.ktorAndroidEngine)
-    implementation(Dependencies.Ktor.ktorOkHttpEngine)
-    implementation(Dependencies.Ktor.ktorSerialization)
-    implementation(Dependencies.Ktor.ktorLogging)
-
     // Timber
     implementation(Dependencies.Android.timber)
 
@@ -144,14 +132,6 @@ dependencies {
     // Accompanist
     implementation(Dependencies.Android.accompanistInsets)
     implementation(Dependencies.Android.accompanistNavigationAnimations)
-
-    // Room database
-    implementation(Dependencies.Android.roomRuntime)
-    implementation(Dependencies.Android.roomKtx)
-    kapt(Dependencies.Android.roomCompiler)
-
-    // Room test
-    testImplementation(Dependencies.Android.roomTest)
 
     // Preferences DataStore
     implementation(Dependencies.Android.prefDataStore)

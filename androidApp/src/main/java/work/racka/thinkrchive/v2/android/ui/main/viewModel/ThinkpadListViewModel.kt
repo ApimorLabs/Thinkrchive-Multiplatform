@@ -5,16 +5,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import work.racka.thinkrchive.v2.android.data.dataTransferObjects.asDomainModel
 import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
-import work.racka.thinkrchive.v2.android.repository.ThinkpadRepository
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreenState
-import work.racka.thinkrchive.v2.android.utils.Resource
 import work.racka.thinkrchive.v2.android.utils.getChipNamesList
 import work.racka.thinkrchive.v2.common.database.model.Thinkpad
+import work.racka.thinkrchive.v2.common.database.repository.ThinkrchiveRepository
+import work.racka.thinkrchive.v2.common.database.util.Resource
 
 class ThinkpadListViewModel(
-    private val thinkpadRepository: ThinkpadRepository,
+    private val thinkpadRepository: ThinkrchiveRepository,
     private val prefDataStore: PrefDataStore
 ) : ViewModel() {
 
@@ -58,23 +57,25 @@ class ThinkpadListViewModel(
     // Also used by pull down to refresh.
     fun refreshThinkpadList() {
         viewModelScope.launch {
-            networkLoading.value = true
-            val result = try {
-                val response = thinkpadRepository.getAllThinkpadsFromNetwork()
-                networkLoading.value = false
-                Resource.Success(data = response)
-            } catch (e: Exception) {
-                networkLoading.value = false
-                Resource.Error(message = "An error occurred: ${e.message}")
-            }
+            val result = thinkpadRepository.getAllThinkpadsFromNetwork()
 
-            Timber.d("loading ThinkpadList")
-            when (result) {
-                is Resource.Success -> {
-                    thinkpadRepository.refreshThinkpadList(result.data!!)
-                }
-                is Resource.Error -> {
-                    networkError.value = result.message!!
+            result.collect { resource ->
+                Timber.d("loading ThinkpadList")
+                when (resource) {
+                    is Resource.Success -> {
+                        networkLoading.value = false
+                        thinkpadRepository.refreshThinkpadList(resource.data!!)
+                    }
+                    is Resource.Error -> {
+                        networkLoading.value = false
+                        networkError.value = resource.message!!
+                    }
+                    is Resource.Loading -> {
+                        networkLoading.value = true
+                    }
+                    else -> {
+                        networkLoading.value = true
+                    }
                 }
             }
         }
@@ -98,7 +99,7 @@ class ThinkpadListViewModel(
                 0 -> {
                     thinkpadRepository.getThinkpadsAlphaAscending(query)
                         .collect {
-                            allThinkpads.value = it.asDomainModel()
+                            allThinkpads.value = it
                             if (
                                 allThinkpads.value.size > availableThinkpadSeries.value.size
                                 || allThinkpads.value.isEmpty()
@@ -111,25 +112,25 @@ class ThinkpadListViewModel(
                 1 -> {
                     thinkpadRepository.getThinkpadsNewestFirst(query)
                         .collect {
-                            allThinkpads.value = it.asDomainModel()
+                            allThinkpads.value = it
                         }
                 }
                 2 -> {
                     thinkpadRepository.getThinkpadsOldestFirst(query)
                         .collect {
-                            allThinkpads.value = it.asDomainModel()
+                            allThinkpads.value = it
                         }
                 }
                 3 -> {
                     thinkpadRepository.getThinkpadsLowPriceFirst(query)
                         .collect {
-                            allThinkpads.value = it.asDomainModel()
+                            allThinkpads.value = it
                         }
                 }
                 4 -> {
                     thinkpadRepository.getThinkpadsHighPriceFirst(query)
                         .collect {
-                            allThinkpads.value = it.asDomainModel()
+                            allThinkpads.value = it
                         }
                 }
             }

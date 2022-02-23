@@ -79,12 +79,12 @@ ORDER BY model ASC;
 getThinkpadsNewestFirst:
 SELECT * FROM ThinkpadListTable
 WHERE model LIKE :query
-ORDER BY subtr (releaseDate, 6, 9) DESC;
+ORDER BY substr (releaseDate, 6, 9) DESC;
 
 getThinkpadsOldestFirst:
 SELECT * FROM ThinkpadListTable
 WHERE model LIKE :query
-ORDER BY subtr (releaseDate, 6, 9) ASC;
+ORDER BY substr (releaseDate, 6, 9) ASC;
 
 getThinkpadsLowPriceFirst:
 SELECT * FROM ThinkpadListTable

@@ -22,7 +22,10 @@ object Koin {
         appDeclaration: KoinAppDeclaration = {}
     ) = startKoin {
         appDeclaration()
-        modules()
+        modules(
+            commonModule(enableNetworkLogs),
+            platformModule()
+        )
     }
 
     fun commonModule(enableNetworkLogs: Boolean) = module {

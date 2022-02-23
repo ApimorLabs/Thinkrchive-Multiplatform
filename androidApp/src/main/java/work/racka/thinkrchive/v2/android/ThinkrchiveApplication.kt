@@ -12,27 +12,25 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.v2.android.di.BillingModule
 import work.racka.thinkrchive.v2.android.di.DataModule
-import work.racka.thinkrchive.v2.android.di.NetworkModule
 import work.racka.thinkrchive.v2.android.di.ViewModelModule
+import work.racka.thinkrchive.v2.common.database.di.Koin.initKoin
 
 class ThinkrchiveApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger(Level.ERROR)
+
+        initKoin {
+            // https://github.com/InsertKoinIO/koin/issues/1188
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@ThinkrchiveApplication)
             modules(
-                NetworkModule.module,
-                DataModule.databaseModule,
                 DataModule.dataStoreModule,
-                DataModule.repositoryModule,
                 BillingModule.module,
                 ViewModelModule.module
             )
