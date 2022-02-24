@@ -30,9 +30,9 @@ class ThinkrchiveApplication : Application() {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@ThinkrchiveApplication)
             modules(
-                DataModule.dataStoreModule,
-                BillingModule.module,
-                ViewModelModule.module
+                DataModule.dataStoreModule(),
+                BillingModule.module(),
+                ViewModelModule.module()
             )
         }
 

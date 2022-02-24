@@ -4,22 +4,23 @@ import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
+import domain.Thinkpad
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import work.racka.thinkrchive.v2.common.database.di.ThinkrchiveDatabaseWrapper
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
-import work.racka.thinkrchive.v2.common.database.remote.ThinkrchiveApi
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getAllThinkpadsFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsAlphaAscendingFromDb
+import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsHighPriceFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsLowPriceFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsNewestFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsOldestFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.insertAllThinkpadsToDb
 import work.racka.thinkrchive.v2.common.database.util.Resource
+import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
 
 class ThinkrchiveRepositoryImpl(
     private val thinkrchiveApi: ThinkrchiveApi,
@@ -93,6 +94,6 @@ class ThinkrchiveRepositoryImpl(
             ?.asFlow()?.mapToList() ?: flowOf(emptyList())
 
     override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
-        thinkpadDatabaseQueries?.getThinkpadsLowPriceFromDb("%$thinkpadModel%")
+        thinkpadDatabaseQueries?.getThinkpadsHighPriceFromDb("%$thinkpadModel%")
             ?.asFlow()?.mapToList() ?: flowOf(emptyList())
 }

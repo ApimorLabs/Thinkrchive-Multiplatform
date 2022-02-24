@@ -74,6 +74,7 @@ android {
 dependencies {
     implementation(project(":common:platform"))
     implementation(project(":common:database"))
+    implementation(project(":common:model"))
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.appCompat)

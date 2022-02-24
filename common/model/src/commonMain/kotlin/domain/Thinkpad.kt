@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.common.database.model
+package domain
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
  * Domain objects are plain Kotlin data classes that represent the things in our app. These are the
  * objects that should be displayed on screen, or manipulated by the app.
  *
- * see data/database for objects that are mapped to the database
+ * see data/network for objects that are mapped to the network
  * see data/responses for objects that parse or prepare network calls
  */
 

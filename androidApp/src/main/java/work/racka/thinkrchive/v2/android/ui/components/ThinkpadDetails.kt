@@ -25,13 +25,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.R
 import work.racka.thinkrchive.v2.android.ui.theme.BlueLinkColor
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.Shapes
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 
 @Composable
 fun ThinkpadDetails(

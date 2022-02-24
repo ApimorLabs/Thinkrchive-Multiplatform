@@ -1,10 +1,10 @@
-package work.racka.thinkrchive.v2.common.database.remote
+package work.racka.thinkrchive.v2.common.network.remote
 
+import domain.Thinkpad
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
-import work.racka.thinkrchive.v2.common.database.util.Constants
+import work.racka.thinkrchive.v2.common.network.util.Constants
 
 
 class ThinkrchiveApiImpl(

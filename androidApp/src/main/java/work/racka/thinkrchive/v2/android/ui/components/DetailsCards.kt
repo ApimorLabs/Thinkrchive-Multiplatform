@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 
 @Composable
 fun DetailsCards(

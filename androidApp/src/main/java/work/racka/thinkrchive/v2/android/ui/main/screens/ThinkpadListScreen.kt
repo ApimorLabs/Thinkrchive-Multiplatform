@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
+import domain.Thinkpad
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.components.CustomSearchBar
@@ -37,7 +38,6 @@ import work.racka.thinkrchive.v2.android.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 
 
 @ExperimentalMaterial3Api

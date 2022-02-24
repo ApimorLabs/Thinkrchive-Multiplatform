@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.v2.android.utils
 
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
+import domain.Thinkpad
 
 fun List<Thinkpad>.getChipNamesList(): List<String> {
     val collection = mutableSetOf<String>()

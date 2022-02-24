@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.v2.android.ui.main.screenStates
 
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
+import domain.Thinkpad
 
 sealed class ThinkpadListScreenState {
     data class ThinkpadListScreen(

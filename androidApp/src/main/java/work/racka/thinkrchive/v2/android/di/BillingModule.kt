@@ -8,17 +8,17 @@ import work.racka.thinkrchive.v2.android.ui.main.viewModel.DonateViewModel
 
 object BillingModule {
 
-    val module = module {
-        scope<DonateViewModel> {
-            scoped {
-                BillingManager(androidContext())
-            }
+     fun module() = module {
+         scope<DonateViewModel> {
+             scoped {
+                 BillingManager(androidContext())
+             }
 
-            scoped {
-                BillingRepository(
-                    billingManager = get()
-                )
-            }
+             scoped {
+                 BillingRepository(
+                     billingManager = get()
+                 )
+             }
         }
     }
 }

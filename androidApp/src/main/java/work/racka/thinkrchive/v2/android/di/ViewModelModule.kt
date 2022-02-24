@@ -8,7 +8,8 @@ import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadListViewModel
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadSettingsViewModel
 
 object ViewModelModule {
-    val module = module {
+
+    fun module() = module {
         viewModel {
             DonateViewModel(
                 billingRepository = get()
@@ -16,6 +17,7 @@ object ViewModelModule {
         }
 
         viewModel {
+
             ThinkpadDetailsViewModel(
                 thinkpadRepository = get()
             )

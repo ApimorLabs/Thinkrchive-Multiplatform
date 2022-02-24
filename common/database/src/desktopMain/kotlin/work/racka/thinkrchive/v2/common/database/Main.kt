@@ -2,7 +2,7 @@ package work.racka.thinkrchive.v2.common.database
 
 import kotlinx.coroutines.runBlocking
 import work.racka.thinkrchive.v2.common.database.di.Koin
-import work.racka.thinkrchive.v2.common.database.remote.ThinkrchiveApi
+import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
 
 fun main() {
     runBlocking {

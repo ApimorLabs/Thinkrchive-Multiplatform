@@ -1,10 +1,10 @@
 package work.racka.thinkrchive.v2.common.database.util
 
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
+import domain.Thinkpad
 import workrackathinkrchivev2commondatabase.db.ThinkpadDatabaseQueries
 import workrackathinkrchivev2commondatabase.db.ThinkpadListTable
 
-object Helpers {
+internal object Helpers {
 
     fun ThinkpadDatabaseQueries.insertAllThinkpadsToDb(
         response: List<Thinkpad>

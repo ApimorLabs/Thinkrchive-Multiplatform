@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
+import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.Shapes
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 
 @Composable
 fun ThinkpadEntry(

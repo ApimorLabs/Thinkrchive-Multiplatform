@@ -23,12 +23,12 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsPadding
+import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.v2.android.ui.components.DetailsCards
 import work.racka.thinkrchive.v2.android.ui.components.ToolbarImage
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 
 @ExperimentalMaterial3Api
 @ExperimentalAnimationApi

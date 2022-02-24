@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.v2.android.utils
 
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
+import domain.Thinkpad
 
 object Constants {
     private const val BASE_URL = "https://thinkrchive-server.herokuapp.com/v1"

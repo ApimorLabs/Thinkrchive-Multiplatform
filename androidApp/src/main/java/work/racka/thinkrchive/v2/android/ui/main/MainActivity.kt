@@ -24,7 +24,7 @@ import work.racka.thinkrchive.v2.android.ui.navigation.ThinkrchiveApp
 @ExperimentalComposeUiApi
 class MainActivity : AppCompatActivity() {
 
-    val prefDataStore: PrefDataStore by inject()
+    private val prefDataStore: PrefDataStore by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

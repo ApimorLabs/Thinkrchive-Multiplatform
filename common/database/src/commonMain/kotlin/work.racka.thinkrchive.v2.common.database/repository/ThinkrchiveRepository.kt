@@ -1,7 +1,7 @@
 package work.racka.thinkrchive.v2.common.database.repository
 
+import domain.Thinkpad
 import kotlinx.coroutines.flow.Flow
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 import work.racka.thinkrchive.v2.common.database.util.Resource
 
 interface ThinkrchiveRepository {

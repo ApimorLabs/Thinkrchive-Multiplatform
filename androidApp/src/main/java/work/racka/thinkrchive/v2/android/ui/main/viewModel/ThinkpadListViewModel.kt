@@ -2,13 +2,13 @@ package work.racka.thinkrchive.v2.android.ui.main.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import domain.Thinkpad
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.v2.android.utils.getChipNamesList
-import work.racka.thinkrchive.v2.common.database.model.Thinkpad
 import work.racka.thinkrchive.v2.common.database.repository.ThinkrchiveRepository
 import work.racka.thinkrchive.v2.common.database.util.Resource
 

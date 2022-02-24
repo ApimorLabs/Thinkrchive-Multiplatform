@@ -7,7 +7,7 @@ import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 
 object DataModule {
 
-    val dataStoreModule = module {
+    fun dataStoreModule() = module {
         single {
             PrefDataStore(
                 context = androidApplication().applicationContext,

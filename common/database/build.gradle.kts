@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 sqldelight {
@@ -38,15 +37,8 @@ kotlin {
     jvm("desktop")
 
     sourceSets["commonMain"].dependencies {
-        with(Dependencies.Ktor) {
-            implementation(ktorCore)
-            implementation(ktorSerialization)
-            implementation(ktorLogging)
-            //implementation(contentNegotiation)
-            //implementation(json)
-        }
-
-        implementation(Dependencies.Kotlin.serializationCore)
+        implementation(project(":common:network"))
+        implementation(project(":common:model"))
 
         with(Dependencies.Squareup.SQLDelight) {
             implementation(runtime)
@@ -64,12 +56,10 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation(Dependencies.Ktor.ktorAndroidEngine)
         implementation(Dependencies.Squareup.SQLDelight.androidDriver)
     }
 
     sourceSets["desktopMain"].dependencies {
-        implementation(Dependencies.Ktor.ktorJavaEngine)
         implementation(Dependencies.Squareup.SQLDelight.sqliteDriver)
         implementation(Dependencies.Log.slf4j)
     }

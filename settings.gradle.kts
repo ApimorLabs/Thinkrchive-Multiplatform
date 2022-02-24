@@ -1,5 +1,9 @@
 rootProject.name = "Thinkrchive"
-include(":androidApp")
-include(":desktopApp")
-include(":common:platform")
-include(":common:database")
+include(
+    ":androidApp",
+    ":desktopApp",
+    ":common:platform",
+    ":common:database",
+    ":common:network",
+    ":common:model"
+)
