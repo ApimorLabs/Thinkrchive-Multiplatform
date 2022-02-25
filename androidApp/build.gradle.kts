@@ -72,15 +72,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:platform"))
-    implementation(project(":common:database"))
     implementation(project(":common:model"))
+    implementation(project(":common:integration"))
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.appCompat)
     implementation(Dependencies.Android.material)
     implementation(Dependencies.Android.lifecycleRuntimeKtx)
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
 
     // Testing
     testImplementation(Dependencies.Android.junit)

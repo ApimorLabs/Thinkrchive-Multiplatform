@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadDetailsScreenState
-import work.racka.thinkrchive.v2.common.database.repository.ThinkrchiveRepository
+import work.racka.thinkrchive.v2.common.integration.repository.ThinkrchiveRepository
 
 class ThinkpadDetailsViewModel(
     private val thinkpadRepository: ThinkrchiveRepository

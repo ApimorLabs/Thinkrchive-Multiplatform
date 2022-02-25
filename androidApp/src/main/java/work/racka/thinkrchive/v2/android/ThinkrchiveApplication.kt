@@ -18,14 +18,14 @@ import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.v2.android.di.BillingModule
 import work.racka.thinkrchive.v2.android.di.DataModule
 import work.racka.thinkrchive.v2.android.di.ViewModelModule
-import work.racka.thinkrchive.v2.common.database.di.Koin.initKoin
+import work.racka.thinkrchive.v2.common.integration.di.KoinMain
 
 class ThinkrchiveApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        initKoin {
+        KoinMain.initKoin {
             // https://github.com/InsertKoinIO/koin/issues/1188
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@ThinkrchiveApplication)

@@ -6,9 +6,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(BuildPlugins.android)
+        // Leaving this plugin here so it can be automatically
+        // updated by Android Studio
+        classpath("com.android.tools.build:gradle:7.1.2")
+
         classpath(BuildPlugins.kotlin)
-        //classpath(BuildPlugins.kotlinxSerialization)
         classpath(BuildPlugins.sqlDelight)
         classpath(BuildPlugins.composeDesktop)
 

@@ -1,14 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.squareup.sqldelight")
-}
-
-sqldelight {
-    database("ThinkpadDatabase") {
-        packageName = "work.racka.thinkrchive.v2.common.database.db"
-        sourceFolders = listOf("sqldelight")
-    }
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
@@ -37,8 +30,16 @@ kotlin {
     jvm("desktop")
 
     sourceSets["commonMain"].dependencies {
-        implementation(project(":common:network"))
         implementation(project(":common:model"))
+        implementation(project(":common:database"))
+        implementation(project(":common:network"))
+
+        implementation(Dependencies.Kotlin.serializationCore)
+
+        with(Dependencies.Squareup.SQLDelight) {
+            implementation(runtime)
+            implementation(coroutineExtensions)
+        }
 
         with(Dependencies.Koin) {
             api(core)
@@ -51,11 +52,10 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation(Dependencies.Squareup.SQLDelight.androidDriver)
+
     }
 
     sourceSets["desktopMain"].dependencies {
-        implementation(Dependencies.Squareup.SQLDelight.sqliteDriver)
         implementation(Dependencies.Log.slf4j)
     }
 }
