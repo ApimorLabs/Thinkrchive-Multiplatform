@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.v2.common.network.remote
 
-import domain.Thinkpad
+import data.remote.response.ThinkpadResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -11,7 +11,7 @@ class ThinkrchiveApiImpl(
     private val client: HttpClient
 ) : ThinkrchiveApi {
 
-    override suspend fun getThinkpads(): List<Thinkpad> =
+    override suspend fun getThinkpads(): List<ThinkpadResponse> =
         client.get {
             url(Constants.ALL_LAPTOPS)
             contentType(ContentType.Application.Json)

@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.common.database.di
+package work.racka.thinkrchive.v2.common.database.dao
 
 import work.racka.thinkrchive.v2.common.database.db.ThinkpadDatabase
 

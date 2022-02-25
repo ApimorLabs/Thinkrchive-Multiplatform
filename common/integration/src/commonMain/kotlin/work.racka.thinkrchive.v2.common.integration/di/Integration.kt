@@ -27,8 +27,7 @@ internal object Integration {
         single<ThinkrchiveRepository> {
             ThinkrchiveRepositoryImpl(
                 thinkrchiveApi = get(),
-                thinkpadDatabase = get(),
-                coroutineScope = get()
+                thinkpadDao = get()
             )
         }
     }

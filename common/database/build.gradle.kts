@@ -40,6 +40,11 @@ kotlin {
         implementation(project(":common:network"))
         implementation(project(":common:model"))
 
+        with(Dependencies.Squareup.SQLDelight) {
+            implementation(runtime)
+            implementation(coroutineExtensions)
+        }
+
         with(Dependencies.Koin) {
             api(core)
             api(test)

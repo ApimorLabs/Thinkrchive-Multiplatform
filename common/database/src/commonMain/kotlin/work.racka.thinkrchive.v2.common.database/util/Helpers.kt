@@ -1,13 +1,14 @@
-package work.racka.thinkrchive.v2.common.integration.util
+package work.racka.thinkrchive.v2.common.database.util
 
-import domain.Thinkpad
+import data.local.ThinkpadDatabaseObject
+import data.remote.response.ThinkpadResponse
 import workrackathinkrchivev2commondatabase.db.ThinkpadDatabaseQueries
 import workrackathinkrchivev2commondatabase.db.ThinkpadListTable
 
 internal object Helpers {
 
     fun ThinkpadDatabaseQueries.insertAllThinkpadsToDb(
-        response: List<Thinkpad>
+        response: List<ThinkpadResponse>
     ) {
         // This implementation removes all existing rows
         // in db and then inserts results from api request
@@ -59,7 +60,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -101,7 +102,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -143,7 +144,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -185,7 +186,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -227,7 +228,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -269,7 +270,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,
@@ -311,7 +312,7 @@ internal object Helpers {
                        fingerPrintReader, kbType, dualBatt, internalBatt, externalBatt,
                        psrefLink, biosVersion, knownIssues, knownIssuesLinks, displaysSupported,
                        otherMods, otherModsLinks, biosLockIn, ports ->
-                Thinkpad(
+                ThinkpadDatabaseObject(
                     model = model,
                     imageUrl = imageUrl,
                     releaseDate = releaseDate,

@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.database.di
 
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.koin.dsl.module
+import work.racka.thinkrchive.v2.common.database.dao.ThinkrchiveDatabaseWrapper
 import work.racka.thinkrchive.v2.common.database.db.ThinkpadDatabase
 
 internal actual fun platformDatabaseModule() = module {

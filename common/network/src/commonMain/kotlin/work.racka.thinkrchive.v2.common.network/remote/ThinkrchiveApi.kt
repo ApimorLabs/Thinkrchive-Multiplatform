@@ -1,7 +1,7 @@
 package work.racka.thinkrchive.v2.common.network.remote
 
-import domain.Thinkpad
+import data.remote.response.ThinkpadResponse
 
 interface ThinkrchiveApi {
-    suspend fun getThinkpads(): List<Thinkpad>
+    suspend fun getThinkpads(): List<ThinkpadResponse>
 }

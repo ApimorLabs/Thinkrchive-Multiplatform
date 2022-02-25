@@ -1,12 +1,13 @@
 package work.racka.thinkrchive.v2.common.integration.repository
 
+import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
 import kotlinx.coroutines.flow.Flow
 import util.Resource
 
 interface ThinkrchiveRepository {
-    suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<Thinkpad>>>
-    suspend fun refreshThinkpadList(response: List<Thinkpad>)
+    suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>>>
+    suspend fun refreshThinkpadList(response: List<ThinkpadResponse>)
     suspend fun getAllThinkpads(): Flow<List<Thinkpad>>
     suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad>?
     suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>>

@@ -75,62 +75,75 @@ dependencies {
     implementation(project(":common:model"))
     implementation(project(":common:integration"))
 
-    implementation(Dependencies.Android.coreKtx)
-    implementation(Dependencies.Android.appCompat)
-    implementation(Dependencies.Android.material)
-    implementation(Dependencies.Android.lifecycleRuntimeKtx)
+    // Core Functionality
+    with(Dependencies.Android) {
+        implementation(coreKtx)
+        implementation(appCompat)
+        implementation(material)
+        implementation(lifecycleRuntimeKtx)
+    }
 
     // Testing
-    testImplementation(Dependencies.Android.junit)
-    testImplementation(Dependencies.Android.testArchCore)
-    testImplementation(Dependencies.Android.junitTest)
-    testImplementation(Dependencies.Android.testExtJUnitKtx)
-    testImplementation(Dependencies.Android.mockitoInline)
-    testImplementation(Dependencies.Android.mockitoKotlin)
-    testImplementation(Dependencies.Android.robolectric)
-    testImplementation(Dependencies.Android.turbine)
-    testImplementation(Dependencies.Android.coroutineTest)
+    with(Dependencies.Android) {
+        testImplementation(junit)
+        testImplementation(testArchCore)
+        testImplementation(junitTest)
+        testImplementation(testExtJUnitKtx)
+        testImplementation(mockitoInline)
+        testImplementation(mockitoKotlin)
+        testImplementation(robolectric)
+        testImplementation(turbine)
+        testImplementation(coroutineTest)
 
-    androidTestImplementation(Dependencies.Android.junitTest)
-    androidTestImplementation(Dependencies.Android.espressoCore)
-    androidTestImplementation(Dependencies.Android.testCoreKtx)
-    androidTestImplementation(Dependencies.Android.testArchCore)
-    androidTestImplementation(Dependencies.Android.mockitoAndroid)
-    androidTestImplementation(Dependencies.Android.mockitoKotlin)
-    androidTestImplementation(Dependencies.Android.turbine)
+        androidTestImplementation(junitTest)
+        androidTestImplementation(espressoCore)
+        androidTestImplementation(testCoreKtx)
+        androidTestImplementation(testArchCore)
+        androidTestImplementation(mockitoAndroid)
+        androidTestImplementation(mockitoKotlin)
+        androidTestImplementation(turbine)
+    }
 
     // Testing Compose
-    androidTestImplementation(Dependencies.Android.junitCompose)
-    debugImplementation(Dependencies.Android.composeTooling)
+    with(Dependencies.Android) {
+        androidTestImplementation(junitCompose)
+        debugImplementation(composeTooling)
+    }
 
     // Compose
-    implementation(Dependencies.Android.composeUi)
-    implementation(Dependencies.Android.composeAnimation)
-    implementation(Dependencies.Android.composeMaterial)
-    implementation(Dependencies.Android.composePreview)
-    implementation(Dependencies.Android.composeActivity)
-    implementation(Dependencies.Android.composeViewModel)
-    implementation(Dependencies.Android.composeNavigation)
-    implementation(Dependencies.Android.composeMaterialIconsCore)
-    implementation(Dependencies.Android.composeMaterialIconsExtended)
-    implementation(Dependencies.Android.composeFoundation)
-    implementation(Dependencies.Android.composeFoundationLayout)
-    implementation(Dependencies.Android.composeConstraintLayout)
-    implementation(Dependencies.Android.composeMaterial3)
+    with(Dependencies.Android) {
+        implementation(composeUi)
+        implementation(composeAnimation)
+        implementation(composeMaterial)
+        implementation(composePreview)
+        implementation(composeActivity)
+        implementation(composeViewModel)
+        implementation(composeNavigation)
+        implementation(composeMaterialIconsCore)
+        implementation(composeMaterialIconsExtended)
+        implementation(composeFoundation)
+        implementation(composeFoundationLayout)
+        implementation(composeConstraintLayout)
+        implementation(composeMaterial3)
+    }
 
     // Timber
     implementation(Dependencies.Android.timber)
 
     // Dependency Injection
-    implementation(Dependencies.Koin.android)
-    implementation(Dependencies.Koin.compose)
+    with(Dependencies.Koin) {
+        implementation(android)
+        implementation(compose)
+    }
 
     // Coil Image loader
     implementation(Dependencies.Android.coilImage)
 
     // Accompanist
-    implementation(Dependencies.Android.accompanistInsets)
-    implementation(Dependencies.Android.accompanistNavigationAnimations)
+    with(Dependencies.Android) {
+        implementation(accompanistInsets)
+        implementation(accompanistNavigationAnimations)
+    }
 
     // Preferences DataStore
     implementation(Dependencies.Android.prefDataStore)
@@ -139,7 +152,9 @@ dependencies {
     implementation(Dependencies.Android.splashScreenCore)
 
     // Billing
-    implementation(Dependencies.Android.googleBilling)
-    implementation(Dependencies.Android.qonversion)
+    with(Dependencies.Android) {
+        implementation(googleBilling)
+        implementation(qonversion)
+    }
 
 }

@@ -37,7 +37,6 @@ kotlin {
         implementation(Dependencies.Kotlin.serializationCore)
 
         with(Dependencies.Squareup.SQLDelight) {
-            implementation(runtime)
             implementation(coroutineExtensions)
         }
 

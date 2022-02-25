@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.database.di
 
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import org.koin.dsl.module
+import work.racka.thinkrchive.v2.common.database.dao.ThinkrchiveDatabaseWrapper
 import work.racka.thinkrchive.v2.common.database.db.ThinkpadDatabase
 import work.racka.thinkrchive.v2.common.database.util.Constants
 
