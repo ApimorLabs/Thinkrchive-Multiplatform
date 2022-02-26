@@ -12,6 +12,7 @@ local.properties
 *.aar
 *.ap_
 *.aab
+!androidApp-release.apk
 
 # Files for the ART/Dalvik VM
 *.dex
