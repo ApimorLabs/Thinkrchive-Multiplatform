@@ -14,7 +14,7 @@ actual class ThinkpadListViewModel(
     settings: SettingsRepository,
 ) : ViewModel() {
 
-    var host: ThinkpadListContainerHost = ThinkpadListContainerHost(
+    val host: ThinkpadListContainerHost = ThinkpadListContainerHost(
         helper = helper,
         backgroundDispatcher = backgroundDispatcher,
         settings = settings,

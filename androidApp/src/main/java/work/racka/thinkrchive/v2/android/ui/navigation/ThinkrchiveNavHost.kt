@@ -3,6 +3,7 @@ package work.racka.thinkrchive.v2.android.ui.navigation
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,22 +20,22 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.viewModel
+import states.details.ThinkpadDetailsSideEffect
+import states.details.ThinkpadDetailsState
 import states.list.ThinkpadListSideEffect
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.billing.qonversion.qonPurchase
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.DonateScreenState
-import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.v2.android.ui.main.screens.*
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.DonateViewModel
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.QonversionViewModel
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadSettingsViewModel
 import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
+import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
 
 
@@ -142,21 +143,40 @@ fun ThinkrchiveNavHost(
         ) { backStackEntry ->
             val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
 
-            val thinkpadDetailsViewModel: ThinkpadDetailsViewModel by viewModel()
-            thinkpadDetailsViewModel.getThinkpad(thinkpadModel)
+            val viewModel: ThinkpadDetailsViewModel = getViewModel()
+            viewModel.host.getThinkpad(thinkpadModel)
 
-            val thinkpadDetail = thinkpadDetailsViewModel.uiState.collectAsState()
-            val context = LocalContext.current
+            val state by viewModel.uiState.collectAsState()
+            val sideEffect = viewModel.sideEffect
+                .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)
+                .value
 
-            if (thinkpadDetail.value is ThinkpadDetailsScreenState.ThinkpadDetail) {
-                val thinkpad =
-                    (thinkpadDetail.value as ThinkpadDetailsScreenState.ThinkpadDetail).thinkpad
-                val intent = remember {
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(thinkpad.psrefLink)
-                    )
+            when (sideEffect) {
+                is ThinkpadDetailsSideEffect.OpenPsrefLink -> {
+                    val link = sideEffect.link
+                    val intent = remember {
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(link)
+                        )
+                    }
+                    LocalContext.current.startActivity(intent)
                 }
+                is ThinkpadDetailsSideEffect.DisplayErrorMsg -> {
+                    val message = sideEffect.message
+                    Toast.makeText(
+                        LocalContext.current,
+                        message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is ThinkpadDetailsSideEffect.EmptySideEffect -> {}
+            }
+
+            if (state is ThinkpadDetailsState.State) {
+                val thinkpad =
+                    (state as ThinkpadDetailsState.State).thinkpad
+
                 ThinkpadDetailsScreen(
                     modifier = modifier,
                     thinkpad = thinkpad,
@@ -164,7 +184,7 @@ fun ThinkrchiveNavHost(
                         navController.popBackStack()
                     },
                     onExternalLinkClicked = {
-                        context.startActivity(intent)
+                        viewModel.host.openPsrefLink()
                     }
                 )
             }

@@ -2,13 +2,13 @@ package states.list
 
 import domain.Thinkpad
 
-sealed class ThinkpadList {
-    data class ThinkpadListState(
+sealed class ThinkpadListState {
+    data class State(
         val thinkpadList: List<Thinkpad> = listOf(),
         val sortOption: Int = 0
-    ) : ThinkpadList()
+    ) : ThinkpadListState()
 
     companion object {
-        val EmptyState = ThinkpadListState()
+        val EmptyState = State()
     }
 }

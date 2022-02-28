@@ -9,8 +9,8 @@ import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import states.list.ThinkpadList
 import states.list.ThinkpadListSideEffect
+import states.list.ThinkpadListState
 import util.Resource
 import work.racka.thinkrchive.v2.common.settings.SettingsRepository
 
@@ -19,10 +19,10 @@ class ThinkpadListContainerHost(
     private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val settings: SettingsRepository,
     scope: CoroutineScope
-) : ContainerHost<ThinkpadList.ThinkpadListState, ThinkpadListSideEffect> {
+) : ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
 
     override val container = scope
-        .container<ThinkpadList.ThinkpadListState, ThinkpadListSideEffect>(ThinkpadList.EmptyState) {
+        .container<ThinkpadListState.State, ThinkpadListSideEffect>(ThinkpadListState.EmptyState) {
             refreshThinkpadList()
             getUserSortOption()
         }
