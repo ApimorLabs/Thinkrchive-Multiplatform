@@ -31,13 +31,22 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:model"))
-        implementation(project(":common:database"))
+        implementation(project(":common:persistence:database"))
+        implementation(project(":common:persistence:settings"))
         implementation(project(":common:network"))
 
         implementation(Dependencies.Kotlin.serializationCore)
 
+        implementation(Dependencies.OrbitMVI.core)
+
         with(Dependencies.Squareup.SQLDelight) {
             implementation(coroutineExtensions)
+        }
+
+        with(Dependencies.ArkIvanov.MVIKotlin) {
+            implementation(mviKotlin)
+            implementation(mviKotlinMain)
+            implementation(mviKotlinExtensionsCoroutines)
         }
 
         with(Dependencies.Koin) {
@@ -51,7 +60,14 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
+        with(Dependencies.Android) {
+            implementation(lifecycleRuntimeKtx)
+            implementation(composeViewModel)
+        }
 
+        with(Dependencies.Koin) {
+            implementation(android)
+        }
     }
 
     sourceSets["desktopMain"].dependencies {

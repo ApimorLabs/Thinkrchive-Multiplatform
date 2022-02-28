@@ -2,7 +2,8 @@ rootProject.name = "Thinkrchive"
 include(
     ":androidApp",
     ":desktopApp",
-    ":common:database",
+    ":common:persistence:database",
+    ":common:persistence:settings",
     ":common:network",
     ":common:model",
     ":common:integration"

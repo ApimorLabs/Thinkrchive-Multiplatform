@@ -20,18 +20,22 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.viewModel
+import states.list.ThinkpadListSideEffect
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.billing.qonversion.qonPurchase
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.DonateScreenState
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadDetailsScreenState
-import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.v2.android.ui.main.screens.*
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.*
+import work.racka.thinkrchive.v2.android.ui.main.viewModel.DonateViewModel
+import work.racka.thinkrchive.v2.android.ui.main.viewModel.QonversionViewModel
+import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadDetailsViewModel
+import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadSettingsViewModel
 import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
+import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
 
 
 @ExperimentalMaterial3Api
@@ -72,29 +76,30 @@ fun ThinkrchiveNavHost(
             }
         ) {
             val viewModel: ThinkpadListViewModel = getViewModel()
-            val thinkpadListState by viewModel.uiState.collectAsState()
-            val thinkpadListScreenData =
-                thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen
 
             Timber.d("thinkpadListScreen NavHost called")
+            val host = viewModel.host
+            val state by viewModel.uiState.collectAsState()
+            val sideEffect = viewModel.sideEffect
+                .collectAsState(initial = ThinkpadListSideEffect.Network())
+                .value as ThinkpadListSideEffect.Network
 
             ThinkpadListScreen(
                 modifier = modifier,
-                thinkpadList = thinkpadListScreenData.thinkpadList,
-                networkLoading = thinkpadListScreenData.networkLoading,
+                thinkpadList = state.thinkpadList,
+                networkLoading = sideEffect.isLoading,
                 onSearch = { query ->
-                    viewModel
-                        .getNewThinkpadListFromDatabase(query)
+                    host.getSortedThinkpadList(query)
                 },
                 onEntryClick = { thinkpad ->
                     navController.navigate(
                         route = "$thinkpadDetailsScreen/${thinkpad.model}"
                     )
                 },
-                networkError = thinkpadListScreenData.networkError,
-                currentSortOption = thinkpadListScreenData.sortOption,
+                networkError = sideEffect.errorMsg,
+                currentSortOption = state.sortOption,
                 onSortOptionClicked = { sort ->
-                    viewModel.sortSelected(sort)
+                    host.sortSelected(sort)
                 },
                 onSettingsClicked = {
                     navController.navigate(

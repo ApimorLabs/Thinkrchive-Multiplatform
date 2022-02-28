@@ -12,6 +12,10 @@ object Versions {
     // Squareup
     const val sqlDelight = "1.5.0"
 
+    // Architecture
+    const val mviKotlin = "3.0.0-beta01"
+    const val orbitMVI = "4.3.2"
+
     // Essentials
     const val material = "1.6.0-alpha02"
     const val splashScreen = "1.0.0-alpha01"
@@ -70,7 +74,8 @@ object Versions {
     // Database
     const val room = "2.4.1"
 
-    // DataStore
+    // DataStore & Preferences
+    const val multiplatformSettings = "0.8.1"
     const val dataStore = "1.0.0"
 
     // Billing

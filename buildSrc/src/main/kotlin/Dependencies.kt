@@ -32,6 +32,41 @@ object Dependencies {
         val contentNegotiation by lazy { "io.ktor:ktor-client-content-negotiation:${Versions.ktor}" }
     }
 
+    object OrbitMVI {
+        val core by lazy { "org.orbit-mvi:orbit-core:${Versions.orbitMVI}" }
+        val androidViewModel by lazy { "org.orbit-mvi:orbit-viewmodel:${Versions.orbitMVI}" }
+        val test by lazy { "org.orbit-mvi:orbit-test:${Versions.orbitMVI}" }
+    }
+
+    object ArkIvanov {
+        object MVIKotlin {
+            val rx by lazy { "com.arkivanov.mvikotlin:rx:${Versions.mviKotlin}" }
+            val mviKotlin by lazy { "com.arkivanov.mvikotlin:mvikotlin:${Versions.mviKotlin}" }
+            val mviKotlinMain by lazy { "com.arkivanov.mvikotlin:mvikotlin-main:${Versions.mviKotlin}" }
+            val mviKotlinLogging by lazy { "com.arkivanov.mvikotlin:mvikotlin-logging:${Versions.mviKotlin}" }
+            val mviKotlinTimeTravel by lazy { "com.arkivanov.mvikotlin:mvikotlin-timetravel:${Versions.mviKotlin}" }
+            val mviKotlinExtensionsCoroutines by lazy {
+                "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Versions.mviKotlin}"
+            }
+        }
+
+        object Decompose {
+            private const val VERSION = "0.3.1"
+            val decompose by lazy { "com.arkivanov.decompose:decompose:$VERSION" }
+            val extensionsCompose by lazy {
+                "com.arkivanov.decompose:extensions-compose-jetbrains:$VERSION"
+            }
+        }
+    }
+
+    object RusshWolf {
+        object MultiplatformSettings {
+            val core by lazy { "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}" }
+            val noArg by lazy { "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}" }
+            val coroutines by lazy { "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}" }
+        }
+    }
+
     object Squareup {
         object SQLDelight {
             val runtime by lazy { "com.squareup.sqldelight:runtime:${Versions.sqlDelight}" }

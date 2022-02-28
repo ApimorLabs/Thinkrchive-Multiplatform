@@ -4,7 +4,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.DonateViewModel
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadDetailsViewModel
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadListViewModel
 import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadSettingsViewModel
 
 object ViewModelModule {
@@ -20,13 +19,6 @@ object ViewModelModule {
 
             ThinkpadDetailsViewModel(
                 thinkpadRepository = get()
-            )
-        }
-
-        viewModel {
-            ThinkpadListViewModel(
-                thinkpadRepository = get(),
-                prefDataStore = get()
             )
         }
 

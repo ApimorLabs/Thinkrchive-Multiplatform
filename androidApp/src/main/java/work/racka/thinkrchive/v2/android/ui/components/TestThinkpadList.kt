@@ -17,30 +17,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.getViewModel
+import states.list.ThinkpadListSideEffect
 import timber.log.Timber
-import work.racka.thinkrchive.v2.android.ui.main.screenStates.ThinkpadListScreenState
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
 
 @ExperimentalAnimationApi
 @Composable
 fun TestThinkpadList(viewModel: ThinkpadListViewModel = getViewModel()) {
 
     val thinkpadListState by viewModel.uiState.collectAsState()
-    val thinkpadListData = thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen
+    val sideEffect = viewModel.sideEffect
+        .collectAsState(initial = ThinkpadListSideEffect.Network())
+        .value as ThinkpadListSideEffect.Network
 
     val scrollState = rememberLazyListState()
     LazyColumn(state = scrollState) {
-        items(thinkpadListData.thinkpadList) {
+        items(thinkpadListState.thinkpadList) {
             Timber.d("items called")
             Text(text = it.model, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             Text(text = "Release Data: ${it.releaseDate}")
             Text(text = "Processors: ${it.processors}")
             Text(text = "Platform: ${it.processorPlatforms}")
-            Text(text = thinkpadListData.networkError)
+            Text(text = sideEffect.errorMsg)
             Spacer(modifier = Modifier.height(16.dp))
         }
         item {
-            AnimatedVisibility(thinkpadListData.networkLoading) {
+            AnimatedVisibility(sideEffect.isLoading) {
                 CircularProgressIndicator()
             }
         }
