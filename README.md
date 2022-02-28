@@ -28,7 +28,7 @@
 
 | Platform | Download | Status |
 |----------|----------|--------|
-| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-alpha01&color=blue)](https://drive.google.com/file/d/1S09YR-SSyazV9-Z3U89rKysXPX6LnMXL/view?usp=sharing)| 🧪 Beta |
+| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-alpha01&color=blue)](https://github.com/racka98/Thinkrchive-Multiplatform/raw/main/androidApp/release/androidApp-release.apk)| 🧪 Beta |
 | Desktop - Windows  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=green)]()| 🧪 Experimental |
 | Desktop - macOS  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=yellow)]()| 🧪 Experimental |
 | Desktop - Linux  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=purple)]()| 🧪 Experimental |
