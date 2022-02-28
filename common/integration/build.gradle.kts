@@ -43,12 +43,6 @@ kotlin {
             implementation(coroutineExtensions)
         }
 
-        with(Dependencies.ArkIvanov.MVIKotlin) {
-            implementation(mviKotlin)
-            implementation(mviKotlinMain)
-            implementation(mviKotlinExtensionsCoroutines)
-        }
-
         with(Dependencies.Koin) {
             api(core)
             api(test)

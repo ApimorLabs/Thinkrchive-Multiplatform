@@ -19,6 +19,13 @@ kotlin {
                 implementation(project(":common:model"))
                 implementation(project(":common:integration"))
                 implementation(compose.desktop.currentOs)
+
+                implementation(Dependencies.OrbitMVI.core)
+
+                with(Dependencies.Koin) {
+                    api(core)
+                    api(test)
+                }
             }
         }
         val jvmTest by getting

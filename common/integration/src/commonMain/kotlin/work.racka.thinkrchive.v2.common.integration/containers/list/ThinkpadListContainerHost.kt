@@ -12,12 +12,12 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.Resource
-import work.racka.thinkrchive.v2.common.settings.SettingsRepository
+import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
 
 class ThinkpadListContainerHost(
     private val helper: ThinkpadListHelper,
     private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private val settings: SettingsRepository,
+    private val settings: AppSettings,
     scope: CoroutineScope
 ) : ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
 
@@ -28,9 +28,10 @@ class ThinkpadListContainerHost(
         }
 
     private fun getUserSortOption() = intent {
-        val sortOption = settings.readSortSettings()
-        reduce { state.copy(sortOption = sortOption) }
-        getSortedThinkpadList()
+        settings.state.collect { settingsState ->
+            reduce { state.copy(sortOption = settingsState.sortValue) }
+            getSortedThinkpadList()
+        }
     }
 
     fun sortSelected(sortOption: Int) = intent {

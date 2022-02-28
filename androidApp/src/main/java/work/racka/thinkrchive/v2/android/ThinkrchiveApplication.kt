@@ -7,17 +7,18 @@ import com.qonversion.android.sdk.Qonversion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
+import states.settings.ThinkpadSettingsSideEffect
 import timber.log.Timber
-import work.racka.thinkrchive.v2.android.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.v2.android.di.BillingModule
-import work.racka.thinkrchive.v2.android.di.DataModule
 import work.racka.thinkrchive.v2.android.di.ViewModelModule
+import work.racka.thinkrchive.v2.android.ui.theme.Theme
+import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
 import work.racka.thinkrchive.v2.common.integration.di.KoinMain
 
 class ThinkrchiveApplication : Application() {
@@ -30,20 +31,25 @@ class ThinkrchiveApplication : Application() {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@ThinkrchiveApplication)
             modules(
-                DataModule.dataStoreModule(),
                 BillingModule.module(),
                 ViewModelModule.module()
             )
         }
 
-        val prefDataStore by inject<PrefDataStore>()
+        val settings by inject<AppSettings>()
+
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {
-            prefDataStore.readThemeSetting.collect {
-                if (it != 12) {
-                    AppCompatDelegate.setDefaultNightMode(it)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+            settings.sideEffect.collectLatest { effect ->
+                when (effect) {
+                    is ThinkpadSettingsSideEffect.ApplyThemeOption -> {
+                        if (effect.themeValue != Theme.MATERIAL_YOU.themeValue) {
+                            AppCompatDelegate.setDefaultNightMode(effect.themeValue)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                        }
+                    }
+                    else -> {}
                 }
             }
         }

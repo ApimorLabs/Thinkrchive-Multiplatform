@@ -93,9 +93,6 @@ dependencies {
         testImplementation(testArchCore)
         testImplementation(junitTest)
         testImplementation(testExtJUnitKtx)
-        testImplementation(mockitoInline)
-        testImplementation(mockitoKotlin)
-        testImplementation(robolectric)
         testImplementation(turbine)
         testImplementation(coroutineTest)
 
@@ -103,8 +100,6 @@ dependencies {
         androidTestImplementation(espressoCore)
         androidTestImplementation(testCoreKtx)
         androidTestImplementation(testArchCore)
-        androidTestImplementation(mockitoAndroid)
-        androidTestImplementation(mockitoKotlin)
         androidTestImplementation(turbine)
     }
 
@@ -148,9 +143,6 @@ dependencies {
         implementation(accompanistInsets)
         implementation(accompanistNavigationAnimations)
     }
-
-    // Preferences DataStore
-    implementation(Dependencies.Android.prefDataStore)
 
     // Splash Screen
     implementation(Dependencies.Android.splashScreenCore)

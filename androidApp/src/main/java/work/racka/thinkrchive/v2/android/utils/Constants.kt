@@ -3,10 +3,6 @@ package work.racka.thinkrchive.v2.android.utils
 import domain.Thinkpad
 
 object Constants {
-    private const val BASE_URL = "https://thinkrchive-server.herokuapp.com/v1"
-    const val ALL_LAPTOPS = "$BASE_URL/all-laptops"
-    const val THINKPAD_LIST_TABLE = "thinkpad_list"
-    const val PREFERENCE_NAME = "settings_preference"
     const val THEME_OPTIONS = "Theme Options"
     const val SORT_OPTIONS = "Default Sort Option"
 
