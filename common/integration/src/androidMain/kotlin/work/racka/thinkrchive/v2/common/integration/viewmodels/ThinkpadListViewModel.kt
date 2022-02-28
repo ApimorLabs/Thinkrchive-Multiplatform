@@ -21,11 +21,6 @@ actual class ThinkpadListViewModel(
         scope = viewModelScope
     )
 
-    init {
-        host.refreshThinkpadList()
-        host.getUserSortOption()
-    }
-
     val uiState = host.container.stateFlow
     val sideEffect = host.container.sideEffectFlow
 }

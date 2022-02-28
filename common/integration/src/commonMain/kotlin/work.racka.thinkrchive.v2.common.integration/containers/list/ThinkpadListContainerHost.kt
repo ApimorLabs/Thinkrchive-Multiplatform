@@ -9,7 +9,6 @@ import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.syntax.simple.repeatOnSubscription
 import states.list.ThinkpadList
 import states.list.ThinkpadListSideEffect
 import util.Resource
@@ -24,10 +23,11 @@ class ThinkpadListContainerHost(
 
     override val container = scope
         .container<ThinkpadList.ThinkpadListState, ThinkpadListSideEffect>(ThinkpadList.EmptyState) {
-
+            refreshThinkpadList()
+            getUserSortOption()
         }
 
-    fun getUserSortOption() = intent {
+    private fun getUserSortOption() = intent {
         val sortOption = settings.readSortSettings()
         reduce { state.copy(sortOption = sortOption) }
         getSortedThinkpadList()
@@ -41,10 +41,8 @@ class ThinkpadListContainerHost(
     // An empty string on model retrieves all Thinkpads in the database
     fun getSortedThinkpadList(model: String = "") = intent {
         val list = helper.getThinkpadListSorted(model, state.sortOption)
-        repeatOnSubscription {
-            list.collect { thinkpadList ->
-                reduce { state.copy(thinkpadList = thinkpadList) }
-            }
+        list.collect { thinkpadList ->
+            reduce { state.copy(thinkpadList = thinkpadList) }
         }
     }
 
@@ -52,36 +50,34 @@ class ThinkpadListContainerHost(
     // Also used by pull down to refresh.
     fun refreshThinkpadList() = intent {
         val result = helper.repository.getAllThinkpadsFromNetwork()
-        repeatOnSubscription {
-            result.collect { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        postSideEffect(
-                            ThinkpadListSideEffect.Network(isLoading = false)
+        result.collect { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    postSideEffect(
+                        ThinkpadListSideEffect.Network(isLoading = false)
+                    )
+                    helper.refreshThinkpadList(
+                        thinkpads = resource.data!!,
+                        dispatcher = backgroundDispatcher
+                    )
+                }
+                is Resource.Error -> {
+                    postSideEffect(
+                        ThinkpadListSideEffect.Network(
+                            isLoading = false,
+                            errorMsg = resource.message!!
                         )
-                        helper.refreshThinkpadList(
-                            thinkpads = resource.data!!,
-                            dispatcher = backgroundDispatcher
-                        )
-                    }
-                    is Resource.Error -> {
-                        postSideEffect(
-                            ThinkpadListSideEffect.Network(
-                                isLoading = false,
-                                errorMsg = resource.message!!
-                            )
-                        )
-                    }
-                    is Resource.Loading -> {
-                        postSideEffect(
-                            ThinkpadListSideEffect.Network(isLoading = true)
-                        )
-                    }
-                    else -> {
-                        postSideEffect(
-                            ThinkpadListSideEffect.Network(isLoading = true)
-                        )
-                    }
+                    )
+                }
+                is Resource.Loading -> {
+                    postSideEffect(
+                        ThinkpadListSideEffect.Network(isLoading = true)
+                    )
+                }
+                else -> {
+                    postSideEffect(
+                        ThinkpadListSideEffect.Network(isLoading = true)
+                    )
                 }
             }
         }
