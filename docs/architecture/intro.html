@@ -12,8 +12,10 @@
     <meta content="current" data-rh="true" name="docsearch:version">
     <meta content="docs-default-current" data-rh="true" name="docsearch:docusaurus_tag">
     <meta content="Introduction | Thinkrchive" data-rh="true" property="og:title">
-    <meta content="Helpful links" data-rh="true" name="description">
-    <meta content="Helpful links" data-rh="true" property="og:description">
+    <meta content="This app uses the Model View Intent (MVI) architecture." data-rh="true"
+          name="description">
+    <meta content="This app uses the Model View Intent (MVI) architecture." data-rh="true"
+          property="og:description">
     <link data-rh="true" href="/Thinkrchive-Multiplatform/img/thinkrchive.svg" rel="icon">
     <link data-rh="true"
           href="https://thinkrchive.github.io/Thinkrchive-Multiplatform/architecture/intro"
@@ -25,9 +27,9 @@
           href="https://thinkrchive.github.io/Thinkrchive-Multiplatform/architecture/intro"
           hreflang="x-default" rel="alternate">
     <link href="/Thinkrchive-Multiplatform/assets/css/styles.bfa02b24.css" rel="stylesheet">
-    <link as="script" href="/Thinkrchive-Multiplatform/assets/js/runtime~main.7f0c037c.js"
+    <link as="script" href="/Thinkrchive-Multiplatform/assets/js/runtime~main.127d1dd3.js"
           rel="preload">
-    <link as="script" href="/Thinkrchive-Multiplatform/assets/js/main.3a28bcde.js" rel="preload">
+    <link as="script" href="/Thinkrchive-Multiplatform/assets/js/main.6c5ce531.js" rel="preload">
 </head>
 <body class="navigation-with-keyboard">
 <script>
@@ -105,9 +107,6 @@
                                            tabindex="0">Introduction</a></li>
                                 </ul>
                             </li>
-                            <li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item">
-                                <a class="menu__link" href="/Thinkrchive-Multiplatform/intro">Tutorial
-                                    Intro</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -136,29 +135,145 @@
                                         </button>
                                     </div>
                                     <div class="theme-doc-markdown markdown"><h1>Introduction</h1>
-                                        <h2 class="anchor anchorWithStickyNavbar_mojV"
-                                            id="helpful-links">Helpful links<a class="hash-link"
-                                                                               href="#helpful-links"
-                                                                               title="Direct link to heading">​</a>
-                                        </h2>
+                                        <p>This app uses the Model View Intent (MVI)
+                                            architecture.</p>
+                                        <p>MVI is an architectural pattern that utilizes
+                                            unidirectional data flow.</p>
+                                        <p>In MVI each component can be described as follows;</p>
                                         <ol>
-                                            <li><p><a href="https://github.com/Thinkrchive"
-                                                      rel="noopener noreferrer" target="_blank">Thinkrchive
-                                                Github Org</a></p></li>
-                                            <li><p><a
-                                                    href="https://github.com/Thinkrchive/ThinkRchive"
-                                                    rel="noopener noreferrer" target="_blank">Original
-                                                Thinkrchive</a></p></li>
-                                            <li><p><a
-                                                    href="https://github.com/Thinkrchive/Thinkrchive-Server"
-                                                    rel="noopener noreferrer" target="_blank">Thinkrchive
-                                                Ktor Server</a></p></li>
+                                            <li><p>Model - It contains state of the UI. This has
+                                                various UI states like Loading, Loaded, List Data,
+                                                Error, etc. The UI just subscribes to these states
+                                                and never tries to alter them directly.</p></li>
+                                            <li><p>View - Is all the UI related code that binds our
+                                                states to the various UI components like Activities,
+                                                Fragements, Composables and other UI components.</p>
+                                            </li>
+                                            <li><p>Intent - This is what describes a user action.
+                                                This is the only way to communicate with our Model
+                                                layer so it can process the user action and return a
+                                                state.</p></li>
                                         </ol>
-                                    </div>
+                                        <p>You can see that data only flow in one direction. Intents
+                                            define the action needed, provided to the Model so it
+                                            can process the data and produce a state that will be
+                                            returned to the View and be displayed to the user. It&#x27;s
+                                            not so different from MVVM. But with MVI we make sure
+                                            that a view only displays state and nothing else. We can
+                                            use ViewModels for process death handling but unlike
+                                            MVVM they will only contain state provided by Model and
+                                            won&#x27;t create state themselves.</p>
+                                        <p><img alt="MVI Structure" height="408" loading="lazy"
+                                                src="/Thinkrchive-Multiplatform/assets/images/mvi-9c404923ad07519d71212e540d65b699.jpg"
+                                                width="652"></p>
+                                        <p>MVI is the perfect choice for a Kotlin Multiplatform
+                                            project as it helps you separate as much code from the
+                                            UI as possible. You can have native UI on all platform
+                                            that all consume states provided by MVI without having
+                                            to do any manipulatio logic on it.</p>
+                                        <h2 class="anchor anchorWithStickyNavbar_mojV"
+                                            id="orbit-mvi">Orbit MVI<a class="hash-link"
+                                                                       href="#orbit-mvi"
+                                                                       title="Direct link to heading">​</a>
+                                        </h2>
+                                        <p>This project uses <a href="https://orbit-mvi.org/"
+                                                                rel="noopener noreferrer"
+                                                                target="_blank">Orbit MVI</a> for it&#x27;s
+                                            MVI implementation.</p>
+                                        <p>Obrbit MVI takes a more MVVM approach in MVI instead of
+                                            the Redux route most other libraries like <a
+                                                    href="https://arkivanov.github.io/MVIKotlin/"
+                                                    rel="noopener noreferrer" target="_blank">MVIKotlin</a>
+                                            use.</p>
+                                        <p>Orbit MVI while not taking separation on concerns to the
+                                            extreme like MVIKotlin it let&#x27;s create your MVI
+                                            system without a lot of boiler plate code</p>
+                                        <p>This makes development using Orbit very quick and does
+                                            not have such a steep learning curve for developers who
+                                            have already worked with MVVM before.</p>
+                                        <h3 class="anchor anchorWithStickyNavbar_mojV"
+                                            id="structure">Structure<a class="hash-link"
+                                                                       href="#structure"
+                                                                       title="Direct link to heading">​</a>
+                                        </h3>
+                                        <p><img alt="Orbit MVI Structure" height="101"
+                                                loading="lazy"
+                                                src="/Thinkrchive-Multiplatform/assets/images/orbit-mvi-overview-d7831b9ed034b5df0ffad9db17c3bb56.svg"
+                                                width="654"></p>
+                                        <p>Orbit MVI works as follows:</p>
+                                        <ol>
+                                            <li><p>UI invokes functions on a class implementing the
+                                                ContainerHost interface like <a
+                                                        href="https://github.com/Thinkrchive/Thinkrchive-Multiplatform/blob/main/common/integration/src/commonMain/kotlin/work.racka.thinkrchive.v2.common.integration/containers/list/ThinkpadListContainerHost.kt"
+                                                        rel="noopener noreferrer" target="_blank">this</a>.
+                                                Typically in Android this might be an Activity,
+                                                Fragment or a simple View. However, an Orbit system
+                                                can also be run without any UI, for example as a
+                                                background service.</p></li>
+                                            <li><p>The functions call through to a Container
+                                                instance through the <code>intent</code> block which
+                                                offloads work to a background coroutine and provides
+                                                a DSL for side effects and reductions.</p></li>
+                                            <li><p>Transformations are performed through
+                                                user-defined business logic within the
+                                                <code>intent</code> block.</p></li>
+                                            <li><p>The reduce operator reduces the current state of
+                                                the system with the incoming events to produce new
+                                                states.</p></li>
+                                            <li><p>The new state is sent to observers.</p></li>
+                                        </ol>
+                                        <p><strong><em>Source: <a
+                                                href="https://orbit-mvi.org/Core/architecture"
+                                                rel="noopener noreferrer" target="_blank">Orbit MVI
+                                            docs</a></em></strong></p>
+                                        <p>On top of providing states, Orbit MVI also has the
+                                            concept of <strong><em>Side Effects</em></strong>
+                                            Side effects are one time events that are fired when a
+                                            certain <code>intent</code> produces something that is
+                                            not directly mapped to the state. A side effect can be
+                                            something like showing a Toast, Navigating to another
+                                            page, Error/Loading Indicators when indirectly accessing
+                                            Network calls, etc.</p>
+                                        <p><img alt="Orbit MVI with Side Effects" height="179"
+                                                loading="lazy"
+                                                src="/Thinkrchive-Multiplatform/assets/images/orbit-mvi-side-effect-255730b09bfce54c8e59ed2f950ed3a7.svg"
+                                                width="721"></p>
+                                        <p>You can leverage the power of side effects to make calls
+                                            to things that are not directly related to UI state.
+                                            These should not post back any events to the UI.</p>
+                                        <div class="admonition admonition-tip alert alert--success">
+                                            <div class="admonition-heading">
+                                                <h5><span class="admonition-icon"><svg height="16"
+                                                                                       viewBox="0 0 12 16"
+                                                                                       width="12"
+                                                                                       xmlns="http://www.w3.org/2000/svg"><path
+                                                        d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"
+                                                        fill-rule="evenodd"></path></svg></span>Example
+                                                </h5>
+                                            </div>
+                                            <div class="admonition-content"><p>When you save a
+                                                <code>Theme</code> property in Settings you will
+                                                provide <code>state</code> to the UI to update the
+                                                user and show them what <code>Theme</code> they have
+                                                selected. But to change the <code>Theme</code> you
+                                                can post a <code>side effect</code> that will change
+                                                the App <code>Theme</code> when the user selects a
+                                                new <code>Theme</code>. This is not directly mapped
+                                                to <code>UI state</code> and hence is a <code>side
+                                                    effect</code>.</p></div>
+                                        </div>
+                                        <h2 class="anchor anchorWithStickyNavbar_mojV"
+                                            id="project-structure">Project Structure<a
+                                                class="hash-link" href="#project-structure"
+                                                title="Direct link to heading">​</a></h2>
+                                        <p><img alt="Project MVI Structure" height="1965"
+                                                loading="lazy"
+                                                src="/Thinkrchive-Multiplatform/assets/images/app-mvi-9a6cbe46fd07f1b03afde8e1e78250a7.svg"
+                                                width="1942"></p></div>
                                     <footer class="theme-doc-footer docusaurus-mt-lg">
                                         <div class="theme-doc-footer-edit-meta-row row">
                                             <div class="col"><a class="theme-edit-this-page"
-                                                                href="https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/architecture/intro.md"
+                                                                href="https://github.com/Thinkrchive/Thinkrchive-Multiplatform-Docs/blob/main/docs/architecture/intro.md"
                                                                 rel="noreferrer noopener"
                                                                 target="_blank">
                                                 <svg aria-hidden="true" class="iconEdit_dcUD"
@@ -181,12 +296,7 @@
                                         <div class="pagination-nav__sublabel">Previous</div>
                                         <div class="pagination-nav__label">Extras</div>
                                     </a></div>
-                                    <div class="pagination-nav__item pagination-nav__item--next"><a
-                                            class="pagination-nav__link"
-                                            href="/Thinkrchive-Multiplatform/intro">
-                                        <div class="pagination-nav__sublabel">Next</div>
-                                        <div class="pagination-nav__label">Tutorial Intro</div>
-                                    </a></div>
+                                    <div class="pagination-nav__item pagination-nav__item--next"></div>
                                 </nav>
                             </div>
                         </div>
@@ -194,7 +304,14 @@
                             <div class="tableOfContents_cNA8 thin-scrollbar theme-doc-toc-desktop">
                                 <ul class="table-of-contents table-of-contents__left-border">
                                     <li><a class="table-of-contents__link toc-highlight"
-                                           href="#helpful-links">Helpful links</a></li>
+                                           href="#orbit-mvi">Orbit MVI</a>
+                                        <ul>
+                                            <li><a class="table-of-contents__link toc-highlight"
+                                                   href="#structure">Structure</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="table-of-contents__link toc-highlight"
+                                           href="#project-structure">Project Structure</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -271,7 +388,7 @@
         </div>
     </footer>
 </div>
-<script src="/Thinkrchive-Multiplatform/assets/js/runtime~main.7f0c037c.js"></script>
-<script src="/Thinkrchive-Multiplatform/assets/js/main.3a28bcde.js"></script>
+<script src="/Thinkrchive-Multiplatform/assets/js/runtime~main.127d1dd3.js"></script>
+<script src="/Thinkrchive-Multiplatform/assets/js/main.6c5ce531.js"></script>
 </body>
 </html>
