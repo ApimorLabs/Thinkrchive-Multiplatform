@@ -20,6 +20,7 @@ class BillingManager(
         .enablePendingPurchases()
         .build()
 
+
     init {
         startConnection()
     }
