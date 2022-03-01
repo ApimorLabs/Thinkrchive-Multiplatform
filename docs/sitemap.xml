@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://thinkrchive.github.io/markdown-page</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/markdown-page</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/architecture/intro</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/architecture/intro</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/intro</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/intro</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/overview/briefing</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/overview/briefing</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/overview/dependencies</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/overview/dependencies</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/overview/extras</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/overview/extras</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/overview/folder-structure</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/overview/folder-structure</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://thinkrchive.github.io/overview/runnning</loc>
+        <loc>https://thinkrchive.github.io/Thinkrchive-Multiplatform/overview/runnning</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>

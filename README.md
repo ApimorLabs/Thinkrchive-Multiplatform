@@ -13,7 +13,7 @@
 
 ### ✨ Documentation
 
-- [Thinkrchive Multiplatform Docs](https://thinkrchive.github.io/)
+- [Thinkrchive Multiplatform Docs](https://thinkrchive.github.io/Thinkrchive-Multiplatform/)
 
 ### 🤳 Screenshots
 
