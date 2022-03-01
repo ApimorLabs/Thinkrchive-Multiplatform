@@ -11,9 +11,9 @@
 > An app showing all details for various Lenovo Thinkpad models. Made to try out Jepack Compose for Android.
 > This repo is a Mutliplatform version of the initial [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
 
-### ✨ Demo
+### ✨ Documentation
 
-- [Coming Soon]()
+- [Thinkrchive Multiplatform Docs](https://thinkrchive.github.io/)
 
 ### 🤳 Screenshots
 
