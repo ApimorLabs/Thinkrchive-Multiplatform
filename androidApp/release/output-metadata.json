@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "work.racka.thinkrchive.v2",
+  "applicationId": "work.racka.thinkrchive",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 2,
-      "versionName": "1.0.0-alpha02",
+      "versionCode": 3,
+      "versionName": "1.0.0-alpha03",
       "outputFile": "androidApp-release.apk"
     }
   ],
