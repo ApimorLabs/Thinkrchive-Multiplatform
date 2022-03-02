@@ -16,7 +16,7 @@ object Network {
         this.apply {
             modules(
                 commonModule(enableNetworkLogs),
-                platformNetworkModule()
+                Platform.platformNetworkModule()
             )
         }
 

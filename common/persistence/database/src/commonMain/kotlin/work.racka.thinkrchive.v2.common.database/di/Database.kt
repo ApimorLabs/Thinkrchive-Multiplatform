@@ -14,7 +14,7 @@ object Database {
         this.apply {
             modules(
                 commonModule(),
-                platformDatabaseModule()
+                Platform.platformDatabaseModule()
             )
         }
 

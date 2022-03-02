@@ -11,7 +11,7 @@ object About {
         this.apply {
             modules(
                 commonModule(),
-                platformAboutModule()
+                Platform.platformAboutModule()
             )
         }
 

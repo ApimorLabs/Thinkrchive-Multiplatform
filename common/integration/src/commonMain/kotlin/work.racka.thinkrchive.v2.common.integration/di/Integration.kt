@@ -17,7 +17,7 @@ internal object Integration {
         this.apply {
             modules(
                 commonModule(),
-                platformIntegrationModule()
+                Platform.platformIntegrationModule()
             )
         }
 

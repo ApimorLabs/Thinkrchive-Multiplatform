@@ -18,7 +18,7 @@ import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsNewest
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsOldestFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.insertAllThinkpadsToDb
 
-class ThinkpadDaoImpl(
+internal class ThinkpadDaoImpl(
     private val coroutineScope: CoroutineScope = MainScope(),
     thinkpadDatabaseWrapper: ThinkrchiveDatabaseWrapper
 ) : ThinkpadDao {

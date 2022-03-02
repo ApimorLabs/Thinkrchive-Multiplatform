@@ -9,7 +9,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import states.settings.ThinkpadSettingsSideEffect
 import states.settings.ThinkpadSettingsState
-import work.racka.thinkrchive.v2.common.settings.SettingsRepository
+import work.racka.thinkrchive.v2.common.settings.repository.SettingsRepository
 
 class ThinkpadSettingsContainerHost(
     private val settings: SettingsRepository,

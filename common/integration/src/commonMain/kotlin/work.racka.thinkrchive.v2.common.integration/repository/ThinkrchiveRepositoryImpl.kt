@@ -12,7 +12,7 @@ import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
 
-class ThinkrchiveRepositoryImpl(
+internal class ThinkrchiveRepositoryImpl(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao
 ) : ThinkrchiveRepository {
