@@ -6,4 +6,7 @@ internal object Constants {
 
     const val THINKPAD_NOT_FOUND = "Can't find this Thinkpad in Database!"
     const val OPEN_LINK_ERROR = "Can't open this link!"
+
+    const val UPDATE_NOT_FOUND = "No Updates Available"
+    const val UPDATE_FOUND = "Updates Available. Please Update!"
 }

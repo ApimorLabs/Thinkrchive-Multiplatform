@@ -32,6 +32,7 @@ fun AboutTopSection(
     appName: String,
     version: String,
     appLogo: Painter,
+    hasUpdates: Boolean = false,
     onCheckUpdatesClicked: () -> Unit = { }
 ) {
     Column(
@@ -86,7 +87,8 @@ fun AboutTopSection(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = "Check Updates",
+                text = if (hasUpdates) "Update"
+                else "Check Updates",
                 modifier = Modifier
                     .padding(
                         horizontal = 4.dp,

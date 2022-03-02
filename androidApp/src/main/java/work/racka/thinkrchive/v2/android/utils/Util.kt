@@ -1,6 +1,18 @@
 package work.racka.thinkrchive.v2.android.utils
 
+import android.widget.Toast
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import domain.Thinkpad
+
+@Composable
+fun ShowToastInCompose(message: String) {
+    Toast.makeText(
+        LocalContext.current,
+        message,
+        Toast.LENGTH_SHORT
+    ).show()
+}
 
 fun List<Thinkpad>.getChipNamesList(): List<String> {
     val collection = mutableSetOf<String>()

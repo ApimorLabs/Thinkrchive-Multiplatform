@@ -2,7 +2,6 @@ package work.racka.thinkrchive.v2.android.ui.main.screens.details
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,10 +20,7 @@ import org.koin.androidx.compose.getViewModel
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
-import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
-import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
-import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
-import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
+import work.racka.thinkrchive.v2.android.utils.*
 import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadDetailsViewModel
 
 @ExperimentalMaterial3Api
@@ -79,12 +75,7 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
                 LocalContext.current.startActivity(intent)
             }
             is ThinkpadDetailsSideEffect.DisplayErrorMsg -> {
-                val message = sideEffect.message
-                Toast.makeText(
-                    LocalContext.current,
-                    message,
-                    Toast.LENGTH_SHORT
-                ).show()
+                ShowToastInCompose(message = sideEffect.message)
             }
             is ThinkpadDetailsSideEffect.EmptySideEffect -> {}
         }

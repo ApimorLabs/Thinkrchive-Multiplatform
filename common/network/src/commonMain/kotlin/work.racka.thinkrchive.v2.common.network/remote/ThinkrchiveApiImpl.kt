@@ -7,7 +7,7 @@ import io.ktor.http.*
 import work.racka.thinkrchive.v2.common.network.util.Constants
 
 
-class ThinkrchiveApiImpl(
+internal class ThinkrchiveApiImpl(
     private val client: HttpClient
 ) : ThinkrchiveApi {
 

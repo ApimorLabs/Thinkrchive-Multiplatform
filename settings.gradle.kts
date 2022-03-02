@@ -6,5 +6,6 @@ include(
     ":common:persistence:settings",
     ":common:network",
     ":common:model",
-    ":common:integration"
+    ":common:integration",
+    ":common:about"
 )

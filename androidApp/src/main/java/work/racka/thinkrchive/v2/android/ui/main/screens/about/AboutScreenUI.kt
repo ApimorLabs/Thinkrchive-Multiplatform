@@ -20,7 +20,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsPadding
-import work.racka.thinkrchive.v2.android.BuildConfig
+import domain.AppAbout
 import work.racka.thinkrchive.v2.android.R
 import work.racka.thinkrchive.v2.android.ui.components.AboutTopSection
 import work.racka.thinkrchive.v2.android.ui.components.CollapsingToolbarBase
@@ -41,6 +40,8 @@ import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 fun AboutScreenUI(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
+    appAbout: AppAbout,
+    hasUpdates: Boolean,
     onCheckUpdates: () -> Unit = { },
     onBackButtonPressed: () -> Unit = { }
 ) {
@@ -71,16 +72,17 @@ fun AboutScreenUI(
                 onBackButtonPressed = onBackButtonPressed
             ) {
                 AboutTopSection(
-                    appName = stringResource(id = R.string.app_name),
-                    version = BuildConfig.VERSION_NAME,
+                    appName = appAbout.appName,
+                    version = appAbout.appVersion,
                     appLogo = painterResource(id = R.drawable.app_icon),
+                    hasUpdates = hasUpdates,
                     onCheckUpdatesClicked = onCheckUpdates
                 )
             }
         },
         bottomBar = {
             Text(
-                text = stringResource(id = R.string.made_with_text),
+                text = appAbout.tagline,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.SmallPadding.size)
@@ -112,6 +114,6 @@ fun AboutScreenUI(
 @Composable
 private fun AboutScreenPrev() {
     ThinkRchiveTheme {
-        AboutScreenUI()
+        AboutScreenUI(appAbout = AppAbout(), hasUpdates = true)
     }
 }
