@@ -10,7 +10,7 @@ android {
     compileSdk = AppConfig.compileSdkVersion
 
     defaultConfig {
-        applicationId = "work.racka.thinkrchive.v2"
+        applicationId = "work.racka.thinkrchive"
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion
         versionCode = AppConfig.versionCode
