@@ -10,6 +10,13 @@ object Dependencies {
         val kotlinJunit by lazy { "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}" }
         val kotlinJsonSerialization by lazy { "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerialization}" }
         val serializationCore by lazy { "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinSerialization}" }
+
+        object Coroutines {
+            private const val VERSION = "1.6.0"
+            val core by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION" }
+            val android by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION" }
+
+        }
     }
 
     object Koin {
@@ -65,6 +72,10 @@ object Dependencies {
             val noArg by lazy { "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}" }
             val coroutines by lazy { "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}" }
         }
+    }
+
+    object Revenuecat {
+        val android by lazy { "com.revenuecat.purchases:purchases:${Versions.revenuecat}" }
     }
 
     object Squareup {

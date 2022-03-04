@@ -3,7 +3,8 @@ package work.racka.thinkrchive.v2.android
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-import com.qonversion.android.sdk.Qonversion
+import com.revenuecat.purchases.Purchases
+import com.revenuecat.purchases.PurchasesConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,8 +16,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 import states.settings.ThinkpadSettingsSideEffect
 import timber.log.Timber
-import work.racka.thinkrchive.v2.android.di.BillingModule
-import work.racka.thinkrchive.v2.android.di.ViewModelModule
 import work.racka.thinkrchive.v2.android.ui.theme.Theme
 import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
 import work.racka.thinkrchive.v2.common.integration.di.KoinMain
@@ -30,10 +29,6 @@ class ThinkrchiveApplication : Application() {
             // https://github.com/InsertKoinIO/koin/issues/1188
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@ThinkrchiveApplication)
-            modules(
-                BillingModule.module(),
-                ViewModelModule.module()
-            )
         }
 
         val settings by inject<AppSettings>()
@@ -54,11 +49,14 @@ class ThinkrchiveApplication : Application() {
             }
         }
         Timber.plant(Timber.DebugTree())
-        Qonversion.setDebugMode()
-        Qonversion.launch(
-            context = this,
-            key = BuildConfig.qonversion_key,
-            observeMode = false
+
+        // Revenuecat
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(
+            configuration = PurchasesConfiguration.Builder(
+                context = this,
+                BuildConfig.revenuecat_key
+            ).build()
         )
     }
 }

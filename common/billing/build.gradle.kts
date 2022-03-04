@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
@@ -31,45 +30,21 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:model"))
-        implementation(project(":common:persistence:database"))
-        implementation(project(":common:persistence:settings"))
-        implementation(project(":common:network"))
-        implementation(project(":common:about"))
-        implementation(project(":common:billing"))
 
         implementation(Dependencies.Kotlin.serializationCore)
 
-        implementation(Dependencies.OrbitMVI.core)
-
-        with(Dependencies.Squareup.SQLDelight) {
-            implementation(coroutineExtensions)
-        }
+        implementation(Dependencies.Kotlin.Coroutines.core)
 
         with(Dependencies.Koin) {
             api(core)
             api(test)
         }
-
-        with(Dependencies.Log) {
-            api(kermit)
-        }
     }
 
     sourceSets["androidMain"].dependencies {
-
         implementation(Dependencies.Revenuecat.android)
-
-        with(Dependencies.Android) {
-            implementation(lifecycleRuntimeKtx)
-            implementation(composeViewModel)
-        }
-
-        with(Dependencies.Koin) {
-            implementation(android)
-        }
     }
 
     sourceSets["desktopMain"].dependencies {
-        implementation(Dependencies.Log.slf4j)
     }
 }

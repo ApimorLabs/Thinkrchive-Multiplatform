@@ -2,7 +2,7 @@ package work.racka.thinkrchive.v2.android.utils
 
 import domain.Thinkpad
 
-object Constants {
+internal object Constants {
     const val THEME_OPTIONS = "Theme Options"
     const val SORT_OPTIONS = "Default Sort Option"
 

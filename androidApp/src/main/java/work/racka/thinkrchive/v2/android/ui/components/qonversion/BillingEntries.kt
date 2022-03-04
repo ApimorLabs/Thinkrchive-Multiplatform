@@ -5,22 +5,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.qonversion.android.sdk.dto.offerings.QOffering
+import domain.Product
 import work.racka.thinkrchive.v2.android.ui.components.ClickableEntry
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.Shapes
 
-fun LazyListScope.QonVersionEntries(
+fun LazyListScope.BillingEntries(
     modifier: Modifier = Modifier,
-    offerings: List<QOffering>,
+    products: List<Product>,
     hasPremium: Boolean,
-    onOfferingClick: (QOffering) -> Unit = { }
+    onProductClick: (Int) -> Unit = { }
 ) {
     if (hasPremium) {
         item {
@@ -40,18 +40,18 @@ fun LazyListScope.QonVersionEntries(
         }
     }
 
-    items(offerings) { offering ->
+    itemsIndexed(products) { index: Int, product ->
         ClickableEntry(
             modifier = modifier
                 .padding(
                     horizontal = Dimens.MediumPadding.size,
                     vertical = Dimens.SmallPadding.size
                 ),
-            title = offering.offeringID,
-            subtitle = "Empty",
-            description = "Empty",
+            title = product.title,
+            subtitle = product.price,
+            description = product.description,
             onEntryClick = {
-                onOfferingClick(offering)
+                onProductClick(index)
             }
         )
     }

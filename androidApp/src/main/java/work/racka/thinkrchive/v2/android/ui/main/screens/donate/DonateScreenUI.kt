@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +22,9 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.android.billingclient.api.SkuDetails
-import com.qonversion.android.sdk.dto.offerings.QOffering
-import work.racka.thinkrchive.v2.android.ui.components.ClickableEntry
+import domain.Product
 import work.racka.thinkrchive.v2.android.ui.components.CollapsingToolbarBase
-import work.racka.thinkrchive.v2.android.ui.components.qonversion.QonVersionEntries
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.QonversionViewModel
+import work.racka.thinkrchive.v2.android.ui.components.qonversion.BillingEntries
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 
 @ExperimentalMaterial3Api
@@ -36,11 +32,9 @@ import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 fun DonateScreenUI(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
-    skuList: List<SkuDetails>,
-    qonViewModel: QonversionViewModel,
-    onDonateItemClicked: (SkuDetails) -> Unit = { },
+    products: List<Product>,
     onBackButtonPressed: () -> Unit = { },
-    onOfferingClicked: (QOffering) -> Unit = { }
+    onProductClicked: (Int) -> Unit = { }
 ) {
     // CollapsingToolbar Implementation
     val toolbarHeight = 250.dp
@@ -91,27 +85,13 @@ fun DonateScreenUI(
             state = listState
         ) {
 
-            QonVersionEntries(
-                offerings = qonViewModel.offerings,
-                hasPremium = qonViewModel.hasPremium,
-                onOfferingClick = {
-                    onOfferingClicked(it)
+            BillingEntries(
+                products = products,
+                hasPremium = false,
+                onProductClick = {
+                    onProductClicked(it)
                 }
             )
-
-            items(skuList) { item ->
-                ClickableEntry(
-                    modifier = Modifier
-                        .padding(
-                            horizontal = Dimens.MediumPadding.size,
-                            vertical = Dimens.SmallPadding.size
-                        ),
-                    title = item.title,
-                    subtitle = item.price,
-                    description = item.description,
-                    onEntryClick = { onDonateItemClicked(item) }
-                )
-            }
         }
 
     }

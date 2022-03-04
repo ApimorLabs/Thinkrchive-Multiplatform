@@ -30,6 +30,11 @@ android {
             "qonversion_key",
             properties.getProperty("qonversion_key")
         )
+        buildConfigField(
+            "String",
+            "revenuecat_key",
+            properties.getProperty("revenuecat_key")
+        )
     }
 
     buildTypes {
@@ -148,9 +153,6 @@ dependencies {
     implementation(Dependencies.Android.splashScreenCore)
 
     // Billing
-    with(Dependencies.Android) {
-        implementation(googleBilling)
-        implementation(qonversion)
-    }
+    implementation(Dependencies.Revenuecat.android)
 
 }

@@ -4,23 +4,26 @@ import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.getViewModel
-import work.racka.thinkrchive.v2.android.billing.qonversion.qonPurchase
-import work.racka.thinkrchive.v2.android.ui.main.screenStates.DonateScreenState
+import com.revenuecat.purchases.Package
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.viewModel
+import states.donate.DonateSideEffect
+import timber.log.Timber
+import util.Resource
+import work.racka.thinkrchive.v2.android.billing.revenuecat.Purchase
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.DonateViewModel
-import work.racka.thinkrchive.v2.android.ui.main.viewModel.QonversionViewModel
-import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
-import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
-import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
-import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
+import work.racka.thinkrchive.v2.android.utils.*
+import work.racka.thinkrchive.v2.common.integration.viewmodels.DonateViewModel
 
 @ExperimentalMaterial3Api
 @ExperimentalComposeUiApi
@@ -45,23 +48,58 @@ fun NavGraphBuilder.DonateScreen(
         }
     ) {
         val currentActivity = LocalContext.current as Activity
-        val viewModel: DonateViewModel = getViewModel()
-        val donateScreenState by viewModel.uiState.collectAsState()
-        val donateScreenData = donateScreenState as DonateScreenState.Donate
 
-        val qonViewModel = QonversionViewModel()
+        val viewModel: DonateViewModel by viewModel()
+        val state by viewModel.uiState.collectAsState()
+        val sideEffect = viewModel.sideEffect
+            .collectAsState(initial = DonateSideEffect.Nothing)
+            .value
+
+        val purchase by lazy { Purchase() }
+        val scope = rememberCoroutineScope()
+
+        LaunchedEffect(purchase.result) {
+            scope.launch {
+                Timber.d("Scope launched")
+                purchase.result.collectLatest {
+                    Timber.d("Collecting State")
+                    when (it) {
+                        is Resource.Loading -> {}
+                        is Resource.Success -> {
+                            viewModel.host.processPurchase(true)
+                        }
+                        is Resource.Error -> {
+                            viewModel.host.processPurchase(false, it.message!!)
+                        }
+                    }
+                }
+            }
+        }
+
+        when (sideEffect) {
+            is DonateSideEffect.LaunchPurchaseFlow -> {
+                purchase.initiatePurchase(currentActivity, sideEffect.item as Package)
+                viewModel.host.detachSideEffect()
+            }
+            is DonateSideEffect.Error -> {
+                ShowToastInCompose(message = sideEffect.errorMsg)
+            }
+            is DonateSideEffect.ProductAuthorized -> {
+                // Show the user what they bought
+            }
+            is DonateSideEffect.ShowPurchaseSuccessToast -> {
+                ShowToastInCompose(message = sideEffect.msg)
+            }
+            is DonateSideEffect.Nothing -> {}
+        }
 
         DonateScreenUI(
-            skuList = donateScreenData.skuDetailsList,
-            onDonateItemClicked = {
-                viewModel.launchPurchaseScreen(currentActivity, it)
-            },
+            products = state.product,
             onBackButtonPressed = {
                 navController.popBackStack()
             },
-            qonViewModel = qonViewModel,
-            onOfferingClicked = {
-                qonPurchase(currentActivity, it, qonViewModel)
+            onProductClicked = {
+                viewModel.host.purchase(it)
             }
         )
     }

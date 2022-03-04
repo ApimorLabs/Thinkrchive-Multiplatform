@@ -9,4 +9,6 @@ internal object Constants {
 
     const val UPDATE_NOT_FOUND = "No Updates Available"
     const val UPDATE_FOUND = "Updates Available. Please Update!"
+
+    const val PURCHASE_SUCCESS_APPEND = "Purchase Success for product:"
 }

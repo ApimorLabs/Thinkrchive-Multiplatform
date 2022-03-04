@@ -7,5 +7,6 @@ include(
     ":common:network",
     ":common:model",
     ":common:integration",
-    ":common:about"
+    ":common:about",
+    ":common:billing"
 )

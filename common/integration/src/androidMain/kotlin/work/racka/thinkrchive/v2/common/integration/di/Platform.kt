@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import work.racka.thinkrchive.v2.common.integration.viewmodels.AboutViewModel
+import work.racka.thinkrchive.v2.common.integration.viewmodels.DonateViewModel
 import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
 
@@ -26,6 +27,12 @@ internal actual object Platform {
         viewModel {
             AboutViewModel(
                 aboutData = get()
+            )
+        }
+
+        viewModel {
+            DonateViewModel(
+                api = get()
             )
         }
     }

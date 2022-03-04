@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -50,7 +51,9 @@ class ThinkpadListContainerHost(
     // Retrieves new data from the network and inserts it into the database
     // Also used by pull down to refresh.
     fun refreshThinkpadList() = intent {
-        val result = helper.repository.getAllThinkpadsFromNetwork()
+        val result = withContext(backgroundDispatcher) {
+            helper.repository.getAllThinkpadsFromNetwork()
+        }
         result.collect { resource ->
             when (resource) {
                 is Resource.Success -> {
