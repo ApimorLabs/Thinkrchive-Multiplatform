@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.integration.di
 
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import work.racka.thinkrchive.v2.common.about.di.About
 import work.racka.thinkrchive.v2.common.billing.di.Billing
 import work.racka.thinkrchive.v2.common.database.di.Database
 import work.racka.thinkrchive.v2.common.network.di.Network
@@ -26,6 +27,9 @@ object KoinMain {
             settingsModules()
         }
         with(Billing) {
+            billingModules()
+        }
+        with(About) {
             aboutModules()
         }
         with(Integration) {

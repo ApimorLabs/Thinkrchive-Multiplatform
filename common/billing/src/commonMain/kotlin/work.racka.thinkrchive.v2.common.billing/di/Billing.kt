@@ -5,7 +5,7 @@ import org.koin.dsl.module
 
 object Billing {
 
-    fun KoinApplication.aboutModules() =
+    fun KoinApplication.billingModules() =
         this.apply {
             modules(
                 commonModule(),
