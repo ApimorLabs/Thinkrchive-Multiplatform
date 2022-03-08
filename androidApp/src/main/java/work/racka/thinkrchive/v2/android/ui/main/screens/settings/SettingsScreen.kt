@@ -42,7 +42,7 @@ fun NavGraphBuilder.SettingsScreen(
     ) {
 
         val settings: AppSettings by inject()
-        val state by settings.state.collectAsState()
+        val state by settings.host.state.collectAsState()
 
         SettingsScreenUI(
             currentTheme = state.themeValue,

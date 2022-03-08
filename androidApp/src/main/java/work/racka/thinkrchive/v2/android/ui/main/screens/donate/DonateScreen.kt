@@ -50,8 +50,8 @@ fun NavGraphBuilder.DonateScreen(
         val currentActivity = LocalContext.current as Activity
 
         val viewModel: DonateViewModel by viewModel()
-        val state by viewModel.uiState.collectAsState()
-        val sideEffect = viewModel.sideEffect
+        val state by viewModel.host.state.collectAsState()
+        val sideEffect = viewModel.host.sideEffect
             .collectAsState(initial = DonateSideEffect.Nothing)
             .value
 

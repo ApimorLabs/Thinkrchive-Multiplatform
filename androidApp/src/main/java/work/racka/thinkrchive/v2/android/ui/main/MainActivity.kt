@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val state by settings.state.collectAsState()
+            val state by settings.host.state.collectAsState()
             ThinkrchiveApp(state.themeValue)
             Timber.d("setContent called")
         }

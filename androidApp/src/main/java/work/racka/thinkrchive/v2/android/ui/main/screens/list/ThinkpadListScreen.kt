@@ -53,8 +53,8 @@ fun NavGraphBuilder.ThinkpadListScreen(
 
         Timber.d("thinkpadListScreen NavHost called")
         val host = viewModel.host
-        val state by viewModel.uiState.collectAsState()
-        val sideEffect = viewModel.sideEffect
+        val state by viewModel.host.state.collectAsState()
+        val sideEffect = viewModel.host.sideEffect
             .collectAsState(initial = ThinkpadListSideEffect.Network())
             .value as ThinkpadListSideEffect.Network
 

@@ -1,6 +1,8 @@
 package work.racka.thinkrchive.v2.common.integration.containers.settings
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
@@ -11,15 +13,21 @@ import states.settings.ThinkpadSettingsSideEffect
 import states.settings.ThinkpadSettingsState
 import work.racka.thinkrchive.v2.common.settings.repository.SettingsRepository
 
-class ThinkpadSettingsContainerHost(
+internal class SettingsContainerHostImpl(
     private val settings: SettingsRepository,
     scope: CoroutineScope
-) : ContainerHost<ThinkpadSettingsState.State, ThinkpadSettingsSideEffect> {
+) : SettingsContainerHost, ContainerHost<ThinkpadSettingsState.State, ThinkpadSettingsSideEffect> {
 
     override val container: Container<ThinkpadSettingsState.State, ThinkpadSettingsSideEffect> =
         scope.container(ThinkpadSettingsState.DefaultState) {
             readSettings()
         }
+
+    override val state: StateFlow<ThinkpadSettingsState.State>
+        get() = container.stateFlow
+
+    override val sideEffect: Flow<ThinkpadSettingsSideEffect>
+        get() = container.sideEffectFlow
 
     private fun readSettings() {
         readThemeSettings()
@@ -38,12 +46,12 @@ class ThinkpadSettingsContainerHost(
         reduce { state.copy(sortValue = sortValue) }
     }
 
-    fun saveThemeSettings(themeValue: Int) = intent {
+    override fun saveThemeSettings(themeValue: Int) = intent {
         settings.saveThemeSettings(themeValue)
         readThemeSettings()
     }
 
-    fun saveSortSettings(sortValue: Int) = intent {
+    override fun saveSortSettings(sortValue: Int) = intent {
         settings.saveSortSettings(sortValue)
         readSortSettings()
     }

@@ -88,10 +88,6 @@ dependencies {
         implementation(lifecycleRuntimeKtx)
     }
 
-    with(Dependencies.OrbitMVI) {
-        implementation(core)
-    }
-
     // Testing
     with(Dependencies.Android) {
         testImplementation(junit)

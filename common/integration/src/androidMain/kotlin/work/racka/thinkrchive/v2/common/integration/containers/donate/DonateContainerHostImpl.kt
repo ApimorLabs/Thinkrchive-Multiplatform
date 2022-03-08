@@ -4,7 +4,9 @@ import com.revenuecat.purchases.CustomerInfo
 import com.revenuecat.purchases.Package
 import domain.Product
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -19,15 +21,21 @@ import work.racka.thinkrchive.v2.common.billing.api.getProductOffered
 import work.racka.thinkrchive.v2.common.billing.api.getSku
 import work.racka.thinkrchive.v2.common.integration.util.Constants
 
-actual class DonateContainerHost(
+internal actual class DonateContainerHostImpl(
     private val api: BillingApi,
     scope: CoroutineScope
-) : ContainerHost<DonateState.State, DonateSideEffect> {
+) : DonateContainerHost, ContainerHost<DonateState.State, DonateSideEffect> {
     override val container: Container<DonateState.State, DonateSideEffect> =
         scope.container(DonateState.EmptyState) {
             loadOfferings()
             updatePermissions()
         }
+
+    override val state: StateFlow<DonateState.State>
+        get() = container.stateFlow
+
+    override val sideEffect: Flow<DonateSideEffect>
+        get() = container.sideEffectFlow
 
     private val packages: MutableStateFlow<List<Package>> = MutableStateFlow(listOf())
 
@@ -61,7 +69,7 @@ actual class DonateContainerHost(
         }
     }
 
-    fun purchase(index: Int) = intent {
+    override fun purchase(index: Int) = intent {
         val item = packages.value[index]
 
         // Should be cast to Package as it will always be that
@@ -70,7 +78,7 @@ actual class DonateContainerHost(
         )
     }
 
-    fun processPurchase(success: Boolean, errorMsg: String = "") = intent {
+    override fun processPurchase(success: Boolean, errorMsg: String) = intent {
         if (success) {
             updatePermissions()
         } else {
@@ -122,7 +130,15 @@ actual class DonateContainerHost(
         }
     }
 
-    fun detachSideEffect() = intent {
+    /**
+     * We need this to prevent showing the Purchase screen on Android twice
+     * because the launched billing flow pauses the donate screen composable.
+     * Closing the billing flow resumes it & causes the composable to execute the
+     * side effect once again.
+     * Without this it will also cause the billing flow to be launched again
+     * when you unlock the device when it's on the donate screen composable
+     */
+    override fun detachSideEffect() = intent {
         postSideEffect(DonateSideEffect.Nothing)
     }
 }

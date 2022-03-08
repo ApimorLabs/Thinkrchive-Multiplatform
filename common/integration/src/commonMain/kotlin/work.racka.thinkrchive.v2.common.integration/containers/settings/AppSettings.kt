@@ -7,11 +7,8 @@ class AppSettings(
     settings: SettingsRepository,
     scope: CoroutineScope
 ) {
-    val host: ThinkpadSettingsContainerHost = ThinkpadSettingsContainerHost(
+    val host: SettingsContainerHost = SettingsContainerHostImpl(
         settings = settings,
         scope = scope
     )
-
-    val state = host.container.stateFlow
-    val sideEffect = host.container.sideEffectFlow
 }

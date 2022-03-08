@@ -25,8 +25,8 @@ import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewM
 @Composable
 fun TestThinkpadList(viewModel: ThinkpadListViewModel = getViewModel()) {
 
-    val thinkpadListState by viewModel.uiState.collectAsState()
-    val sideEffect = viewModel.sideEffect
+    val thinkpadListState by viewModel.host.state.collectAsState()
+    val sideEffect = viewModel.host.sideEffect
         .collectAsState(initial = ThinkpadListSideEffect.Network())
         .value as ThinkpadListSideEffect.Network
 

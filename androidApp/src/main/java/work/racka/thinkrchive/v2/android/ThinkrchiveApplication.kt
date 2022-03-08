@@ -35,7 +35,7 @@ class ThinkrchiveApplication : Application() {
 
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {
-            settings.sideEffect.collectLatest { effect ->
+            settings.host.sideEffect.collectLatest { effect ->
                 when (effect) {
                     is ThinkpadSettingsSideEffect.ApplyThemeOption -> {
                         if (effect.themeValue != Theme.MATERIAL_YOU.themeValue) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import work.racka.thinkrchive.v2.common.integration.containers.list.ThinkpadListContainerHost
+import work.racka.thinkrchive.v2.common.integration.containers.list.ThinkpadListContainerHostImpl
 import work.racka.thinkrchive.v2.common.integration.containers.list.ThinkpadListHelper
 import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
 
@@ -14,13 +15,10 @@ actual class ThinkpadListViewModel(
     settings: AppSettings,
 ) : ViewModel() {
 
-    val host: ThinkpadListContainerHost = ThinkpadListContainerHost(
+    val host: ThinkpadListContainerHost = ThinkpadListContainerHostImpl(
         helper = helper,
         backgroundDispatcher = backgroundDispatcher,
         settings = settings,
         scope = viewModelScope
     )
-
-    val uiState = host.container.stateFlow
-    val sideEffect = host.container.sideEffectFlow
 }

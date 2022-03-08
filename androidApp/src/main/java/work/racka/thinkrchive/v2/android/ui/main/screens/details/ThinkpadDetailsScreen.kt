@@ -58,8 +58,8 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
         val viewModel: ThinkpadDetailsViewModel = getViewModel()
         viewModel.host.getThinkpad(thinkpadModel)
 
-        val state by viewModel.uiState.collectAsState()
-        val sideEffect = viewModel.sideEffect
+        val state by viewModel.host.state.collectAsState()
+        val sideEffect = viewModel.host.sideEffect
             .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)
             .value
 
