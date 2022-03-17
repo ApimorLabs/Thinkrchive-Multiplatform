@@ -81,6 +81,7 @@ dependencies {
     implementation(project(":common:integration"))
     implementation(project(":common:features:about"))
     implementation(project(":common:features:settings"))
+    implementation(project(":common:features:thinkpad_list"))
 
     // Core Functionality
     with(Dependencies.Android) {

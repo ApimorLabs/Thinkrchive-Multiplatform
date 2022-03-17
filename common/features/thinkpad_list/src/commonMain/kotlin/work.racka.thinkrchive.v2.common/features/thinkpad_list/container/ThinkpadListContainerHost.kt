@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.common.integration.containers.list
+package work.racka.thinkrchive.v2.common.features.thinkpad_list.container
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow

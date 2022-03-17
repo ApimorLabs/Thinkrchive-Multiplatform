@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.getViewModel
 import states.list.ThinkpadListSideEffect
 import timber.log.Timber
-import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.features.thinkpad_list.viewmodel.ThinkpadListViewModel
 
 @ExperimentalAnimationApi
 @Composable

@@ -1,12 +1,8 @@
-package work.racka.thinkrchive.v2.common.integration.containers.list
+package work.racka.thinkrchive.v2.common.features.thinkpad_list.container
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -15,11 +11,10 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.Resource
-import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
+import work.racka.thinkrchive.v2.common.features.settings.AppSettings
 
 internal class ThinkpadListContainerHostImpl(
     private val helper: ThinkpadListHelper,
-    private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val settings: AppSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
@@ -59,19 +54,14 @@ internal class ThinkpadListContainerHostImpl(
     // Retrieves new data from the network and inserts it into the database
     // Also used by pull down to refresh.
     override fun refreshThinkpadList() = intent {
-        val result = withContext(backgroundDispatcher) {
-            helper.repository.getAllThinkpadsFromNetwork()
-        }
+        val result = helper.repository.getAllThinkpadsFromNetwork()
         result.collect { resource ->
             when (resource) {
                 is Resource.Success -> {
                     postSideEffect(
                         ThinkpadListSideEffect.Network(isLoading = false)
                     )
-                    helper.refreshThinkpadList(
-                        thinkpads = resource.data!!,
-                        dispatcher = backgroundDispatcher
-                    )
+                    helper.refreshThinkpadList(thinkpads = resource.data!!)
                 }
                 is Resource.Error -> {
                     postSideEffect(

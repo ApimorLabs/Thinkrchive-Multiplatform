@@ -1,6 +1,5 @@
 package work.racka.thinkrchive.v2.common.integration.repository
 
-import co.touchlab.kermit.Logger
 import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +15,9 @@ internal class ThinkrchiveRepositoryImpl(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao
 ) : ThinkrchiveRepository {
-    private val logger = Logger.withTag("ThinkrchiveRepository")
 
     override suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>>> =
         flow {
-            logger.d { "getAllThinkpadsFromNetwork" }
             var replay = true
             while (replay) {
                 emit(Resource.Loading())
@@ -29,7 +26,6 @@ internal class ThinkrchiveRepositoryImpl(
                     emit(Resource.Success(data = response))
                     replay = false
                 } catch (e: Exception) {
-                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
                     emit(Resource.Error(message = "An error occurred: ${e.message}"))
                 }
             }

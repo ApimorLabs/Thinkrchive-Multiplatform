@@ -4,6 +4,7 @@ include(
     ":desktopApp",
     ":common:features:about",
     ":common:features:settings",
+    ":common:features:thinkpad_list",
     ":common:persistence:database",
     ":common:persistence:settings",
     ":common:network",

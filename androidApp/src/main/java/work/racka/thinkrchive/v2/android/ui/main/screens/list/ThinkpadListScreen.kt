@@ -18,7 +18,7 @@ import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
-import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.features.thinkpad_list.viewmodel.ThinkpadListViewModel
 
 @ExperimentalMaterial3Api
 @ExperimentalComposeUiApi

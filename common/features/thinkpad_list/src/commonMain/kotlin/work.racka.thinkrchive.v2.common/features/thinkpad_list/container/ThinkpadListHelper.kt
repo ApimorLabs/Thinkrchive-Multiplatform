@@ -1,12 +1,10 @@
-package work.racka.thinkrchive.v2.common.integration.containers.list
+package work.racka.thinkrchive.v2.common.features.thinkpad_list.container
 
 import data.remote.response.ThinkpadResponse
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
-import work.racka.thinkrchive.v2.common.integration.repository.ThinkrchiveRepository
+import work.racka.thinkrchive.v2.common.features.thinkpad_list.repository.ListRepository
 
 class ThinkpadListHelper(
-    val repository: ThinkrchiveRepository
+    val repository: ListRepository
 ) {
 
     suspend fun getThinkpadListSorted(model: String, sortOption: Int) =
@@ -19,12 +17,7 @@ class ThinkpadListHelper(
             else -> repository.getAllThinkpads()
         }
 
-    suspend fun refreshThinkpadList(
-        thinkpads: List<ThinkpadResponse>,
-        dispatcher: CoroutineDispatcher
-    ) {
-        withContext(dispatcher) {
-            repository.refreshThinkpadList(thinkpads)
-        }
+    suspend fun refreshThinkpadList(thinkpads: List<ThinkpadResponse>) {
+        repository.refreshThinkpadList(thinkpads)
     }
 }
