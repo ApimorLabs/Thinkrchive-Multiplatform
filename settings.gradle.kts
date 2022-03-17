@@ -6,6 +6,7 @@ include(
     ":common:features:settings",
     ":common:features:thinkpad_list",
     ":common:features:details",
+    ":common:features:donate",
     ":common:persistence:database",
     ":common:persistence:settings",
     ":common:network",

@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
@@ -37,8 +36,6 @@ kotlin {
             implementation(ktorSerialization)
             implementation(ktorLogging)
         }
-
-        implementation(Dependencies.Kotlin.serializationCore)
 
         with(Dependencies.Koin) {
             api(core)

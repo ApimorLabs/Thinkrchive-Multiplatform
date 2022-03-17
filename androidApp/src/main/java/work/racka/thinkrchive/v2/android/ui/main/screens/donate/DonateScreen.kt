@@ -23,7 +23,7 @@ import util.Resource
 import work.racka.thinkrchive.v2.android.billing.revenuecat.Purchase
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
-import work.racka.thinkrchive.v2.common.integration.viewmodels.DonateViewModel
+import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewModel
 
 @ExperimentalMaterial3Api
 @ExperimentalComposeUiApi

@@ -29,19 +29,12 @@ kotlin {
     jvm("desktop")
 
     sourceSets["commonMain"].dependencies {
-        // Base Common Modules
-        implementation(project(":common:billing"))
         implementation(project(":common:model"))
-        implementation(project(":common:network"))
-        implementation(project(":common:persistence:database"))
-        implementation(project(":common:persistence:settings"))
+        implementation(project(":common:billing"))
 
-        // Feature Modules
-        implementation(project(":common:features:about"))
-        implementation(project(":common:features:settings"))
-        implementation(project(":common:features:thinkpad_list"))
-        implementation(project(":common:features:details"))
-        implementation(project(":common:features:donate"))
+        implementation(Dependencies.Kotlin.Coroutines.core)
+
+        implementation(Dependencies.OrbitMVI.core)
 
         with(Dependencies.Koin) {
             api(core)
@@ -50,6 +43,16 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
+        with(Dependencies.Android) {
+            implementation(lifecycleRuntimeKtx)
+            implementation(composeViewModel)
+        }
+
+        with(Dependencies.Koin) {
+            implementation(android)
+        }
+
+        implementation(Dependencies.Revenuecat.android)
     }
 
     sourceSets["desktopMain"].dependencies {

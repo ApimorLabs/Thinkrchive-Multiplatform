@@ -14,7 +14,5 @@ internal object Integration {
             )
         }
 
-    private fun commonModule() = module {
-
-    }
+    private fun commonModule() = module { }
 }
