@@ -17,7 +17,7 @@ import org.koin.core.logger.Level
 import states.settings.ThinkpadSettingsSideEffect
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.theme.Theme
-import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
+import work.racka.thinkrchive.v2.common.features.settings.AppSettings
 import work.racka.thinkrchive.v2.common.integration.di.KoinMain
 
 class ThinkrchiveApplication : Application() {

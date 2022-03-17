@@ -10,8 +10,10 @@ actual class AboutViewModel(
     aboutData: AboutData
 ) : ViewModel() {
 
-    val host: AboutContainerHost = AboutContainerHostImpl(
-        aboutData = aboutData,
-        scope = viewModelScope
-    )
+    val host: AboutContainerHost by lazy {
+        AboutContainerHostImpl(
+            aboutData = aboutData,
+            scope = viewModelScope
+        )
+    }
 }

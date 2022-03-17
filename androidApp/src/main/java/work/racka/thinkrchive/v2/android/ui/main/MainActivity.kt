@@ -14,7 +14,7 @@ import androidx.core.view.WindowCompat
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.navigation.ThinkrchiveApp
-import work.racka.thinkrchive.v2.common.integration.containers.settings.AppSettings
+import work.racka.thinkrchive.v2.common.features.settings.AppSettings
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi
