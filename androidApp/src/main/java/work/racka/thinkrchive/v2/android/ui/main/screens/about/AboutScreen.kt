@@ -13,7 +13,7 @@ import org.koin.androidx.compose.getViewModel
 import states.about.AboutSideEffect
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
-import work.racka.thinkrchive.v2.common.integration.viewmodels.AboutViewModel
+import work.racka.thinkrchive.v2.common.features.about.viewmodel.AboutViewModel
 
 @ExperimentalMaterial3Api
 @ExperimentalComposeUiApi
