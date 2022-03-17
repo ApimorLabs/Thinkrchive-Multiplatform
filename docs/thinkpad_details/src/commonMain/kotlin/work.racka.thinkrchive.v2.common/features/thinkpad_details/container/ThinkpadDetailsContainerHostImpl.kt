@@ -1,9 +1,8 @@
-package work.racka.thinkrchive.v2.common.integration.containers.details
+package work.racka.thinkrchive.v2.common.features.thinkpad_details.container
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
@@ -12,11 +11,11 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
-import work.racka.thinkrchive.v2.common.integration.repository.ThinkrchiveRepository
-import work.racka.thinkrchive.v2.common.integration.util.Constants
+import work.racka.thinkrchive.v2.common.features.thinkpad_details.repository.DetailsRepository
+import work.racka.thinkrchive.v2.common.features.thinkpad_details.util.Constants
 
 internal class ThinkpadDetailsContainerHostImpl(
-    private val repository: ThinkrchiveRepository,
+    private val repository: DetailsRepository,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {
 

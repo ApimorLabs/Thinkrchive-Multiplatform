@@ -21,7 +21,7 @@ import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
-import work.racka.thinkrchive.v2.common.integration.viewmodels.ThinkpadDetailsViewModel
+import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
 
 @ExperimentalMaterial3Api
 @ExperimentalComposeUiApi

@@ -11,9 +11,11 @@ actual class ThinkpadListViewModel(
     settings: AppSettings,
     scope: CoroutineScope
 ) {
-    val host: ThinkpadListContainerHost = ThinkpadListContainerHostImpl(
-        helper = helper,
-        settings = settings,
-        scope = scope
-    )
+    val host: ThinkpadListContainerHost by lazy {
+        ThinkpadListContainerHostImpl(
+            helper = helper,
+            settings = settings,
+            scope = scope
+        )
+    }
 }
