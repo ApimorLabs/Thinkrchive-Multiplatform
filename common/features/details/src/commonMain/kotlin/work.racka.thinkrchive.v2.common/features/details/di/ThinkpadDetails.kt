@@ -17,10 +17,10 @@ object ThinkpadDetails {
 
     private fun commonModule() = module {
 
-        single<DetailsRepository> {
+        factory<DetailsRepository> {
             DetailsRepositoryImpl(
                 thinkpadDao = get(),
-                backgroundDispatcher = work.racka.thinkrchive.v2.common.features.details.di.CoroutineDispatchers.backgroundDispatcher
+                backgroundDispatcher = CoroutineDispatchers.backgroundDispatcher
             )
         }
     }

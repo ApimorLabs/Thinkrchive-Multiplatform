@@ -21,8 +21,10 @@ object Network {
         }
 
     private fun commonModule(enableNetworkLogs: Boolean) = module {
-        single {
-            HttpClient(get()) {
+        factory {
+            HttpClient(
+                engine = get()
+            ) {
                 install(JsonFeature) {
                     serializer = KotlinxSerializer()
                 }
@@ -36,6 +38,6 @@ object Network {
             }
         }
 
-        single<ThinkrchiveApi> { ThinkrchiveApiImpl(get()) }
+        factory<ThinkrchiveApi> { ThinkrchiveApiImpl(get()) }
     }
 }

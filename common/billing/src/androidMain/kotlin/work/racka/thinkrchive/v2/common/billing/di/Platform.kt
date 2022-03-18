@@ -7,7 +7,7 @@ import work.racka.thinkrchive.v2.common.billing.api.BillingApiImpl
 
 internal actual object Platform {
     actual fun platformBillingModule() = module {
-        single<BillingApi> {
+        factory<BillingApi> {
             BillingApiImpl(
                 purchases = Purchases.sharedInstance
             )

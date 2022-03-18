@@ -5,7 +5,7 @@ import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewMode
 
 internal actual object Platform {
     actual fun platformSettingsModule() = module {
-        single {
+        factory {
             DonateViewModel()
         }
     }

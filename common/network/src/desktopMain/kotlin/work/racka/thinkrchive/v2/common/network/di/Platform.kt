@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 internal actual object Platform {
     actual fun platformNetworkModule() = module {
-        single { Java.create() }
+        factory { Java.create() }
     }
 }

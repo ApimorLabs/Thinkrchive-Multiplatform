@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 internal actual object Platform {
     actual fun platformDetailsModule() = module {
-        single {
+        factory {
             work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel(
                 repository = get(),
                 scope = CoroutineScope(Dispatchers.Main)

@@ -18,7 +18,7 @@ object ThinkpadList {
 
     private fun commonModule() = module {
 
-        single<ListRepository> {
+        factory<ListRepository> {
             ListRepositoryImpl(
                 thinkrchiveApi = get(),
                 thinkpadDao = get(),
@@ -26,7 +26,7 @@ object ThinkpadList {
             )
         }
 
-        single {
+        factory {
             ThinkpadListHelper(
                 repository = get()
             )

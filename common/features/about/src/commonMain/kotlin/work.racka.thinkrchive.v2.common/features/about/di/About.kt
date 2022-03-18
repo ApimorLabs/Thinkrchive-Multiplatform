@@ -16,7 +16,7 @@ object About {
         }
 
     private fun commonModule() = module {
-        single<AboutData> {
+        factory<AboutData> {
             AboutDataImpl()
         }
     }

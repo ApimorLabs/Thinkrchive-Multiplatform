@@ -18,7 +18,7 @@ object UserPreferences {
         }
 
     private fun commonModule() = module {
-        single {
+        factory {
             CoroutineScope(Dispatchers.Default + SupervisorJob())
         }
 

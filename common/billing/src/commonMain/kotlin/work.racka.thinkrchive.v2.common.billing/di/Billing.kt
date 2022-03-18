@@ -9,7 +9,7 @@ object Billing {
         this.apply {
             modules(
                 commonModule(),
-                work.racka.thinkrchive.v2.common.billing.di.Platform.platformBillingModule()
+                Platform.platformBillingModule()
             )
         }
 
