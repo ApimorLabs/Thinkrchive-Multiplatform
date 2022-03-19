@@ -166,6 +166,9 @@ object Dependencies {
         // Splash Screen
         val splashScreenCore by lazy { "androidx.core:core-splashscreen:${Versions.splashScreen}" }
 
+        // Lottie
+        val lottie by lazy { "com.airbnb.android:lottie-compose:${Versions.lottie}" }
+
         // Billing
         val googleBilling by lazy { "com.android.billingclient:billing-ktx:${Versions.gBilling}" }
         val qonversion by lazy { "io.qonversion.android.sdk:sdk:${Versions.qonversion}" }

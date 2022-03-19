@@ -7,10 +7,12 @@ import work.racka.thinkrchive.v2.common.features.details.repository.DetailsRepos
 
 actual class ThinkpadDetailsViewModel(
     repository: DetailsRepository,
+    s: String?,
     scope: CoroutineScope
 ) {
     val host: ThinkpadDetailsContainerHost = ThinkpadDetailsContainerHostImpl(
         repository = repository,
+        model = s,
         scope = scope
     )
 }

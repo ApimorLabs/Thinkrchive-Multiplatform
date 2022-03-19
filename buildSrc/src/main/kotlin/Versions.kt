@@ -83,6 +83,9 @@ object Versions {
     const val qonversion = "3.2.3"
     const val revenuecat = "5.0.0-rc3"
 
+    // Lottie
+    const val lottie = "5.0.3"
+
     // Glance App Widget - Early Snapshot
     const val glanceAppWidget = "1.0.0-SNAPSHOT"
 }

@@ -16,11 +16,14 @@ import work.racka.thinkrchive.v2.common.features.details.util.Constants
 
 internal class ThinkpadDetailsContainerHostImpl(
     private val repository: DetailsRepository,
+    private val model: String?,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {
 
     override val container: Container<ThinkpadDetailsState, ThinkpadDetailsSideEffect> =
-        scope.container(ThinkpadDetailsState.EmptyState)
+        scope.container(ThinkpadDetailsState.EmptyState) {
+            getThinkpad()
+        }
 
     override val state: StateFlow<ThinkpadDetailsState>
         get() = container.stateFlow
@@ -28,7 +31,7 @@ internal class ThinkpadDetailsContainerHostImpl(
     override val sideEffect: Flow<ThinkpadDetailsSideEffect>
         get() = container.sideEffectFlow
 
-    override fun getThinkpad(model: String?) = intent {
+    override fun getThinkpad() = intent {
         when (val result = repository.getThinkpad(model!!)) {
             null -> {
                 reduce { ThinkpadDetailsState.EmptyState }

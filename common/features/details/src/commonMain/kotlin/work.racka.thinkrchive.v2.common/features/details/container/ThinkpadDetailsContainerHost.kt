@@ -8,6 +8,6 @@ import states.details.ThinkpadDetailsState
 interface ThinkpadDetailsContainerHost {
     val state: StateFlow<ThinkpadDetailsState>
     val sideEffect: Flow<ThinkpadDetailsSideEffect>
-    fun getThinkpad(model: String?)
+    fun getThinkpad()
     fun openPsrefLink()
 }

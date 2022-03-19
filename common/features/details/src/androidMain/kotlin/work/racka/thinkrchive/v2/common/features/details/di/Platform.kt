@@ -6,9 +6,10 @@ import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetai
 
 internal actual object Platform {
     actual fun platformDetailsModule() = module {
-        viewModel {
+        viewModel { (model: String?) ->
             ThinkpadDetailsViewModel(
-                repository = get()
+                repository = get(),
+                model = model
             )
         }
     }

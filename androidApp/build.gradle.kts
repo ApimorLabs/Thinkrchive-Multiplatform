@@ -153,6 +153,9 @@ dependencies {
     // Splash Screen
     implementation(Dependencies.Android.splashScreenCore)
 
+    // Splash Screen
+    implementation(Dependencies.Android.lottie)
+
     // Billing
     implementation(Dependencies.Revenuecat.android)
 

@@ -16,7 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
@@ -53,10 +54,11 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
             scaleOutPopExitTransition()
         }
     ) { backStackEntry ->
-        val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
 
-        val viewModel: ThinkpadDetailsViewModel = getViewModel()
-        viewModel.host.getThinkpad(thinkpadModel)
+        val viewModel: ThinkpadDetailsViewModel by viewModel {
+            val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
+            parametersOf(thinkpadModel)
+        }
 
         val state by viewModel.host.state.collectAsState()
         val sideEffect = viewModel.host.sideEffect

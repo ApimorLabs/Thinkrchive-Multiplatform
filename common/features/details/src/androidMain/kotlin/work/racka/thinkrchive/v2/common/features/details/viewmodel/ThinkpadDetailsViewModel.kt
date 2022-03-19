@@ -7,11 +7,13 @@ import work.racka.thinkrchive.v2.common.features.details.container.ThinkpadDetai
 import work.racka.thinkrchive.v2.common.features.details.repository.DetailsRepository
 
 actual class ThinkpadDetailsViewModel(
-    repository: DetailsRepository
+    repository: DetailsRepository,
+    model: String?
 ) : ViewModel() {
 
     val host: ThinkpadDetailsContainerHost = ThinkpadDetailsContainerHostImpl(
         repository = repository,
+        model = model,
         scope = viewModelScope
     )
 }
