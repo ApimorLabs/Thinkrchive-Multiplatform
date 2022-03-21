@@ -39,7 +39,7 @@ kotlin {
         // Feature Modules
         implementation(project(":common:features:about"))
         implementation(project(":common:features:settings"))
-        implementation(project(":common:features:thinkpad_list"))
+        implementation(project(":common:features:list"))
         implementation(project(":common:features:details"))
         implementation(project(":common:features:donate"))
 

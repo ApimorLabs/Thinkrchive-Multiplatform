@@ -34,7 +34,7 @@ import work.racka.thinkrchive.v2.desktop.ui.theme.Theme
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.Constants
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SettingsScreenUI(
     modifier: Modifier = Modifier,
@@ -175,7 +175,6 @@ fun SettingsScreenUI(
     }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun ThinkpadSettingsScreenPrev() {

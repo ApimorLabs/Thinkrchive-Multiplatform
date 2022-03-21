@@ -1,26 +1,21 @@
 package work.racka.thinkrchive.v2.desktop.ui.screens.donate
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
-import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.pop
+import com.arkivanov.decompose.ComponentContext
 import org.koin.java.KoinJavaComponent.inject
 import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewModel
-import work.racka.thinkrchive.v2.desktop.ui.navigation.Configuration
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Component
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@Composable
-fun DonateScreen(
-    router: Router<Configuration, Any>
-) {
+class DonateScreen(
+    private val componentContext: ComponentContext,
+    private val onBackClicked: () -> Unit
+) : Component, ComponentContext by componentContext {
 
-    val viewModel: DonateViewModel by inject(DonateViewModel::class.java)
+    private val viewModel: DonateViewModel by inject(DonateViewModel::class.java)
 
-    /*val state by viewModel.host.state.collectAsState()
+    @Composable
+    override fun render() {
+        /*val state by viewModel.host.state.collectAsState()
     val sideEffect = viewModel.host.sideEffect
         .collectAsState(initial = DonateSideEffect.Nothing)
         .value
@@ -41,11 +36,12 @@ fun DonateScreen(
         is DonateSideEffect.Nothing -> {}
     }*/
 
-    DonateScreenUI(
-        products = listOf(),
-        onBackButtonPressed = router::pop,
-        onProductClicked = {
-            //viewModel.host.purchase(it)
-        }
-    )
+        DonateScreenUI(
+            products = listOf(),
+            onBackButtonPressed = onBackClicked,
+            onProductClicked = {
+                //viewModel.host.purchase(it)
+            }
+        )
+    }
 }

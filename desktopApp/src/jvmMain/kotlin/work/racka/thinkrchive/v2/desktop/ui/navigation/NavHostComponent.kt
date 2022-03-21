@@ -1,15 +1,17 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation
 
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
-import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.push
 import com.arkivanov.decompose.router.router
+import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutScreen
 import work.racka.thinkrchive.v2.desktop.ui.screens.details.ThinkpadDetailsScreen
+import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateScreen
 import work.racka.thinkrchive.v2.desktop.ui.screens.list.ThinkpadListScreen
+import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsScreen
 
 class NavHostComponent(
     private val componentContext: ComponentContext
@@ -28,25 +30,48 @@ class NavHostComponent(
             is Configuration.ThinkpadListScreen -> {
                 ThinkpadListScreen(
                     componentContext = componentContext,
-                    onDetailsClicked = {
-                        router.push(Configuration.ThinkpadDetailsScreen(it))
-                    }
+                    onEntryClick = { model ->
+                        NavigationActions.List.onEntryClick(router, model)
+                    },
+                    onAboutClicked = { NavigationActions.List.onAboutClicked(router) },
+                    onDonateClicked = { NavigationActions.List.onDonateClicked(router) },
+                    onSettingsClicked = { NavigationActions.List.onSettingsClicked(router) }
                 )
             }
             is Configuration.ThinkpadDetailsScreen -> {
-
                 ThinkpadDetailsScreen(
                     componentContext = componentContext,
-                    onBackClicked = router::pop,
+                    onBackClicked = { NavigationActions.goBack(router) },
                     model = config.model
+                )
+            }
+            is Configuration.DonationScreen -> {
+                DonateScreen(
+                    componentContext = componentContext,
+                    onBackClicked = { NavigationActions.goBack(router) }
+                )
+            }
+            is Configuration.ThinkpadAboutScreen -> {
+                AboutScreen(
+                    componentContext = componentContext,
+                    onBackClicked = { NavigationActions.goBack(router) }
+                )
+            }
+            is Configuration.ThinkpadSettingsScreen -> {
+                SettingsScreen(
+                    componentContext = componentContext,
+                    onBackClicked = { NavigationActions.goBack(router) }
                 )
             }
             else -> {
                 ThinkpadListScreen(
                     componentContext = componentContext,
-                    onDetailsClicked = {
-                        router.push(Configuration.ThinkpadDetailsScreen(it))
-                    }
+                    onEntryClick = { model ->
+                        NavigationActions.List.onEntryClick(router, model)
+                    },
+                    onAboutClicked = { NavigationActions.List.onAboutClicked(router) },
+                    onDonateClicked = { NavigationActions.List.onDonateClicked(router) },
+                    onSettingsClicked = { NavigationActions.List.onSettingsClicked(router) }
                 )
             }
         }
@@ -57,7 +82,9 @@ class NavHostComponent(
     override fun render() {
         Children(
             routerState = router.state,
-            animation = crossfadeScale()
+            animation = crossfadeScale(
+                animationSpec = tween(300)
+            )
         ) { child ->
             child.instance.render()
         }

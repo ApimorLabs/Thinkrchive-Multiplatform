@@ -1,31 +1,23 @@
 package work.racka.thinkrchive.v2.desktop.ui.screens.list
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.Router
 import org.koin.java.KoinJavaComponent.inject
 import states.list.ThinkpadListSideEffect
-import work.racka.thinkrchive.v2.common.features.thinkpad_list.viewmodel.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListViewModel
 import work.racka.thinkrchive.v2.desktop.ui.navigation.Component
-import work.racka.thinkrchive.v2.desktop.ui.navigation.Configuration
-
 
 class ThinkpadListScreen(
     private val componentContext: ComponentContext,
-    private val onDetailsClicked: (model: String) -> Unit
+    private val onEntryClick: (model: String) -> Unit,
+    private val onSettingsClicked: () -> Unit,
+    private val onAboutClicked: () -> Unit,
+    private val onDonateClicked: () -> Unit
 ) : Component, ComponentContext by componentContext {
 
     private val viewModel: ThinkpadListViewModel by inject(ThinkpadListViewModel::class.java)
-
-    @Composable
-    fun Screen(
-        modifier: Modifier = Modifier,
-        router: Router<Configuration, Any>
-    ) {
-
-
-    }
 
     @Composable
     override fun render() {
@@ -42,22 +34,16 @@ class ThinkpadListScreen(
                 host.getSortedThinkpadList(query)
             },
             onEntryClick = { thinkpad ->
-                onDetailsClicked(thinkpad.model)
+                onEntryClick(thinkpad.model)
             },
             networkError = sideEffect.errorMsg,
             currentSortOption = state.sortOption,
             onSortOptionClicked = { sort ->
                 host.sortSelected(sort)
             },
-            onSettingsClicked = {
-                //router.push(Configuration.ThinkpadSettingsScreen)
-            },
-            onAboutClicked = {
-                //router.push(Configuration.ThinkpadAboutScreen)
-            },
-            onDonateClicked = {
-                //router.push(Configuration.DonationScreen)
-            }
+            onSettingsClicked = onSettingsClicked,
+            onAboutClicked = onAboutClicked,
+            onDonateClicked = onDonateClicked
         )
     }
 }
