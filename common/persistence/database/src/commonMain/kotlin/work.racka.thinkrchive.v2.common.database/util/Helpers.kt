@@ -13,7 +13,7 @@ internal object Helpers {
         // This implementation removes all existing rows
         // in db and then inserts results from api request
         // Using "transaction" accelerate the batch of queries, especially inserting
-        this.transaction {
+        transaction {
             deleteAll()
             response.forEach {
                 insertAllThinkpads(

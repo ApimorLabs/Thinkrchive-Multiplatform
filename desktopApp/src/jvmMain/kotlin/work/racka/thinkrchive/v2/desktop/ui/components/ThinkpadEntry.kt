@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
@@ -85,8 +86,8 @@ fun ThinkpadEntry(
                     )
                 }
                 AsyncImage(
-                    load = { loadSvgPainter(thinkpad.imageUrl, density) },
-                    painterFor = { remember { it } },
+                    load = { /*loadSvgPainter(thinkpad.imageUrl, density)*/ },
+                    painterFor = { painterResource("drawables/app_icon.png") },
                     contentDescription = "${thinkpad.model} Image",
                     onStart = {
                         imageLoading = true

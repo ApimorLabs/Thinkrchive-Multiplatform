@@ -25,16 +25,18 @@ class ListRepositoryImpl(
             flow {
                 logger.d { "getAllThinkpadsFromNetwork" }
                 var replay = true
+                emit(Resource.Loading())
                 while (replay) {
-                    emit(Resource.Loading())
-                    try {
+                    val response = try {
                         val response = thinkrchiveApi.getThinkpads()
-                        emit(Resource.Success(data = response))
                         replay = false
+                        Resource.Success(data = response)
                     } catch (e: Exception) {
                         logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                        emit(Resource.Error(message = "An error occurred: ${e.message}"))
+                        replay = false
+                        Resource.Error(message = "An error occurred: ${e.message}")
                     }
+                    emit(response)
                 }
             }
         }

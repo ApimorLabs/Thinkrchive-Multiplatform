@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.thinkpad_list.container
 
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,9 +19,11 @@ internal class ThinkpadListContainerHostImpl(
     private val settings: AppSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
+    val logger = Logger.withTag("ContainerHost")
 
     override val container = scope
         .container<ThinkpadListState.State, ThinkpadListSideEffect>(ThinkpadListState.EmptyState) {
+            logger.d { "Container Initialized" }
             refreshThinkpadList()
             getUserSortOption()
         }
@@ -54,6 +57,7 @@ internal class ThinkpadListContainerHostImpl(
     // Retrieves new data from the network and inserts it into the database
     // Also used by pull down to refresh.
     override fun refreshThinkpadList() = intent {
+        logger.d { "Refresh Thinkpad Intent" }
         val result = helper.repository.getAllThinkpadsFromNetwork()
         result.collect { resource ->
             when (resource) {

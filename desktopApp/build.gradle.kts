@@ -1,5 +1,6 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -29,6 +30,8 @@ kotlin {
 
                 implementation(Dependencies.OrbitMVI.core)
 
+                implementation(Dependencies.Kotlin.Coroutines.swing)
+
                 with(Dependencies.ArkIvanov.Decompose) {
                     implementation(decompose)
                     implementation(extensionsCompose)
@@ -42,6 +45,10 @@ kotlin {
         }
         val jvmTest by getting
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
 }
 
 compose.desktop {

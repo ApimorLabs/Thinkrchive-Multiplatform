@@ -1,98 +1,51 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.donate
+package work.racka.thinkrchive.v2.desktop.ui.screens.donate
 
-import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.viewModel
-import states.donate.DonateSideEffect
-import timber.log.Timber
-import util.Resource
-import work.racka.thinkrchive.v2.android.billing.revenuecat.Purchase
-import work.racka.thinkrchive.v2.android.utils.*
+import com.arkivanov.decompose.router.Router
+import com.arkivanov.decompose.router.pop
+import org.koin.java.KoinJavaComponent.inject
 import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewModel
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Configuration
 
-@ExperimentalMaterial3Api
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
-fun NavGraphBuilder.DonateScreen(
-    navController: NavHostController
+@Composable
+fun DonateScreen(
+    router: Router<Configuration, Any>
 ) {
-    composable(
-        route = ThinkrchiveScreens.DonationScreen.name,
-        enterTransition = {
-            scaleInEnterTransition()
-        },
-        exitTransition = {
-            scaleOutExitTransition()
-        },
-        popEnterTransition = {
-            scaleInPopEnterTransition()
-        },
-        popExitTransition = {
-            scaleOutPopExitTransition()
+
+    val viewModel: DonateViewModel by inject(DonateViewModel::class.java)
+
+    /*val state by viewModel.host.state.collectAsState()
+    val sideEffect = viewModel.host.sideEffect
+        .collectAsState(initial = DonateSideEffect.Nothing)
+        .value
+
+    when (sideEffect) {
+        is DonateSideEffect.LaunchPurchaseFlow -> {
+            // Will purchase
         }
-    ) {
-        val currentActivity = LocalContext.current as Activity
-
-        val viewModel: DonateViewModel by viewModel()
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
-            .collectAsState(initial = DonateSideEffect.Nothing)
-            .value
-
-        val purchase by lazy { Purchase() }
-        val scope = rememberCoroutineScope()
-
-        LaunchedEffect(purchase.result) {
-            scope.launch {
-                Timber.d("Scope launched")
-                purchase.result.collectLatest {
-                    Timber.d("Collecting State")
-                    when (it) {
-                        is Resource.Loading -> {}
-                        is Resource.Success -> {
-                            viewModel.host.processPurchase(true)
-                        }
-                        is Resource.Error -> {
-                            viewModel.host.processPurchase(false, it.message!!)
-                        }
-                    }
-                }
-            }
+        is DonateSideEffect.Error -> {
+            //ShowToastInCompose(message = sideEffect.errorMsg)
         }
-
-        when (sideEffect) {
-            is DonateSideEffect.LaunchPurchaseFlow -> {
-                purchase.initiatePurchase(currentActivity, sideEffect.item as Package)
-                viewModel.host.detachSideEffect()
-            }
-            is DonateSideEffect.Error -> {
-                ShowToastInCompose(message = sideEffect.errorMsg)
-            }
-            is DonateSideEffect.ProductAuthorized -> {
-                // Show the user what they bought
-            }
-            is DonateSideEffect.ShowPurchaseSuccessToast -> {
-                ShowToastInCompose(message = sideEffect.msg)
-            }
-            is DonateSideEffect.Nothing -> {}
+        is DonateSideEffect.ProductAuthorized -> {
+            // Show the user what they bought
         }
+        is DonateSideEffect.ShowPurchaseSuccessToast -> {
+            //ShowToastInCompose(message = sideEffect.msg)
+        }
+        is DonateSideEffect.Nothing -> {}
+    }*/
 
-        DonateScreenUI(
-            products = state.product,
-            onBackButtonPressed = {
-                navController.popBackStack()
-            },
-            onProductClicked = {
-                viewModel.host.purchase(it)
-            }
-        )
-    }
+    DonateScreenUI(
+        products = listOf(),
+        onBackButtonPressed = router::pop,
+        onProductClicked = {
+            //viewModel.host.purchase(it)
+        }
+    )
 }

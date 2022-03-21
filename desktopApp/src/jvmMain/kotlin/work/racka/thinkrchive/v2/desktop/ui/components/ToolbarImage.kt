@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.android.ui.components
+package work.racka.thinkrchive.v2.desktop.ui.components
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -9,14 +9,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import work.racka.thinkrchive.v2.desktop.ui.components.AsyncImage
-import work.racka.thinkrchive.v2.desktop.ui.components.loadSvgPainter
+import androidx.compose.ui.res.painterResource
 import work.racka.thinkrchive.v2.desktop.ui.theme.Dimens
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.StringResource
 
 // Must always be used inside a BoxScope for proper alignment
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ToolbarImage(
     modifier: Modifier = Modifier,
@@ -30,8 +29,8 @@ fun ToolbarImage(
     }
 
     AsyncImage(
-        load = { loadSvgPainter(imageUrl, density) },
-        painterFor = { remember { it } },
+        load = { /*loadSvgPainter(thinkpad.imageUrl, density)*/ },
+        painterFor = { painterResource("drawables/app_icon.png") },
         contentDescription = StringResource.thinkpad_image,
         onStart = {
             imageLoading = true
@@ -57,7 +56,6 @@ fun ToolbarImage(
     }
 }
 
-@ExperimentalAnimationApi
 @Preview
 @Composable
 private fun TopCardWithImagePreview() {

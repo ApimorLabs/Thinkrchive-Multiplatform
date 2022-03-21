@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.donate
+package work.racka.thinkrchive.v2.desktop.ui.screens.donate
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +26,6 @@ import work.racka.thinkrchive.v2.desktop.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.v2.desktop.ui.components.qonversion.BillingEntries
 import work.racka.thinkrchive.v2.desktop.ui.theme.Dimens
 
-@ExperimentalMaterial3Api
 @Composable
 fun DonateScreenUI(
     modifier: Modifier = Modifier,
@@ -64,8 +62,8 @@ fun DonateScreenUI(
             ) {
                 Text(
                     text = "Donate",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colors.onSurface,
+                    style = MaterialTheme.typography.h3,
                     modifier = Modifier
                         .padding(horizontal = Dimens.SmallPadding.size)
                         .animateContentSize(

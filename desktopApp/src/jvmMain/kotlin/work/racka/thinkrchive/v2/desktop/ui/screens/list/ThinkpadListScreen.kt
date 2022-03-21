@@ -1,67 +1,48 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.list
+package work.racka.thinkrchive.v2.desktop.ui.screens.list
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.getViewModel
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.Router
+import org.koin.java.KoinJavaComponent.inject
 import states.list.ThinkpadListSideEffect
-import timber.log.Timber
 import work.racka.thinkrchive.v2.common.features.thinkpad_list.viewmodel.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Component
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Configuration
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-fun NavGraphBuilder.ThinkpadListScreen(
-    modifier: Modifier,
-    navController: NavHostController
-) {
-    val thinkpadDetailsScreen = ThinkrchiveScreens.ThinkpadDetailsScreen.name
 
-    // Main List Screen
-    composable(
-        route = ThinkrchiveScreens.ThinkpadListScreen.name,
+class ThinkpadListScreen(
+    private val componentContext: ComponentContext,
+    private val onDetailsClicked: (model: String) -> Unit
+) : Component, ComponentContext by componentContext {
 
-        // Transition animations
-        enterTransition = {
-            scaleInEnterTransition()
-        },
-        exitTransition = {
-            scaleOutExitTransition()
-        },
-        // popEnter and popExit default to enterTransition & exitTransition respectively
-        popEnterTransition = {
-            scaleInPopEnterTransition()
-        },
-        popExitTransition = {
-            scaleOutPopExitTransition()
-        }
+    private val viewModel: ThinkpadListViewModel by inject(ThinkpadListViewModel::class.java)
+
+    @Composable
+    fun Screen(
+        modifier: Modifier = Modifier,
+        router: Router<Configuration, Any>
     ) {
-        val viewModel: ThinkpadListViewModel = getViewModel()
 
-        Timber.d("thinkpadListScreen NavHost called")
-        val host = viewModel.host
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
+
+    }
+
+    @Composable
+    override fun render() {
+        val host = viewModel.hostDesktop
+        val state by viewModel.hostDesktop.state.collectAsState()
+        val sideEffect = viewModel.hostDesktop.sideEffect
             .collectAsState(initial = ThinkpadListSideEffect.Network())
             .value as ThinkpadListSideEffect.Network
 
         ThinkpadListScreenUI(
-            modifier = modifier,
             thinkpadList = state.thinkpadList,
             networkLoading = sideEffect.isLoading,
             onSearch = { query ->
                 host.getSortedThinkpadList(query)
             },
             onEntryClick = { thinkpad ->
-                navController.navigate(
-                    route = "$thinkpadDetailsScreen/${thinkpad.model}"
-                )
+                onDetailsClicked(thinkpad.model)
             },
             networkError = sideEffect.errorMsg,
             currentSortOption = state.sortOption,
@@ -69,19 +50,13 @@ fun NavGraphBuilder.ThinkpadListScreen(
                 host.sortSelected(sort)
             },
             onSettingsClicked = {
-                navController.navigate(
-                    route = ThinkrchiveScreens.ThinkpadSettingsScreen.name
-                )
+                //router.push(Configuration.ThinkpadSettingsScreen)
             },
             onAboutClicked = {
-                navController.navigate(
-                    route = ThinkrchiveScreens.ThinkpadAboutScreen.name
-                )
+                //router.push(Configuration.ThinkpadAboutScreen)
             },
             onDonateClicked = {
-                navController.navigate(
-                    route = ThinkrchiveScreens.DonationScreen.name
-                )
+                //router.push(Configuration.DonationScreen)
             }
         )
     }

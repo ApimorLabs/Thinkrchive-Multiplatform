@@ -1,22 +1,15 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.settings
+package work.racka.thinkrchive.v2.desktop.ui.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,8 +23,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.android.utils.Sort
@@ -43,7 +34,6 @@ import work.racka.thinkrchive.v2.desktop.ui.theme.Theme
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.Constants
 
-@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Composable
 fun SettingsScreenUI(
@@ -112,8 +102,8 @@ fun SettingsScreenUI(
                     content = {
                         Text(
                             text = "Settings",
-                            color = MaterialTheme.colorScheme.onSurface,
-                            style = MaterialTheme.typography.headlineLarge,
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.h1,
                             modifier = Modifier
                                 .padding(horizontal = Dimens.SmallPadding.size)
                                 .animateContentSize(
@@ -137,7 +127,6 @@ fun SettingsScreenUI(
                     val theme = when (currentTheme) {
                         1 -> Theme.LIGHT_THEME
                         2 -> Theme.DARK_THEME
-                        12 -> Theme.MATERIAL_YOU
                         else -> Theme.FOLLOW_SYSTEM
                     }
                     SettingsEntry(
@@ -186,12 +175,8 @@ fun SettingsScreenUI(
     }
 }
 
-@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
-@Preview(
-    uiMode = Configuration.UI_MODE_TYPE_NORMAL,
-    device = Devices.PIXEL_4
-)
+@Preview
 @Composable
 private fun ThinkpadSettingsScreenPrev() {
     ThinkRchiveTheme {

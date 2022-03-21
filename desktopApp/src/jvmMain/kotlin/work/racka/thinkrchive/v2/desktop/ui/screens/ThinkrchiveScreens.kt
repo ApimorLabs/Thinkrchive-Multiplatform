@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens
+package work.racka.thinkrchive.v2.desktop.ui.screens
 
 // Always make sure every entry here has a unique name
 // These are used as routes for navigation

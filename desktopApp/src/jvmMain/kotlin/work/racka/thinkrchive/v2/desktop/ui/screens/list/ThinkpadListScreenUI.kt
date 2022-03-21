@@ -1,7 +1,6 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.list
+package work.racka.thinkrchive.v2.desktop.ui.screens.list
 
-import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,24 +10,15 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import domain.Thinkpad
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import work.racka.thinkrchive.v2.desktop.ui.components.CustomSearchBar
 import work.racka.thinkrchive.v2.desktop.ui.components.HomeBottomSheet
 import work.racka.thinkrchive.v2.desktop.ui.components.ScrollToTopButton
 import work.racka.thinkrchive.v2.desktop.ui.components.ThinkpadEntry
@@ -37,10 +27,7 @@ import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.Constants
 
 
-@ExperimentalMaterial3Api
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ThinkpadListScreenUI(
     modifier: Modifier = Modifier,
@@ -90,10 +77,12 @@ fun ThinkpadListScreenUI(
                 modifier = modifier,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Timber.d("thinkpadListScreen Contents called")
                 item {
-                    Spacer(modifier = Modifier.statusBarsPadding())
-                    CustomSearchBar(
+                    Spacer(
+                        modifier = Modifier
+                            .padding(top = Dimens.MediumPadding.size)
+                    )
+                    /*CustomSearchBar(
                         focusManager = focusManager,
                         onSearch = {
                             onSearch(it)
@@ -109,7 +98,7 @@ fun ThinkpadListScreenUI(
                         modifier = Modifier.padding(
                             vertical = Dimens.SmallPadding.size
                         )
-                    )
+                    )*/
                 }
                 items(thinkpadList) {
                     ThinkpadEntry(
@@ -131,7 +120,7 @@ fun ThinkpadListScreenUI(
                     if (networkError.isNotBlank()) {
                         Text(
                             text = networkError,
-                            color = MaterialTheme.colorScheme.error,
+                            color = MaterialTheme.colors.error,
                             textAlign = TextAlign.Center
                         )
                     }
@@ -139,7 +128,7 @@ fun ThinkpadListScreenUI(
 
                 // This must always stay at the bottom for navBar padding
                 item {
-                    Spacer(modifier = Modifier.navigationBarsPadding())
+                    Spacer(modifier = Modifier.padding(Dimens.MediumPadding.size))
                 }
             }
             ScrollToTopButton(
@@ -151,14 +140,7 @@ fun ThinkpadListScreenUI(
     }
 }
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
-@Preview(
-    uiMode = Configuration.UI_MODE_TYPE_NORMAL,
-    device = Devices.PIXEL_4
-)
+@Preview
 @Composable
 private fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {

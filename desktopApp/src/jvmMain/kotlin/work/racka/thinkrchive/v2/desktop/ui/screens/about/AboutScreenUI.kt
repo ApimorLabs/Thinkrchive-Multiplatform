@@ -1,15 +1,15 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.about
+package work.racka.thinkrchive.v2.desktop.ui.screens.about
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,18 +24,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsPadding
 import domain.AppAbout
-import work.racka.thinkrchive.v2.android.R
 import work.racka.thinkrchive.v2.desktop.ui.components.AboutTopSection
 import work.racka.thinkrchive.v2.desktop.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.v2.desktop.ui.theme.Dimens
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 
-@ExperimentalMaterial3Api
 @Composable
 fun AboutScreenUI(
     modifier: Modifier = Modifier,
@@ -74,7 +70,7 @@ fun AboutScreenUI(
                 AboutTopSection(
                     appName = appAbout.appName,
                     version = appAbout.appVersion,
-                    appLogo = painterResource(id = R.drawable.app_icon),
+                    appLogo = painterResource("drawables/app_icon.png"),
                     hasUpdates = hasUpdates,
                     onCheckUpdatesClicked = onCheckUpdates
                 )
@@ -85,12 +81,11 @@ fun AboutScreenUI(
                 text = appAbout.tagline,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.SmallPadding.size)
-                    .navigationBarsPadding(),
+                    .padding(Dimens.SmallPadding.size),
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colors.onSurface
                 ),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
@@ -109,7 +104,6 @@ fun AboutScreenUI(
     }
 }
 
-@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun AboutScreenPrev() {

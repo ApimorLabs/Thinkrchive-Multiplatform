@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.desktop.ui.theme.Dimens
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ScrollToTopButton(
     modifier: Modifier = Modifier,
@@ -77,7 +77,6 @@ fun ScrollToTopButton(
     }
 }
 
-@ExperimentalAnimationApi
 @Preview
 @Composable
 fun ScrollButtonPreview() {

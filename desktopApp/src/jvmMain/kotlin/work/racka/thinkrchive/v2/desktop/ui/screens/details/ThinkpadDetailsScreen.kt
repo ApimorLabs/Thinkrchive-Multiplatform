@@ -1,62 +1,40 @@
-package work.racka.thinkrchive.v2.android.ui.main.screens.details
+package work.racka.thinkrchive.v2.desktop.ui.screens.details
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.viewModel
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.Router
+import org.koin.core.parameter.parametersOf
+import org.koin.java.KoinJavaComponent.inject
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
-import work.racka.thinkrchive.v2.android.utils.*
 import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Component
+import work.racka.thinkrchive.v2.desktop.ui.navigation.Configuration
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-fun NavGraphBuilder.ThinkpadDetailsScreen(
-    modifier: Modifier,
-    navController: NavHostController
-) {
-    val thinkpadDetailsScreen = ThinkrchiveScreens.ThinkpadDetailsScreen.name
+class ThinkpadDetailsScreen(
+    private val componentContext: ComponentContext,
+    private val onBackClicked: () -> Unit,
+    model: String
+) : Component, ComponentContext by componentContext {
 
-    composable(
-        route = "$thinkpadDetailsScreen/{thinkpad}",
-        arguments = listOf(
-            navArgument(name = "thinkpad") {
-                type = NavType.StringType
-            }
-        ),
-        enterTransition = {
-            scaleInEnterTransition()
-        },
-        exitTransition = {
-            scaleOutExitTransition()
-        },
-        popEnterTransition = {
-            scaleInPopEnterTransition()
-        },
-        popExitTransition = {
-            scaleOutPopExitTransition()
-        }
-    ) { backStackEntry ->
+    private val viewModel: ThinkpadDetailsViewModel by inject(ThinkpadDetailsViewModel::class.java) {
+        parametersOf(model)
+    }
 
-        val viewModel: ThinkpadDetailsViewModel by viewModel {
-            val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
-            parametersOf(thinkpadModel)
-        }
+    @Composable
+    fun Screen(
+        modifier: Modifier = Modifier,
+        router: Router<Configuration, Any>
+    ) {
 
+
+    }
+
+    @Composable
+    override fun render() {
         val state by viewModel.host.state.collectAsState()
         val sideEffect = viewModel.host.sideEffect
             .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)
@@ -64,17 +42,10 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
 
         when (sideEffect) {
             is ThinkpadDetailsSideEffect.OpenPsrefLink -> {
-                val link = sideEffect.link
-                val intent = remember {
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(link)
-                    )
-                }
-                LocalContext.current.startActivity(intent)
+                // To be implemented
             }
             is ThinkpadDetailsSideEffect.DisplayErrorMsg -> {
-                ShowToastInCompose(message = sideEffect.message)
+                //ShowToastInCompose(message = sideEffect.message)
             }
             is ThinkpadDetailsSideEffect.EmptySideEffect -> {}
         }
@@ -84,11 +55,8 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
                 (state as ThinkpadDetailsState.State).thinkpad
 
             ThinkpadDetailsScreenUI(
-                modifier = modifier,
                 thinkpad = thinkpad,
-                onBackButtonPressed = {
-                    navController.popBackStack()
-                },
+                onBackButtonPressed = onBackClicked,
                 onExternalLinkClicked = {
                     viewModel.host.openPsrefLink()
                 }

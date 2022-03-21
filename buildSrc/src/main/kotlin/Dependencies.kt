@@ -15,7 +15,7 @@ object Dependencies {
             private const val VERSION = "1.6.0"
             val core by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION" }
             val android by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION" }
-
+            val swing by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION" }
         }
     }
 
@@ -58,7 +58,7 @@ object Dependencies {
         }
 
         object Decompose {
-            private const val VERSION = "0.3.1"
+            private const val VERSION = "0.5.2"
             val decompose by lazy { "com.arkivanov.decompose:decompose:$VERSION" }
             val extensionsCompose by lazy {
                 "com.arkivanov.decompose:extensions-compose-jetbrains:$VERSION"

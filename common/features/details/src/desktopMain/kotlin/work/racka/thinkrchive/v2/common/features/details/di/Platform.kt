@@ -10,7 +10,7 @@ internal actual object Platform {
         factory { (model: String?) ->
             ThinkpadDetailsViewModel(
                 repository = get(),
-                s = model,
+                model = model,
                 scope = CoroutineScope(Dispatchers.Main)
             )
         }

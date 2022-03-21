@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.details.container
 
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +20,11 @@ internal class ThinkpadDetailsContainerHostImpl(
     private val model: String?,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {
+    val logger = Logger.withTag("DetailsContainerHost")
 
     override val container: Container<ThinkpadDetailsState, ThinkpadDetailsSideEffect> =
         scope.container(ThinkpadDetailsState.EmptyState) {
+            logger.d { "Details Container Initialized" }
             getThinkpad()
         }
 
