@@ -1,24 +1,31 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.router
+import work.racka.thinkrchive.v2.desktop.ui.screens.HomeSplitPane
 import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutScreen
-import work.racka.thinkrchive.v2.desktop.ui.screens.details.ThinkpadDetailsScreen
 import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateScreen
-import work.racka.thinkrchive.v2.desktop.ui.screens.list.ThinkpadListScreen
 import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsScreen
 
 class NavHostComponent(
     private val componentContext: ComponentContext
 ) : Component, ComponentContext by componentContext {
 
+    private val logger = Logger.withTag("NavHostComponent")
+
     private val router = router<Configuration, Component>(
-        initialConfiguration = Configuration.ThinkpadListScreen,
+        key = "MainRouter",
+        initialConfiguration = Configuration.HomeSplitPane,
         childFactory = ::createScreenComponent
     )
 
@@ -27,22 +34,13 @@ class NavHostComponent(
         componentContext: ComponentContext
     ): Component {
         return when (config) {
-            is Configuration.ThinkpadListScreen -> {
-                ThinkpadListScreen(
+            is Configuration.HomeSplitPane -> {
+                logger.d { "HomeScreen" }
+                HomeSplitPane(
                     componentContext = componentContext,
-                    onEntryClick = { model ->
-                        NavigationActions.List.onEntryClick(router, model)
-                    },
-                    onAboutClicked = { NavigationActions.List.onAboutClicked(router) },
-                    onDonateClicked = { NavigationActions.List.onDonateClicked(router) },
-                    onSettingsClicked = { NavigationActions.List.onSettingsClicked(router) }
-                )
-            }
-            is Configuration.ThinkpadDetailsScreen -> {
-                ThinkpadDetailsScreen(
-                    componentContext = componentContext,
-                    onBackClicked = { NavigationActions.goBack(router) },
-                    model = config.model
+                    onAboutClicked = { NavigationActions.Home.onAboutClicked(router) },
+                    onDonateClicked = { NavigationActions.Home.onDonateClicked(router) },
+                    onSettingsClicked = { NavigationActions.Home.onSettingsClicked(router) }
                 )
             }
             is Configuration.DonationScreen -> {
@@ -52,26 +50,25 @@ class NavHostComponent(
                 )
             }
             is Configuration.ThinkpadAboutScreen -> {
+                logger.d { "AboutScreen" }
                 AboutScreen(
                     componentContext = componentContext,
                     onBackClicked = { NavigationActions.goBack(router) }
                 )
             }
             is Configuration.ThinkpadSettingsScreen -> {
+                logger.d { "SettingsScreen" }
                 SettingsScreen(
                     componentContext = componentContext,
                     onBackClicked = { NavigationActions.goBack(router) }
                 )
             }
             else -> {
-                ThinkpadListScreen(
+                HomeSplitPane(
                     componentContext = componentContext,
-                    onEntryClick = { model ->
-                        NavigationActions.List.onEntryClick(router, model)
-                    },
-                    onAboutClicked = { NavigationActions.List.onAboutClicked(router) },
-                    onDonateClicked = { NavigationActions.List.onDonateClicked(router) },
-                    onSettingsClicked = { NavigationActions.List.onSettingsClicked(router) }
+                    onAboutClicked = { NavigationActions.Home.onAboutClicked(router) },
+                    onDonateClicked = { NavigationActions.Home.onDonateClicked(router) },
+                    onSettingsClicked = { NavigationActions.Home.onSettingsClicked(router) }
                 )
             }
         }
@@ -80,13 +77,21 @@ class NavHostComponent(
     @OptIn(ExperimentalDecomposeApi::class)
     @Composable
     override fun render() {
+        val state = router.state.subscribeAsState()
         Children(
             routerState = router.state,
             animation = crossfadeScale(
                 animationSpec = tween(300)
             )
         ) { child ->
-            child.instance.render()
+            Column {
+                Text(
+                    text = state.value.activeChild.instance.toString(),
+                    color = Color.White
+                )
+                logger.d { "Child rendered" }
+                child.instance.render()
+            }
         }
     }
 }

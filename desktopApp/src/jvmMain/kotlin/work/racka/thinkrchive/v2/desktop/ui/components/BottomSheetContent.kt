@@ -40,6 +40,7 @@ fun HomeBottomSheet(
     sheetState: ModalBottomSheetState,
     scope: CoroutineScope,
     currentSortOption: Int,
+    close: () -> Unit = { },
     onSettingsClicked: () -> Unit = { },
     onSortOptionClicked: (Int) -> Unit = { },
     onAboutClicked: () -> Unit = { },
@@ -47,7 +48,7 @@ fun HomeBottomSheet(
 ) {
 
     Surface(
-        shape = BottomSheetShape,
+        shape = DialogSheetShape,
         color = MaterialTheme.colors.surface,
         modifier = modifier
             .fillMaxSize()
@@ -61,14 +62,16 @@ fun HomeBottomSheet(
                     .padding(Dimens.SmallPadding.size),
                 sheetTitle = "Sort By",
                 onCloseClicked = {
+                    close()
                     scope.launch {
                         sheetState.hide()
                     }
                 },
                 onSettingsClicked = {
+                    close()
+                    onSettingsClicked()
                     scope.launch {
                         sheetState.hide()
-                        onSettingsClicked()
                     }
                 }
             )
@@ -119,15 +122,17 @@ fun HomeBottomSheet(
                         modifier = Modifier
                             .padding(Dimens.MediumPadding.size),
                         onAboutClicked = {
+                            close()
+                            onAboutClicked()
                             scope.launch {
                                 sheetState.hide()
-                                onAboutClicked()
                             }
                         },
                         onDonateClicked = {
+                            close()
+                            onDonateClicked()
                             scope.launch {
                                 sheetState.hide()
-                                onDonateClicked()
                             }
                         }
                     )

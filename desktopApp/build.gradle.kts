@@ -27,6 +27,8 @@ kotlin {
 
                 implementation(compose.desktop.currentOs)
                 implementation(compose.ui)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.desktop.components.splitPane)
                 implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.0.0-rc11")
 
                 implementation(Dependencies.OrbitMVI.core)
@@ -37,6 +39,8 @@ kotlin {
                     implementation(decompose)
                     implementation(extensionsCompose)
                 }
+
+                implementation(Dependencies.Log.kermit)
 
                 with(Dependencies.Koin) {
                     api(core)

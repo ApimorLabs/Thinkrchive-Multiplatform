@@ -3,6 +3,7 @@ package work.racka.thinkrchive.v2.desktop.ui.screens.settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ComponentContext
 import org.koin.java.KoinJavaComponent.inject
 import work.racka.thinkrchive.v2.common.features.settings.AppSettings
@@ -13,11 +14,14 @@ class SettingsScreen(
     private val onBackClicked: () -> Unit
 ) : Component, ComponentContext by componentContext {
 
+    private val logger = Logger.withTag("SettingsScreen")
     private val settings: AppSettings by inject(AppSettings::class.java)
 
     @Composable
     override fun render() {
         val state by settings.host.state.collectAsState()
+
+        logger.d { "SettingsScreen Render call" }
 
         SettingsScreenUI(
             currentTheme = state.themeValue,

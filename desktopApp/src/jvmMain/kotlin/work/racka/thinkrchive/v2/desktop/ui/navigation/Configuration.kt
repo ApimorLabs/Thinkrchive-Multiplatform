@@ -3,13 +3,8 @@ package work.racka.thinkrchive.v2.desktop.ui.navigation
 import com.arkivanov.essenty.parcelable.Parcelable
 
 sealed class Configuration : Parcelable {
-    object ThinkpadListScreen : Configuration()
-    data class ThinkpadDetailsScreen(val model: String) : Configuration()
+    object HomeSplitPane : Configuration()
     object DonationScreen : Configuration()
     object ThinkpadAboutScreen : Configuration()
     object ThinkpadSettingsScreen : Configuration()
-    sealed class SplitPaneHome : Configuration() {
-        object ListScreen : SplitPaneHome()
-        data class DetailsScreen(val model: String) : SplitPaneHome()
-    }
 }

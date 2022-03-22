@@ -10,13 +10,7 @@ object NavigationActions {
         router.pop()
     }
 
-    object List {
-        fun onEntryClick(
-            router: Router<Configuration, Component>,
-            model: String
-        ) {
-            router.push(Configuration.ThinkpadDetailsScreen(model))
-        }
+    object Home {
 
         fun onSettingsClicked(router: Router<Configuration, Component>) {
             router.push(Configuration.ThinkpadSettingsScreen)

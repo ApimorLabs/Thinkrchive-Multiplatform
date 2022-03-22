@@ -16,3 +16,10 @@ val BottomSheetShape = RoundedCornerShape(
     bottomStart = 0.dp,
     bottomEnd = 0.dp
 )
+
+val DialogSheetShape = RoundedCornerShape(
+    topStart = 20.dp,
+    topEnd = 20.dp,
+    bottomStart = 20.dp,
+    bottomEnd = 20.dp
+)
