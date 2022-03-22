@@ -8,4 +8,8 @@ sealed class Configuration : Parcelable {
     object DonationScreen : Configuration()
     object ThinkpadAboutScreen : Configuration()
     object ThinkpadSettingsScreen : Configuration()
+    sealed class SplitPaneHome : Configuration() {
+        object ListScreen : SplitPaneHome()
+        data class DetailsScreen(val model: String) : SplitPaneHome()
+    }
 }

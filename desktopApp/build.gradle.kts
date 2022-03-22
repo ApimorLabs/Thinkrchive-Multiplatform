@@ -26,6 +26,7 @@ kotlin {
                 implementation(project(":common:features:donate"))
 
                 implementation(compose.desktop.currentOs)
+                implementation(compose.ui)
                 implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.0.0-rc11")
 
                 implementation(Dependencies.OrbitMVI.core)

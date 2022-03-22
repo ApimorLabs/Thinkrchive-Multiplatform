@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import domain.Thinkpad
+import kotlinx.coroutines.launch
+import work.racka.thinkrchive.v2.desktop.ui.components.CustomSearchBar
 import work.racka.thinkrchive.v2.desktop.ui.components.HomeBottomSheet
 import work.racka.thinkrchive.v2.desktop.ui.components.ScrollToTopButton
 import work.racka.thinkrchive.v2.desktop.ui.components.ThinkpadEntry
@@ -27,7 +29,7 @@ import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.Constants
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun ThinkpadListScreenUI(
     modifier: Modifier = Modifier,
@@ -82,7 +84,7 @@ fun ThinkpadListScreenUI(
                         modifier = Modifier
                             .padding(top = Dimens.MediumPadding.size)
                     )
-                    /*CustomSearchBar(
+                    CustomSearchBar(
                         focusManager = focusManager,
                         onSearch = {
                             onSearch(it)
@@ -92,13 +94,13 @@ fun ThinkpadListScreenUI(
                         },
                         onOptionsClicked = {
                             scope.launch {
-                                sheetState.show()
+                                sheetState.animateTo(ModalBottomSheetValue.Expanded)
                             }
                         },
                         modifier = Modifier.padding(
                             vertical = Dimens.SmallPadding.size
                         )
-                    )*/
+                    )
                 }
                 items(thinkpadList) {
                     ThinkpadEntry(
