@@ -47,6 +47,8 @@ kotlin {
 
         implementation(Dependencies.OrbitMVI.core)
 
+        implementation(Dependencies.Log.kermit)
+
         with(Dependencies.Koin) {
             api(core)
             api(test)

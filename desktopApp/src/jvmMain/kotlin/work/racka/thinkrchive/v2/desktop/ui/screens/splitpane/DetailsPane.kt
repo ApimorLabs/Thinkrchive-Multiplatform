@@ -8,20 +8,19 @@ import org.koin.java.KoinJavaComponent.inject
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
-import work.racka.thinkrchive.v2.desktop.ui.navigation.Component
 import work.racka.thinkrchive.v2.desktop.ui.screens.details.ThinkpadDetailsScreenUI
 
-class DetailsScreen(
+class DetailsPane(
     private val onBackClicked: () -> Unit,
     model: String
-) : Component {
+) {
 
     private val viewModel: ThinkpadDetailsViewModel by inject(ThinkpadDetailsViewModel::class.java) {
         parametersOf(model)
     }
 
     @Composable
-    override fun render() {
+    fun render() {
         val state by viewModel.host.state.collectAsState()
         val sideEffect = viewModel.host.sideEffect
             .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)

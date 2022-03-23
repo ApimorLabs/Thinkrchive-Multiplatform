@@ -1,97 +1,87 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation
 
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetbrains.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.router
-import work.racka.thinkrchive.v2.desktop.ui.screens.HomeSplitPane
-import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutScreen
-import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateScreen
-import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsScreen
+import com.arkivanov.decompose.value.Value
+import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutComponent
+import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateComponent
+import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsComponent
+import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.screens.splitpane.HomePaneComponent
+import work.racka.thinkrchive.v2.desktop.ui.screens.splitpane.HomePaneComponentImpl
 
 class NavHostComponent(
     private val componentContext: ComponentContext
-) : Component, ComponentContext by componentContext {
+) : RootComponent, ComponentContext by componentContext {
 
     private val logger = Logger.withTag("NavHostComponent")
 
-    private val router = router<Configuration, Component>(
+    private val router = router<Configuration, RootComponent.Child>(
         key = "MainRouter",
         initialConfiguration = Configuration.HomeSplitPane,
-        childFactory = ::createScreenComponent
+        childFactory = ::createChild
     )
 
-    private fun createScreenComponent(
+    override val routerState: Value<RouterState<Configuration, RootComponent.Child>>
+        get() = router.state
+
+    private fun createChild(
         config: Configuration,
         componentContext: ComponentContext
-    ): Component {
-        return when (config) {
+    ): RootComponent.Child =
+        when (config) {
             is Configuration.HomeSplitPane -> {
                 logger.d { "HomeScreen" }
-                HomeSplitPane(
-                    componentContext = componentContext,
-                    onAboutClicked = { NavigationActions.Home.onAboutClicked(router) },
-                    onDonateClicked = { NavigationActions.Home.onDonateClicked(router) },
-                    onSettingsClicked = { NavigationActions.Home.onSettingsClicked(router) }
-                )
+                RootComponent.Child.HomePane(homePaneComponent(componentContext))
             }
             is Configuration.DonationScreen -> {
-                DonateScreen(
-                    componentContext = componentContext,
-                    onBackClicked = { NavigationActions.goBack(router) }
-                )
+                logger.d { "DonateScreen" }
+                RootComponent.Child.Donate(donateComponent(componentContext))
             }
             is Configuration.ThinkpadAboutScreen -> {
                 logger.d { "AboutScreen" }
-                AboutScreen(
-                    componentContext = componentContext,
-                    onBackClicked = { NavigationActions.goBack(router) }
-                )
+                RootComponent.Child.About(aboutComponent(componentContext))
             }
             is Configuration.ThinkpadSettingsScreen -> {
                 logger.d { "SettingsScreen" }
-                SettingsScreen(
-                    componentContext = componentContext,
-                    onBackClicked = { NavigationActions.goBack(router) }
-                )
+                RootComponent.Child.Settings(settingsComponent(componentContext))
             }
             else -> {
-                HomeSplitPane(
-                    componentContext = componentContext,
-                    onAboutClicked = { NavigationActions.Home.onAboutClicked(router) },
-                    onDonateClicked = { NavigationActions.Home.onDonateClicked(router) },
-                    onSettingsClicked = { NavigationActions.Home.onSettingsClicked(router) }
-                )
+                logger.d { "Else Screen Block Called" }
+                RootComponent.Child.HomePane(homePaneComponent(componentContext))
             }
         }
-    }
 
-    @OptIn(ExperimentalDecomposeApi::class)
-    @Composable
-    override fun render() {
-        val state = router.state.subscribeAsState()
-        Children(
-            routerState = router.state,
-            animation = crossfadeScale(
-                animationSpec = tween(300)
-            )
-        ) { child ->
-            Column {
-                Text(
-                    text = state.value.activeChild.instance.toString(),
-                    color = Color.White
-                )
-                logger.d { "Child rendered" }
-                child.instance.render()
-            }
-        }
-    }
+    private fun homePaneComponent(componentContext: ComponentContext): HomePaneComponent =
+        HomePaneComponentImpl(
+            componentContext = componentContext,
+            onAboutClicked = {
+                logger.d { "About Clicked" }
+                NavigationActions.Home.onAboutClicked(router)
+            },
+            onDonateClicked = { NavigationActions.Home.onDonateClicked(router) },
+            onSettingsClicked = { NavigationActions.Home.onSettingsClicked(router) }
+        )
+
+    private fun aboutComponent(componentContext: ComponentContext): AboutComponent =
+        AboutComponentImpl(
+            componentContext = componentContext,
+            onBackClicked = { NavigationActions.goBack(router) }
+        )
+
+    private fun settingsComponent(componentContext: ComponentContext): SettingsComponent =
+        SettingsComponentImpl(
+            componentContext = componentContext,
+            onBackClicked = { NavigationActions.goBack(router) }
+        )
+
+    private fun donateComponent(componentContext: ComponentContext): DonateComponent =
+        DonateComponentImpl(
+            componentContext = componentContext,
+            onBackClicked = { NavigationActions.goBack(router) }
+        )
 }

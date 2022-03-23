@@ -19,7 +19,7 @@ internal class ThinkpadListContainerHostImpl(
     private val settings: AppSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
-    val logger = Logger.withTag("ContainerHost")
+    private val logger = Logger.withTag("ContainerHost")
 
     override val container = scope
         .container<ThinkpadListState.State, ThinkpadListSideEffect>(ThinkpadListState.EmptyState) {

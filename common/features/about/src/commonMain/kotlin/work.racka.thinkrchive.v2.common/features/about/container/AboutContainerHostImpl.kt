@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.about.container
 
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +20,10 @@ internal class AboutContainerHostImpl(
     scope: CoroutineScope,
 ) : AboutContainerHost, ContainerHost<AboutState.State, AboutSideEffect> {
 
+    private val logger = Logger.withTag("AboutContainerHost")
     override val container: Container<AboutState.State, AboutSideEffect> =
         scope.container(AboutState.EmptyState) {
+            logger.d { "Container Host initialized" }
             getAppAbout()
         }
 

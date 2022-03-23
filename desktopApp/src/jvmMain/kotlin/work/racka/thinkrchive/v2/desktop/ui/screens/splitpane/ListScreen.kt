@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import states.list.ThinkpadListSideEffect
+import states.list.ThinkpadListState
 import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListViewModel
 import work.racka.thinkrchive.v2.desktop.ui.screens.list.ThinkpadListScreenUI
 
@@ -35,6 +36,37 @@ fun ListScreen(
         currentSortOption = state.sortOption,
         onSortOptionClicked = { sort ->
             host.sortSelected(sort)
+        },
+        onSettingsClicked = onSettingsClicked,
+        onAboutClicked = onAboutClicked,
+        onDonateClicked = onDonateClicked
+    )
+}
+
+@Composable
+fun ListPane(
+    state: ThinkpadListState.State,
+    sideEffect: ThinkpadListSideEffect.Network,
+    onSearch: (String) -> Unit,
+    onEntryClick: (model: String) -> Unit,
+    onSortOptionClicked: (Int) -> Unit,
+    onSettingsClicked: () -> Unit,
+    onAboutClicked: () -> Unit,
+    onDonateClicked: () -> Unit
+) {
+    ThinkpadListScreenUI(
+        thinkpadList = state.thinkpadList,
+        networkLoading = sideEffect.isLoading,
+        onSearch = { query ->
+            onSearch(query)
+        },
+        onEntryClick = { thinkpad ->
+            onEntryClick(thinkpad.model)
+        },
+        networkError = sideEffect.errorMsg,
+        currentSortOption = state.sortOption,
+        onSortOptionClicked = { sort ->
+            onSortOptionClicked(sort)
         },
         onSettingsClicked = onSettingsClicked,
         onAboutClicked = onAboutClicked,

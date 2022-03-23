@@ -50,3 +50,40 @@ class AboutScreen(
     }
 
 }
+
+@Composable
+fun AboutScreen(
+    aboutComponent: AboutComponent
+) {
+    val state by aboutComponent.state.collectAsState()
+    val sideEffect = aboutComponent.sideEffect
+        .collectAsState(initial = AboutSideEffect.NoSideEffect)
+        .value
+
+    // React to Side Effects
+    when (sideEffect) {
+        is AboutSideEffect.UpdateFound -> {
+            //ShowToastInCompose(message = sideEffect.toastMessage)
+        }
+        is AboutSideEffect.UpdateNotFound -> {
+            //ShowToastInCompose(message = sideEffect.toastMessage)
+        }
+        is AboutSideEffect.Update -> {
+            // Call Update Logic Here
+        }
+        is AboutSideEffect.NoSideEffect -> {
+            /* Do Nothing */
+        }
+    }
+
+    AboutScreenUI(
+        onCheckUpdates = {
+            aboutComponent.update()
+        },
+        onBackButtonPressed = {
+            aboutComponent.backClicked()
+        },
+        appAbout = state.appAbout,
+        hasUpdates = state.hasUpdates
+    )
+}

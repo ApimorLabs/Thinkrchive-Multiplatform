@@ -39,3 +39,30 @@ class SettingsScreen(
     }
 
 }
+
+@Composable
+fun SettingsScreen(
+    settingsComponent: SettingsComponent
+) {
+    val logger = Logger.withTag("SettingsScreen")
+
+    val state by settingsComponent.state.collectAsState()
+
+    logger.d { "SettingsScreen Render call" }
+
+    SettingsScreenUI(
+        currentTheme = state.themeValue,
+        currentSortOption = state.sortValue,
+        onThemeOptionClicked = {
+            settingsComponent.saveThemeSettings(it)
+            //viewModel.saveThemeSetting(it)
+        },
+        onSortOptionClicked = {
+            settingsComponent.saveSortSettings(it)
+            //viewModel.saveSortOptionSetting(it)
+        },
+        onBackButtonPressed = {
+            settingsComponent.backClicked()
+        }
+    )
+}

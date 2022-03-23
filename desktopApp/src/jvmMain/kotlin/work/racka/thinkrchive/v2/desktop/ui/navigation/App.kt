@@ -25,9 +25,9 @@ fun App() {
     ThinkRchiveTheme(
         theme = state.themeValue
     ) {
+        logger.d { "Screen rendered" }
         Scaffold {
-            logger.d { "Screen rendered" }
-            root.render()
+            RootUI(root)
         }
     }
 }

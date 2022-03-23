@@ -68,8 +68,8 @@ fun HomeBottomSheet(
                     }
                 },
                 onSettingsClicked = {
-                    close()
                     onSettingsClicked()
+                    close()
                     scope.launch {
                         sheetState.hide()
                     }
@@ -129,8 +129,8 @@ fun HomeBottomSheet(
                             }
                         },
                         onDonateClicked = {
-                            close()
                             onDonateClicked()
+                            close()
                             scope.launch {
                                 sheetState.hide()
                             }
