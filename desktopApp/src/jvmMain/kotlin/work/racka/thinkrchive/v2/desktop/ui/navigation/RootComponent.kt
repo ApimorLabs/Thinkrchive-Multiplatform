@@ -1,9 +1,11 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation
 
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
+import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.value.Value
 import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutComponent
@@ -31,7 +33,10 @@ interface RootComponent {
 fun RootUI(rootComponent: RootComponent) {
     val logger = Logger.withTag("RootComponent")
     Children(
-        routerState = rootComponent.routerState
+        routerState = rootComponent.routerState,
+        animation = crossfadeScale(
+            tween(300)
+        )
     ) {
         when (val child = it.instance) {
             is RootComponent.Child.HomePane -> {

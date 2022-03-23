@@ -7,7 +7,7 @@ import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListView
 
 internal actual object Platform {
     actual fun platformSettingsModule() = module {
-        single {
+        factory {
             ThinkpadListViewModel(
                 helper = get(),
                 settings = get(),

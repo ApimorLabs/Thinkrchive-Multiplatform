@@ -76,10 +76,10 @@ fun ThinkpadListScreenUI(
         ) {
             window.size = Dimension(400, 450)
             if (!alreadyCalled.value) {
-                pointOnScreen.value = window.location
+                pointOnScreen.value = Point(window.location.x, window.location.y - 50)
                 alreadyCalled.value = true
             }
-            window.location = Point(pointOnScreen.value.x, pointOnScreen.value.y - 50)
+            window.location = pointOnScreen.value
             HomeBottomSheet(
                 sheetState = sheetState,
                 scope = scope,
