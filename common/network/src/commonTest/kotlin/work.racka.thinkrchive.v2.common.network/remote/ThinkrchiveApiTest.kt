@@ -6,9 +6,11 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import work.racka.thinkrchive.v2.common.network.di.Network.networkModules
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -27,6 +29,11 @@ class ThinkrchiveApiTest : KoinTest {
         startKoin {
             networkModules(true)
         }
+    }
+
+    @AfterTest
+    fun unloadKoin() {
+        stopKoin()
     }
 
     @Test

@@ -20,4 +20,11 @@ kotlin {
             api(kermit)
         }
     }
+
+    sourceSets["commonTest"].dependencies {
+        implementation(Dependencies.RusshWolf.MultiplatformSettings.test)
+        implementation(Dependencies.Koin.test)
+        implementation(kotlin("test-common"))
+        implementation(kotlin("test-annotations-common"))
+    }
 }
