@@ -65,7 +65,7 @@ fun AboutScreenUI(
                 toolbarHeading = "About",
                 toolbarHeight = toolbarHeight,
                 toolbarOffset = toolbarOffsetHeightPx.value,
-                onBackButtonPressed = onBackButtonPressed
+                onCloseButtonClicked = onBackButtonPressed
             ) {
                 AboutTopSection(
                     appName = appAbout.appName,

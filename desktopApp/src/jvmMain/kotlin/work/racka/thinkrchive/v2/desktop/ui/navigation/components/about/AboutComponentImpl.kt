@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.desktop.ui.screens.about
+package work.racka.thinkrchive.v2.desktop.ui.navigation.components.about
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.Flow

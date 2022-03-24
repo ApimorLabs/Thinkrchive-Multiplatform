@@ -5,14 +5,15 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
-import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutComponent
-import work.racka.thinkrchive.v2.desktop.ui.screens.about.AboutComponentImpl
-import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateComponent
-import work.racka.thinkrchive.v2.desktop.ui.screens.donate.DonateComponentImpl
-import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsComponent
-import work.racka.thinkrchive.v2.desktop.ui.screens.settings.SettingsComponentImpl
-import work.racka.thinkrchive.v2.desktop.ui.screens.splitpane.HomePaneComponent
-import work.racka.thinkrchive.v2.desktop.ui.screens.splitpane.HomePaneComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.RootComponent
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.about.AboutComponent
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.about.AboutComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.donate.DonateComponent
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.donate.DonateComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.home.HomePaneComponent
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.home.HomePaneComponentImpl
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.settings.SettingsComponent
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.settings.SettingsComponentImpl
 
 class NavHostComponent(
     private val componentContext: ComponentContext

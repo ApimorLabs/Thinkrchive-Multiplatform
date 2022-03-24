@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.desktop.ui.screens.donate
+package work.racka.thinkrchive.v2.desktop.ui.navigation.components.donate
 
 import com.arkivanov.decompose.ComponentContext
 

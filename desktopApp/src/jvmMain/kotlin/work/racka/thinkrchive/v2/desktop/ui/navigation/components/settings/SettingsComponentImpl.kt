@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.desktop.ui.screens.settings
+package work.racka.thinkrchive.v2.desktop.ui.navigation.components.settings
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow

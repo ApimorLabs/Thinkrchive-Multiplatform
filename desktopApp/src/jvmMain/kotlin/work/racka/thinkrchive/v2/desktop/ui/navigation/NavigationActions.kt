@@ -3,6 +3,7 @@ package work.racka.thinkrchive.v2.desktop.ui.navigation
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.push
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.RootComponent
 
 object NavigationActions {
 

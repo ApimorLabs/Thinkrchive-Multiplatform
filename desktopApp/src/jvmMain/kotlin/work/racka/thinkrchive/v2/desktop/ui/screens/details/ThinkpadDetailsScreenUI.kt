@@ -32,7 +32,7 @@ import work.racka.thinkrchive.v2.desktop.utils.Constants
 fun ThinkpadDetailsScreenUI(
     modifier: Modifier = Modifier,
     thinkpad: Thinkpad,
-    onBackButtonPressed: () -> Unit = { },
+    onCloseButtonClicked: () -> Unit = { },
     onExternalLinkClicked: () -> Unit = { },
     listState: LazyListState = rememberLazyListState()
 ) {
@@ -60,7 +60,7 @@ fun ThinkpadDetailsScreenUI(
                 toolbarHeading = "",
                 toolbarHeight = toolbarHeight,
                 toolbarOffset = toolbarOffsetHeightPx.value,
-                onBackButtonPressed = onBackButtonPressed
+                onCloseButtonClicked = onCloseButtonClicked
             ) {
                 ToolbarImage(
                     modifier = Modifier

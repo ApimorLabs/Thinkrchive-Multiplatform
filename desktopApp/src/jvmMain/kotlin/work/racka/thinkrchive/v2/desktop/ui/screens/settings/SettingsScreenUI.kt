@@ -96,7 +96,7 @@ fun SettingsScreenUI(
             topBar = {
                 CollapsingToolbarBase(
                     toolbarHeading = "Settings",
-                    onBackButtonPressed = onBackButtonPressed,
+                    onCloseButtonClicked = onBackButtonPressed,
                     toolbarHeight = 250.dp,
                     toolbarOffset = toolbarOffsetHeightPx.value,
                     content = {

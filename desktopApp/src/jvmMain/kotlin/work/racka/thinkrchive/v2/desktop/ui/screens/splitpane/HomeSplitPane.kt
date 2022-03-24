@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -18,6 +21,9 @@ import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.HorizontalSplitPane
 import org.jetbrains.compose.splitpane.rememberSplitPaneState
 import states.list.ThinkpadListSideEffect
+import work.racka.thinkrchive.v2.desktop.ui.navigation.components.home.HomePaneComponent
+import work.racka.thinkrchive.v2.desktop.ui.screens.details.DetailsPane
+import work.racka.thinkrchive.v2.desktop.ui.screens.list.ListPane
 import java.awt.Cursor
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -31,9 +37,7 @@ fun HomeSplitPaneScreen(
 ) {
     val logger = Logger.withTag("HomeSplitPaneScreen")
     val splitterState = rememberSplitPaneState()
-    val pane: MutableState<PaneConfig> = remember {
-        mutableStateOf(PaneConfig.Blank)
-    }
+    val paneState = homePaneComponent.paneState.collectAsState()
 
     logger.d { "HomeSplitPaneScreen called" }
 
@@ -51,7 +55,7 @@ fun HomeSplitPaneScreen(
                 state = listState,
                 sideEffect = listSideEffect,
                 onEntryClick = {
-                    pane.value = PaneConfig.Details(it)
+                    homePaneComponent.updatePaneState(PaneConfig.Details(it))
                 },
                 onSearch = { query ->
                     homePaneComponent.search(query)
@@ -76,14 +80,17 @@ fun HomeSplitPaneScreen(
             Box(
                 contentAlignment = Alignment.Center
             ) {
-                when (pane.value) {
+                when (paneState.value) {
                     is PaneConfig.Details -> {
-                        DetailsPane(
-                            onBackClicked = {
-                                pane.value = PaneConfig.Blank
-                            },
-                            model = (pane.value as PaneConfig.Details).model
-                        ).render()
+                        val detailsPane = remember(paneState.value) {
+                            DetailsPane(
+                                onCloseClicked = {
+                                    homePaneComponent.updatePaneState(PaneConfig.Blank)
+                                },
+                                model = (paneState.value as PaneConfig.Details).model
+                            )
+                        }
+                        detailsPane.render()
                     }
                     else -> {
                         // Show Empty Composable

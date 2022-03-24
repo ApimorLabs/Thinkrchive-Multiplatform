@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.desktop.ui.screens.splitpane
+package work.racka.thinkrchive.v2.desktop.ui.screens.details
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -8,10 +8,9 @@ import org.koin.java.KoinJavaComponent.inject
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
-import work.racka.thinkrchive.v2.desktop.ui.screens.details.ThinkpadDetailsScreenUI
 
 class DetailsPane(
-    private val onBackClicked: () -> Unit,
+    private val onCloseClicked: () -> Unit,
     model: String
 ) {
 
@@ -42,7 +41,7 @@ class DetailsPane(
 
             ThinkpadDetailsScreenUI(
                 thinkpad = thinkpad,
-                onBackButtonPressed = onBackClicked,
+                onCloseButtonClicked = onCloseClicked,
                 onExternalLinkClicked = {
                     viewModel.host.openPsrefLink()
                 }

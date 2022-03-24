@@ -12,7 +12,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,7 +47,7 @@ import work.racka.thinkrchive.v2.desktop.utils.StringResource
 fun CollapsingToolbarBase(
     modifier: Modifier = Modifier,
     toolbarHeading: String,
-    onBackButtonPressed: () -> Unit = { },
+    onCloseButtonClicked: () -> Unit = { },
     contentAlignment: Alignment = Alignment.Center,
     shape: Shape = RoundedCornerShape(
         bottomEnd = 10.dp,
@@ -116,13 +116,13 @@ fun CollapsingToolbarBase(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = onBackButtonPressed,
+                onClick = onCloseButtonClicked,
                 modifier = Modifier
                     .padding(Dimens.SmallPadding.size)
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = StringResource.back_icon,
+                    imageVector = Icons.Rounded.Close,
+                    contentDescription = StringResource.close_icon,
                     tint = MaterialTheme.colors.onSurface
                 )
             }

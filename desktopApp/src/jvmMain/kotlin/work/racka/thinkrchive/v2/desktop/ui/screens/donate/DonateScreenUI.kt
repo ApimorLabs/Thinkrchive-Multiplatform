@@ -58,7 +58,7 @@ fun DonateScreenUI(
                 toolbarHeading = "Donate",
                 toolbarHeight = toolbarHeight,
                 toolbarOffset = toolbarOffsetHeightPx.value,
-                onBackButtonPressed = onBackButtonPressed
+                onCloseButtonClicked = onBackButtonPressed
             ) {
                 Text(
                     text = "Donate",

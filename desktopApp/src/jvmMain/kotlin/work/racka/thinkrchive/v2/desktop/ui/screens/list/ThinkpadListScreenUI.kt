@@ -29,7 +29,6 @@ import work.racka.thinkrchive.v2.desktop.ui.theme.Dimens
 import work.racka.thinkrchive.v2.desktop.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.desktop.utils.Constants
 import java.awt.Dimension
-import java.awt.Point
 
 
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
@@ -56,8 +55,6 @@ fun ThinkpadListScreenUI(
     )
     val openDialog = remember { mutableStateOf(false) }
     val dialogState = rememberDialogState()
-    val alreadyCalled = remember { mutableStateOf(false) }
-    val pointOnScreen = remember { mutableStateOf(Point()) }
 
     Scaffold(
         modifier = Modifier
@@ -75,11 +72,6 @@ fun ThinkpadListScreenUI(
             transparent = true
         ) {
             window.size = Dimension(400, 450)
-            if (!alreadyCalled.value) {
-                pointOnScreen.value = Point(window.location.x, window.location.y - 50)
-                alreadyCalled.value = true
-            }
-            window.location = pointOnScreen.value
             HomeBottomSheet(
                 sheetState = sheetState,
                 scope = scope,

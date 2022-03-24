@@ -1,12 +1,15 @@
 package work.racka.thinkrchive.v2.desktop
 
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import work.racka.thinkrchive.v2.common.integration.di.KoinMain
-import work.racka.thinkrchive.v2.desktop.ui.navigation.App
+import work.racka.thinkrchive.v2.desktop.ui.navigation.ComposeApp
 import work.racka.thinkrchive.v2.desktop.ui.navigation.NavHostComponent
 
 fun main() {
@@ -18,9 +21,14 @@ fun main() {
         logger.d { "Main Function Called" }
         KoinMain.initKoin()
 
-        Window(onCloseRequest = ::exitApplication) {
+        val windowState = rememberWindowState(size = DpSize(1000.dp, 600.dp))
+
+        Window(
+            onCloseRequest = ::exitApplication,
+            state = windowState
+        ) {
             logger.d { "App Window Called" }
-            App(root)
+            ComposeApp(root)
         }
     }
 }
