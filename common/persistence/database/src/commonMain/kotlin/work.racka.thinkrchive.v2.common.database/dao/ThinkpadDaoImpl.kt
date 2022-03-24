@@ -33,10 +33,11 @@ internal class ThinkpadDaoImpl(
         thinkpadDatabaseQueries?.getAllThinkpadsFromDb()
             ?.asFlow()?.mapToList() ?: flowOf(emptyList())
 
-    override fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject>? {
+    override fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?> {
         return thinkpadDatabaseQueries?.getThinkpadFromDb(thinkpadModel)
             ?.asFlow()
             ?.mapToOne(context = coroutineScope.coroutineContext)
+            ?: flowOf(null)
     }
 
     override fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =

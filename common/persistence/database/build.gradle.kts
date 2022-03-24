@@ -59,6 +59,7 @@ kotlin {
     }
 
     sourceSets["commonTest"].dependencies {
+        implementation(Dependencies.Android.turbine)
         implementation(Dependencies.Koin.test)
         implementation(Dependencies.Kotlin.Coroutines.test)
         implementation(kotlin("test-common"))

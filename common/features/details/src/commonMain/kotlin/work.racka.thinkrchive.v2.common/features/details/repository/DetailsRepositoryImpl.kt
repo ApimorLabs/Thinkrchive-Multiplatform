@@ -13,10 +13,10 @@ class DetailsRepositoryImpl(
     private val backgroundDispatcher: CoroutineDispatcher
 ) : DetailsRepository {
 
-    override suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad>? =
+    override suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad?> =
         withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpad(thinkpadModel)?.map {
-                it.asThinkpad()
+            thinkpadDao.getThinkpad(thinkpadModel).map {
+                it?.asThinkpad()
             }
         }
 }

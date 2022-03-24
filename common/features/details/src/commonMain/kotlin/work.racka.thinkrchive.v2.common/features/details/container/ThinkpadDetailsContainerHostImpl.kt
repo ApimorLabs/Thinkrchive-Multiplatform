@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
@@ -20,7 +21,7 @@ internal class ThinkpadDetailsContainerHostImpl(
     private val model: String?,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {
-    val logger = Logger.withTag("DetailsContainerHost")
+    private val logger = Logger.withTag("DetailsContainerHost")
 
     override val container: Container<ThinkpadDetailsState, ThinkpadDetailsSideEffect> =
         scope.container(ThinkpadDetailsState.EmptyState) {
@@ -35,7 +36,7 @@ internal class ThinkpadDetailsContainerHostImpl(
         get() = container.sideEffectFlow
 
     override fun getThinkpad() = intent {
-        when (val result = repository.getThinkpad(model!!)) {
+        when (model) {
             null -> {
                 reduce { ThinkpadDetailsState.EmptyState }
                 postSideEffect(
@@ -43,9 +44,15 @@ internal class ThinkpadDetailsContainerHostImpl(
                 )
             }
             else -> {
-                result.collect { thinkpad ->
-                    reduce {
-                        ThinkpadDetailsState.State(thinkpad)
+                repository.getThinkpad(model).collectLatest { thinkpad ->
+                    when (thinkpad) {
+                        null -> {
+                            reduce { ThinkpadDetailsState.EmptyState }
+                            postSideEffect(
+                                ThinkpadDetailsSideEffect.DisplayErrorMsg(Constants.THINKPAD_NOT_FOUND)
+                            )
+                        }
+                        else -> reduce { ThinkpadDetailsState.State(thinkpad) }
                     }
                 }
             }

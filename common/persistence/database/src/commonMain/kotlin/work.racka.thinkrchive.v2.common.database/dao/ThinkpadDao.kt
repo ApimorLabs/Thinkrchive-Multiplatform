@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface ThinkpadDao {
     fun insertAllThinkpads(response: List<ThinkpadResponse>)
     fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject>?
+    fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?>
     fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
     fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
     fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>

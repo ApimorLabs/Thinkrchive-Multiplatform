@@ -53,7 +53,7 @@ object Versions {
     const val mockito = "3.12.4"
     const val mockitoKotlin = "3.2.0"
     const val robolectric = "4.3.1"
-    const val turbine = "0.6.1"
+    const val turbine = "0.7.0"
     const val coroutineTest = "1.5.1"
 
     // Logging

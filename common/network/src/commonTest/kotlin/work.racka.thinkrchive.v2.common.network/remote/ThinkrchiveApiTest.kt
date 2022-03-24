@@ -30,7 +30,7 @@ class ThinkrchiveApiTest : KoinTest {
     }
 
     @Test
-    fun testGetAllThinkpads() = runTest {
+    fun testGetAllThinkpadsFromNetwork() = runTest {
         val result = api.getThinkpads()
         print(result)
         assertTrue(result.isNotEmpty())
