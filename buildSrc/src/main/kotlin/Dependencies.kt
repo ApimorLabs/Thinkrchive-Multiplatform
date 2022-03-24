@@ -16,6 +16,7 @@ object Dependencies {
             val core by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION" }
             val android by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION" }
             val swing by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION" }
+            val test by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-test:$VERSION" }
         }
     }
 
@@ -85,6 +86,13 @@ object Dependencies {
             val androidDriver by lazy { "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}" }
             val sqliteDriver by lazy { "com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}" }
         }
+    }
+
+    object Mockk {
+        val core by lazy { "io.mockk:mockk:${Versions.mockk}" }
+        val android by lazy { "io.mockk:mockk-android:${Versions.mockk}" }
+        val jvm by lazy { "io.mockk:mockk-agent-jvm:${Versions.mockk}" }
+        val commonMultiplatform by lazy { "io.mockk:mockk-common:${Versions.mockk}" }
     }
 
     object Log {

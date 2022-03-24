@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -17,6 +19,7 @@ android {
     defaultConfig {
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -55,12 +58,32 @@ kotlin {
         }
     }
 
+    sourceSets["commonTest"].dependencies {
+        implementation(Dependencies.Koin.test)
+        implementation(Dependencies.Kotlin.Coroutines.test)
+        implementation(kotlin("test-common"))
+        implementation(kotlin("test-annotations-common"))
+    }
+
     sourceSets["androidMain"].dependencies {
         implementation(Dependencies.Squareup.SQLDelight.androidDriver)
+    }
+
+    sourceSets["androidTest"].dependencies {
+        implementation(Dependencies.Squareup.SQLDelight.sqliteDriver)
+        implementation(Dependencies.Android.junit)
     }
 
     sourceSets["desktopMain"].dependencies {
         implementation(Dependencies.Squareup.SQLDelight.sqliteDriver)
         implementation(Dependencies.Log.slf4j)
     }
+
+    sourceSets["desktopTest"].dependencies {
+
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
 }
