@@ -44,6 +44,17 @@ kotlin {
         }
     }
 
+    sourceSets["commonTest"].dependencies {
+        implementation(Dependencies.Mockk.core)
+        implementation(Dependencies.Mockk.commonMultiplatform)
+
+        implementation(Dependencies.Android.turbine)
+        implementation(Dependencies.Koin.test)
+        implementation(Dependencies.Kotlin.Coroutines.test)
+        implementation(kotlin("test-common"))
+        implementation(kotlin("test-annotations-common"))
+    }
+
     sourceSets["androidMain"].dependencies {
         with(Dependencies.Android) {
             implementation(lifecycleRuntimeKtx)
@@ -55,6 +66,14 @@ kotlin {
         }
     }
 
+    sourceSets["androidTest"].dependencies {
+        implementation(Dependencies.Android.junit)
+    }
+
     sourceSets["desktopMain"].dependencies {
+    }
+
+    sourceSets["desktopTest"].dependencies {
+
     }
 }
