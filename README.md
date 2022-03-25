@@ -59,8 +59,8 @@
 | 💾  Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   | [SQLDelight](https://cashapp.github.io/sqldelight/), [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore), [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) - Future Plan  |
 | ⌨️  Logging            | [Timber](https://github.com/JakeWharton/timber) | [Timber](https://github.com/JakeWharton/timber) - Android, [slf4j + logback](https://www.baeldung.com/kotlin/logging), [Kermit](https://github.com/touchlab/Kermit) |
 | 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/) | [Coil](https://coil-kt.github.io/coil/) |
-| 🔧  Supplimentary   | [Accompanist](https://github.com/google/accompanist)  | [Accompanist](https://github.com/google/accompanist) |
-| 🧪  Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   | Not Setup Yet  |
+| 🔧 Supplimentary   | [Accompanist](https://github.com/google/accompanist)  | [Accompanist](https://github.com/google/accompanist) |
+| 🧪 Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   | [Mockk](https://mockk.io/), [JUnit](https://junit.org/junit5/), [Turbine](https://github.com/cashapp/turbine), [Kotlin Test](https://kotlinlang.org/api/latest/kotlin.test/)  |
 
 ## 🧐 Fun Facts
 
