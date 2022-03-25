@@ -1,15 +1,16 @@
 package work.racka.thinkrchive.v2.common.features.list.container
 
-import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -19,13 +20,16 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.orbitmvi.orbit.test
+import states.list.ThinkpadListState
 import util.DataMappers.asDomainModel
 import util.Resource
 import work.racka.thinkrchive.v2.common.features.list.repository.ListRepository
 import work.racka.thinkrchive.v2.common.features.list.util.TestData
 import work.racka.thinkrchive.v2.common.features.list.util.TestData.responseListToDbObjectList
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ThinkpadListContainerHostImplTest : KoinTest {
@@ -64,12 +68,11 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     }
 
     @Test
-    @Ignore
     fun onContainerCreation_IntentShouldProduceStateWithCorrectValues() = runTest {
         val thinkpadResponse = TestData.thinkpadResponseList
         val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
         val query = ""
-        //every { settingsRepo.readSortSettings() } returns 0
+        every { settingsRepo.sortFlow } returns MutableStateFlow(0).asStateFlow()
         coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
             Resource.Success(
                 thinkpadResponse
@@ -77,37 +80,13 @@ class ThinkpadListContainerHostImplTest : KoinTest {
         )
         coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
         coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
-
-        val myState = containerHost.state
-        launch {
-            myState.test {
-                assertTrue(awaitItem().sortOption == 0)
-                assertEquals(awaitItem().thinkpadList, thinkpadData)
-                awaitComplete()
-            }
-        }
         val testSubject = containerHost.test()
-        //testSubject.runOnCreate()
-        testSubject.testIntent {
-            //getSortedThinkpadList(query)
-            launch {
-                /*state.test {
-                    println("Turbine running")
-                    val item = awaitItem()
-                    assertTrue(item.sortOption == 0)
-                    val item2 = awaitItem()
-                    println(item)
-                    assertEquals(item2.thinkpadList, thinkpadData)
-                    awaitComplete()
-                }*/
-            }
-        }
-
-        /*testSubject.assert(ThinkpadListState.EmptyState) {
+        testSubject.runOnCreate()
+        testSubject.assert(ThinkpadListState.EmptyState) {
             states(
                 { copy(sortOption = 0) },
                 { copy(thinkpadList = thinkpadData) }
             )
-        }*/
+        }
     }
 }
