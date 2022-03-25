@@ -1,16 +1,16 @@
 package work.racka.thinkrchive.v2.common.features.list.container
 
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockkClass
 import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -44,8 +44,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     @BeforeTest
     fun setup() {
         Dispatchers.setMain(StandardTestDispatcher())
-        appSettings = mockkClass(AppSettings::class, relaxed = true)
-        repo = mockkClass(ListRepository::class, relaxed = true)
+        MockKAnnotations.init(this)
         startKoin {
             modules(
                 module {
@@ -77,11 +76,11 @@ class ThinkpadListContainerHostImplTest : KoinTest {
         val thinkpadResponse = TestData.thinkpadResponseList
         val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
         val query = ""
-        every { appSettings.host.state } returns MutableStateFlow(
+        every { appSettings.host.state } returns flowOf(
             ThinkpadSettingsState.State(
                 sortValue = 1
             )
-        )
+        ).stateIn(this)
         coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
             Resource.Success(
                 thinkpadResponse
@@ -98,7 +97,6 @@ class ThinkpadListContainerHostImplTest : KoinTest {
                 awaitComplete()
             }
         }
-
         val testSubject = containerHost.test()
         //testSubject.runOnCreate()
         testSubject.testIntent {

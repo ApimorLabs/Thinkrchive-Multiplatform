@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.details.container
 
+import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -21,8 +22,10 @@ internal class ThinkpadDetailsContainerHostImpl(
     private val model: String?,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {
-    private val logger = Logger.withTag("DetailsContainerHost")
-
+    private val logger = Logger.apply {
+        setLogWriters(CommonWriter())
+        withTag("DetailsContainerHost")
+    }
     override val container: Container<ThinkpadDetailsState, ThinkpadDetailsSideEffect> =
         scope.container(ThinkpadDetailsState.EmptyState) {
             logger.d { "Details Container Initialized" }
@@ -40,7 +43,7 @@ internal class ThinkpadDetailsContainerHostImpl(
             null -> {
                 reduce { ThinkpadDetailsState.EmptyState }
                 postSideEffect(
-                    ThinkpadDetailsSideEffect.DisplayErrorMsg(Constants.THINKPAD_NOT_FOUND)
+                    ThinkpadDetailsSideEffect.DisplayErrorMsg(Constants.THINKPAD_MODEL_NULL)
                 )
             }
             else -> {
