@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.list.repository
 
+import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
 import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
@@ -18,7 +19,10 @@ class ListRepositoryImpl(
     private val thinkpadDao: ThinkpadDao,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ListRepository {
-    private val logger = Logger.withTag("ListRepository")
+    private val logger = Logger.apply {
+        setLogWriters(CommonWriter())
+        withTag("ListRepository")
+    }
 
     override suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>>> =
         withContext(backgroundDispatcher) {

@@ -43,6 +43,8 @@ kotlin {
         implementation(project(":common:features:details"))
         implementation(project(":common:features:donate"))
 
+        implementation(Dependencies.Log.kermit)
+
         with(Dependencies.Koin) {
             api(core)
             api(test)

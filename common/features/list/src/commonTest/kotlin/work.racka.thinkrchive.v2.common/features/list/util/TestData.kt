@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.features.list.util
 
 import data.local.ThinkpadDatabaseObject
 import data.remote.response.ThinkpadResponse
+import domain.Thinkpad
 
 internal object TestData {
     val thinkpadResponseList = listOf(
@@ -374,7 +375,7 @@ internal object TestData {
     )
 
     val ascendingOrderThinkpad = listOf(
-        ThinkpadDatabaseObject(
+        Thinkpad(
             model = "Thinkpad L460",
             imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
             releaseDate = "Jan, 2017",
@@ -404,7 +405,7 @@ internal object TestData {
             biosLockIn = "Yes: Display",
             ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
-        ThinkpadDatabaseObject(
+        Thinkpad(
             model = "Thinkpad P540",
             imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
             releaseDate = "Jan, 2018",
@@ -434,7 +435,7 @@ internal object TestData {
             biosLockIn = "Yes: Display",
             ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
-        ThinkpadDatabaseObject(
+        Thinkpad(
             model = "Thinkpad T450",
             imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
             releaseDate = "Jan, 2015",
@@ -464,7 +465,7 @@ internal object TestData {
             biosLockIn = "Yes: Display",
             ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
-        ThinkpadDatabaseObject(
+        Thinkpad(
             model = "Thinkpad T470",
             imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
             releaseDate = "Jan, 2019",
@@ -494,7 +495,7 @@ internal object TestData {
             biosLockIn = "Yes: Display",
             ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
-        ThinkpadDatabaseObject(
+        Thinkpad(
             model = "Thinkpad X250",
             imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
             releaseDate = "Jan, 2016",

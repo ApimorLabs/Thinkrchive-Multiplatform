@@ -1,11 +1,8 @@
 package work.racka.thinkrchive.v2.common.features.list.repository
 
 import app.cash.turbine.test
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.unmockkAll
-import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -18,14 +15,11 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import util.DataMappers.asDomainModel
+import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.features.list.util.TestData
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ListRepositoryTest : KoinTest {
@@ -73,14 +67,140 @@ class ListRepositoryTest : KoinTest {
     @Test
     fun getAllThinkpads_ReturnsAllThinkpadsFromDbByDao() = runTest {
         val thinkpadDbList = TestData.ascendingOrderThinkpadsDbObject
+        val expect = TestData.ascendingOrderThinkpad
         every { dao.getAllThinkpads() } returns flowOf(thinkpadDbList)
         val data = repo.getAllThinkpads()
         launch {
             data.test {
-                verify { dao.getAllThinkpads() }
                 val actual = expectMostRecentItem()
-                val expect = thinkpadDbList.asDomainModel()
+
+                verify { dao.getAllThinkpads() }
                 assertEquals(expect, actual)
+            }
+        }
+    }
+
+    // Success from the API
+    @Test
+    fun getAllThinkpadsFromNetwork_EmitsLoadingResourceThenSuccessResourceWithData() = runTest {
+        val responseList = TestData.thinkpadResponseList
+        coEvery { api.getThinkpads() } returns responseList
+        val data = repo.getAllThinkpadsFromNetwork()
+        launch {
+            data.test {
+                // Check if Resource.Loading is emitted
+                assertTrue(awaitItem() is Resource.Loading)
+                // Check if the Response list is returned
+                assertEquals(responseList, awaitItem().data)
+                awaitComplete()
+            }
+        }
+    }
+
+    // Failure from the API
+    @Test
+    fun getAllThinkpadsFromNetwork_EmitsLoadingResourceThenErrorResourceWithMsg() = runTest {
+        val expectedErrorMsg = "Failure to Get List from Server"
+        coEvery { api.getThinkpads() } throws IllegalStateException(expectedErrorMsg)
+        val data = repo.getAllThinkpadsFromNetwork()
+        // Verify ap
+        launch {
+            data.test {
+                // Check if Resource.Loading is emitted
+                assertTrue(awaitItem() is Resource.Loading)
+
+                // Check if the Error Resource is returned with it's required message
+                val actualError = awaitItem()
+                val actualErrorMsg = actualError.message
+                assertTrue(actualError is Resource.Error)
+                assertNotNull(actualErrorMsg)
+                assertTrue(actualErrorMsg.contains(expectedErrorMsg))
+                awaitComplete()
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsAlphaAscending_VerifyCallsTheDaoAndDataIsPassed() = runTest {
+        val expected = TestData.ascendingOrderThinkpad
+        val expectedAsDbObject = TestData.ascendingOrderThinkpadsDbObject
+        val query = ""
+        every { dao.getThinkpadsAlphaAscending(query) } returns flowOf(expectedAsDbObject)
+        val data = repo.getThinkpadsAlphaAscending(query)
+        launch {
+            data.test {
+                val actual = expectMostRecentItem()
+
+                verify { dao.getThinkpadsAlphaAscending(query) }
+                assertEquals(expected, actual)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsNewestFirst_VerifyCallsTheDaoAndDataIsPassed() = runTest {
+        val expected = TestData.ascendingOrderThinkpad
+        val expectedAsDbObject = TestData.ascendingOrderThinkpadsDbObject
+        val query = ""
+        every { dao.getThinkpadsNewestFirst(query) } returns flowOf(expectedAsDbObject)
+        val data = repo.getThinkpadsNewestFirst(query)
+        launch {
+            data.test {
+                val actual = expectMostRecentItem()
+
+                verify { dao.getThinkpadsNewestFirst(query) }
+                assertEquals(expected, actual)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsOldestFirst_VerifyCallsTheDaoAndDataIsPassed() = runTest {
+        val expected = TestData.ascendingOrderThinkpad
+        val expectedAsDbObject = TestData.ascendingOrderThinkpadsDbObject
+        val query = ""
+        every { dao.getThinkpadsOldestFirst(query) } returns flowOf(expectedAsDbObject)
+        val data = repo.getThinkpadsOldestFirst(query)
+        launch {
+            data.test {
+                val actual = expectMostRecentItem()
+
+                verify { dao.getThinkpadsOldestFirst(query) }
+                assertEquals(expected, actual)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsLowPriceFirst_VerifyCallsTheDaoAndDataIsPassed() = runTest {
+        val expected = TestData.ascendingOrderThinkpad
+        val expectedAsDbObject = TestData.ascendingOrderThinkpadsDbObject
+        val query = ""
+        every { dao.getThinkpadsLowPriceFirst(query) } returns flowOf(expectedAsDbObject)
+        val data = repo.getThinkpadsLowPriceFirst(query)
+        launch {
+            data.test {
+                val actual = expectMostRecentItem()
+
+                verify { dao.getThinkpadsLowPriceFirst(query) }
+                assertEquals(expected, actual)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsHighPriceFirst_VerifyCallsTheDaoAndDataIsPassed() = runTest {
+        val expected = TestData.ascendingOrderThinkpad
+        val expectedAsDbObject = TestData.ascendingOrderThinkpadsDbObject
+        val query = ""
+        every { dao.getThinkpadsHighPriceFirst(query) } returns flowOf(expectedAsDbObject)
+        val data = repo.getThinkpadsHighPriceFirst(query)
+        launch {
+            data.test {
+                val actual = expectMostRecentItem()
+
+                verify { dao.getThinkpadsHighPriceFirst(query) }
+                assertEquals(expected, actual)
             }
         }
     }
