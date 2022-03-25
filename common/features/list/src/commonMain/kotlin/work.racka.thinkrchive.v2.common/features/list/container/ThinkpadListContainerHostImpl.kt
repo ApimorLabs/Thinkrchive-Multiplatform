@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.list.container
 
+import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +20,10 @@ internal class ThinkpadListContainerHostImpl(
     private val settings: AppSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
-    private val logger = Logger.withTag("ContainerHost")
+    private val logger = Logger.apply {
+        setLogWriters(CommonWriter())
+        withTag("ContainerHost")
+    }
 
     override val container = scope
         .container<ThinkpadListState.State, ThinkpadListSideEffect>(ThinkpadListState.EmptyState) {

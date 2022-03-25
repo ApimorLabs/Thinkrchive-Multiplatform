@@ -48,6 +48,8 @@ kotlin {
         implementation(Dependencies.Mockk.core)
         implementation(Dependencies.Mockk.commonMultiplatform)
 
+        implementation(Dependencies.OrbitMVI.test)
+
         implementation(Dependencies.Android.turbine)
         implementation(Dependencies.Koin.test)
         implementation(Dependencies.Kotlin.Coroutines.test)
