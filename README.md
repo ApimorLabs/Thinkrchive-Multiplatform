@@ -48,9 +48,9 @@
 
 | Component       | Thinkrchive                   | Thinkrchive-Multiplaform                |
 |----------------	|------------------------------	|-----------------------------------------|
-| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   | [Compose Mulitplatform](https://www.jetbrains.com/lp/compose-mpp/)  |
-| 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)  |  [MVI](https://github.com/MostafaBorjali/MVI-Architecture/wiki/MVI-Architecture-Wiki) - Not Completed Yet |
-| 🧠  Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server) | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)  |
+| 🎭 User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   | [Compose Mulitplatform](https://www.jetbrains.com/lp/compose-mpp/)  |
+| 🏗 Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)  |  [MVI](https://github.com/MostafaBorjali/MVI-Architecture/wiki/MVI-Architecture-Wiki) |
+| 🧠 Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server) | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)  |
 | 💉  DI                | [Hilt](https://dagger.dev/hilt/)  | [Koin](https://insert-koin.io/)  |
 | 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)   | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation), [Decompose](https://arkivanov.github.io/Decompose/)  |
 | 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) |
@@ -74,10 +74,10 @@
 
 ## ✅ TODO
 
-- Add more Tests (Unit Tests, UI Tests, Integration Tests)
+- Add more Tests (UI Tests & Integration Tests)
 - Add more features
 - Support for more platform
-- Fully switch to MVI
+- ~Fully switch to MVI~
 
 ## 🙇 Credits
 
