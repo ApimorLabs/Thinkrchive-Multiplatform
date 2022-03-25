@@ -10,7 +10,7 @@ internal actual object Platform {
         factory {
             ThinkpadListViewModel(
                 helper = get(),
-                settings = get(),
+                settingsRepo = get(),
                 scope = CoroutineScope(Dispatchers.Main)
             )
         }

@@ -79,6 +79,9 @@ android {
 dependencies {
     implementation(project(":common:model"))
     implementation(project(":common:integration"))
+    implementation(project(":common:persistence:settings"))
+
+    // Feature Modules
     implementation(project(":common:features:about"))
     implementation(project(":common:features:settings"))
     implementation(project(":common:features:list"))

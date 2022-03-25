@@ -14,11 +14,10 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
-import states.settings.ThinkpadSettingsSideEffect
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.theme.Theme
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
 import work.racka.thinkrchive.v2.common.integration.di.KoinMain
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 class ThinkrchiveApplication : Application() {
 
@@ -31,20 +30,15 @@ class ThinkrchiveApplication : Application() {
             androidContext(this@ThinkrchiveApplication)
         }
 
-        val settings by inject<AppSettings>()
+        val settings by inject<MultiplatformSettings>()
 
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {
-            settings.host.sideEffect.collectLatest { effect ->
-                when (effect) {
-                    is ThinkpadSettingsSideEffect.ApplyThemeOption -> {
-                        if (effect.themeValue != Theme.MATERIAL_YOU.themeValue) {
-                            AppCompatDelegate.setDefaultNightMode(effect.themeValue)
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-                        }
-                    }
-                    else -> {}
+            settings.themeFlow.collectLatest { themeValue ->
+                if (themeValue != Theme.MATERIAL_YOU.themeValue) {
+                    AppCompatDelegate.setDefaultNightMode(themeValue)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
                 }
             }
         }

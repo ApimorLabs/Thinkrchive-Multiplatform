@@ -5,6 +5,7 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -13,11 +14,11 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.Resource
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 internal class ThinkpadListContainerHostImpl(
     private val helper: ThinkpadListHelper,
-    private val settings: AppSettings,
+    private val settingsRepo: MultiplatformSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {
     private val logger = Logger.apply {
@@ -39,8 +40,8 @@ internal class ThinkpadListContainerHostImpl(
         get() = container.sideEffectFlow
 
     private fun getUserSortOption() = intent {
-        settings.host.state.collect { settingsState ->
-            reduce { state.copy(sortOption = settingsState.sortValue) }
+        settingsRepo.sortFlow.collectLatest { sortOption ->
+            reduce { state.copy(sortOption = sortOption) }
             getSortedThinkpadList()
         }
     }

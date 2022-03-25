@@ -3,8 +3,8 @@ package work.racka.thinkrchive.v2.common.settings.di
 import com.russhwolf.settings.Settings
 import org.koin.core.KoinApplication
 import org.koin.dsl.module
-import work.racka.thinkrchive.v2.common.settings.repository.SettingsRepository
-import work.racka.thinkrchive.v2.common.settings.repository.SettingsRepositoryImpl
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettingsImpl
 
 object Settings {
 
@@ -17,9 +17,9 @@ object Settings {
         }
 
     private fun commonModule() = module {
-        single<SettingsRepository> {
+        single<MultiplatformSettings> {
             val settings = Settings()
-            SettingsRepositoryImpl(settings)
+            MultiplatformSettingsImpl(settings)
         }
     }
 }

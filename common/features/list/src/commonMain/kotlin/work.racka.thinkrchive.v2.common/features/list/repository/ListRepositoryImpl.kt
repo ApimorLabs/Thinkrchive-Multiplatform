@@ -14,7 +14,7 @@ import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
 
-class ListRepositoryImpl(
+internal class ListRepositoryImpl(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao,
     private val backgroundDispatcher: CoroutineDispatcher

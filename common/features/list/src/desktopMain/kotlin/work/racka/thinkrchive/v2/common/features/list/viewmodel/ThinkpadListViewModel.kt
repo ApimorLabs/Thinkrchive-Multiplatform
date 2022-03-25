@@ -4,17 +4,17 @@ import kotlinx.coroutines.CoroutineScope
 import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHost
 import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHostImpl
 import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListHelper
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 actual class ThinkpadListViewModel(
     helper: ThinkpadListHelper,
-    settings: AppSettings,
+    settingsRepo: MultiplatformSettings,
     scope: CoroutineScope
 ) {
     val hostDesktop: ThinkpadListContainerHost by lazy {
         ThinkpadListContainerHostImpl(
             helper = helper,
-            settings = settings,
+            settingsRepo = settingsRepo,
             scope = scope
         )
     }

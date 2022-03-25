@@ -3,14 +3,12 @@ package work.racka.thinkrchive.v2.common.features.list.container
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -21,13 +19,12 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.orbitmvi.orbit.test
-import states.settings.ThinkpadSettingsState
 import util.DataMappers.asDomainModel
 import util.Resource
 import work.racka.thinkrchive.v2.common.features.list.repository.ListRepository
 import work.racka.thinkrchive.v2.common.features.list.util.TestData
 import work.racka.thinkrchive.v2.common.features.list.util.TestData.responseListToDbObjectList
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 import kotlin.test.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -39,7 +36,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     lateinit var repo: ListRepository
 
     @RelaxedMockK
-    lateinit var appSettings: AppSettings
+    lateinit var settingsRepo: MultiplatformSettings
 
     @BeforeTest
     fun setup() {
@@ -51,7 +48,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
                     single {
                         ThinkpadListContainerHostImpl(
                             helper = ThinkpadListHelper(repo),
-                            settings = appSettings,
+                            settingsRepo = settingsRepo,
                             scope = CoroutineScope(Dispatchers.Default)
                         )
                     }
@@ -67,20 +64,12 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     }
 
     @Test
-    fun testing() {
-        assertTrue(true)
-    }
-
-    @Test
+    @Ignore
     fun onContainerCreation_IntentShouldProduceStateWithCorrectValues() = runTest {
         val thinkpadResponse = TestData.thinkpadResponseList
         val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
         val query = ""
-        every { appSettings.host.state } returns flowOf(
-            ThinkpadSettingsState.State(
-                sortValue = 1
-            )
-        ).stateIn(this)
+        //every { settingsRepo.readSortSettings() } returns 0
         coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
             Resource.Success(
                 thinkpadResponse

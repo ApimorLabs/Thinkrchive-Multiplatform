@@ -14,7 +14,7 @@ import androidx.core.view.WindowCompat
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.navigation.ThinkrchiveApp
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi
@@ -22,7 +22,7 @@ import work.racka.thinkrchive.v2.common.features.settings.AppSettings
 @ExperimentalComposeUiApi
 class MainActivity : AppCompatActivity() {
 
-    private val settings: AppSettings by inject()
+    private val settings: MultiplatformSettings by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val state by settings.host.state.collectAsState()
-            ThinkrchiveApp(state.themeValue)
+            val themeValue by settings.themeFlow.collectAsState()
+            ThinkrchiveApp(themeValue)
             Timber.d("setContent called")
         }
     }

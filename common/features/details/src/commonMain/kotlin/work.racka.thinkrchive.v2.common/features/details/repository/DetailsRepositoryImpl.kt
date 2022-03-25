@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import util.DataMappers.asThinkpad
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 
-class DetailsRepositoryImpl(
+internal class DetailsRepositoryImpl(
     private val thinkpadDao: ThinkpadDao,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : DetailsRepository {

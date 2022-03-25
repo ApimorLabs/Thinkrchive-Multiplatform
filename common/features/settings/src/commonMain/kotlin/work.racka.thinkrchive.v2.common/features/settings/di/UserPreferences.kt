@@ -22,7 +22,7 @@ object UserPreferences {
             CoroutineScope(Dispatchers.Default + SupervisorJob())
         }
 
-        single {
+        factory {
             AppSettings(
                 settings = get(),
                 scope = get()

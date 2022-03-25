@@ -9,7 +9,7 @@ internal actual object Platform {
         viewModel {
             ThinkpadListViewModel(
                 helper = get(),
-                settings = get()
+                settingsRepo = get()
             )
         }
     }
