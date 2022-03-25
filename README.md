@@ -8,8 +8,8 @@
 <img alt="Twitter: rackadev" src="https://img.shields.io/twitter/follow/rackadev.svg?style=social" />
 </a>
 
-> An app showing all details for various Lenovo Thinkpad models. Made to try out Jepack Compose for Android.
-> This repo is a Mutliplatform version of the initial [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
+> An app showing all details for various Lenovo Thinkpad models. Made to try out Jetpack Compose for Android and Desktop.
+> This repo is a Multiplatform version of the initial [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
 
 ### ✨ Documentation
 
@@ -34,7 +34,7 @@
 | Desktop - Linux  |[![Download Button](https://img.shields.io/static/v1?label=In-Progress&message=v0.0.0-experimental00&color=purple)]()| 🧪 Experimental |
 
 > ℹ️ Compose Debug apks are sometimes laggy as they contain a lot of debug code.
-> 
+>
 > ℹ️ The apk above is a signed release version and should perform as expected.
 
 ## 🏋 Dependency
@@ -46,31 +46,34 @@
 
 ### Compared to [Thinkrchive](https://github.com/racka98/ThinkRchive) which was Android-centric
 
-| Component       | Thinkrchive                   | Thinkrchive-Multiplaform                |
+| Component       | Thinkrchive                   | Thinkrchive-Multiplatform                |
 |----------------	|------------------------------	|-----------------------------------------|
-| 🎭 User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   | [Compose Mulitplatform](https://www.jetbrains.com/lp/compose-mpp/)  |
+| 🎭 User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)   | [Compose Multiplatform](https://www.jetbrains.com/lp/compose-mpp/)  |
 | 🏗 Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)  |  [MVI](https://github.com/MostafaBorjali/MVI-Architecture/wiki/MVI-Architecture-Wiki) |
 | 🧠 Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server) | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)  |
-| 💉  DI                | [Hilt](https://dagger.dev/hilt/)  | [Koin](https://insert-koin.io/)  |
-| 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)   | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation), [Decompose](https://arkivanov.github.io/Decompose/)  |
-| 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) |
-| 🌐  Networking        | [Ktor Client](https://ktor.io/docs/client.html) | [Ktor Client](https://ktor.io/docs/client.html)  |
+| 💉 DI                | [Hilt](https://dagger.dev/hilt/)  | [Koin](https://insert-koin.io/)  |
+| 🛣️ Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)   | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation), [Decompose](https://arkivanov.github.io/Decompose/)  |
+| 🌊 Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) |
+| 🌐 Networking        | [Ktor Client](https://ktor.io/docs/client.html) | [Ktor Client](https://ktor.io/docs/client.html)  |
 | 📄 JSON            | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization) | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization)  |
-| 💾 Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   | [SQLDelight](https://cashapp.github.io/sqldelight/), [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings)  |
+| 💾 Persistence     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   | [SQLDelight](https://cashapp.github.io/sqldelight/), [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings)  |
 | ⌨️ Logging            | [Timber](https://github.com/JakeWharton/timber) | [Timber](https://github.com/JakeWharton/timber) - Android, [slf4j + logback](https://www.baeldung.com/kotlin/logging), [Kermit](https://github.com/touchlab/Kermit) |
-| 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/) | [Coil](https://coil-kt.github.io/coil/) |
-| 🔧 Supplimentary   | [Accompanist](https://github.com/google/accompanist)  | [Accompanist](https://github.com/google/accompanist) |
+| 📸 Image Loading      | [Coil](https://coil-kt.github.io/coil/) | [Coil](https://coil-kt.github.io/coil/) |
+| 🔧 Supplementary   | [Accompanist](https://github.com/google/accompanist)  | [Accompanist](https://github.com/google/accompanist) |
 | 🧪 Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   | [Mockk](https://mockk.io/), [JUnit](https://junit.org/junit5/), [Turbine](https://github.com/cashapp/turbine), [Kotlin Test](https://kotlinlang.org/api/latest/kotlin.test/)  |
 
 ## 🧐 Fun Facts
 
-- ThinkRchive
-  originally used [a google sheet](https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/edit?usp=sharing)
+- ThinkRchive originally
+  used [a google sheet](https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/edit?usp=sharing)
   as the backend via [Retrosheet](https://github.com/theapache64/retrosheet)
-  
-- ThinkRchive now uses [a custom Ktor powered server client](https://github.com/racka98/Thinkrchive-Server) as the backend. The backend is hosted on [Heroku](https://www.heroku.com)
 
-- I mocked the designs for this app on Figma and the finished app looks better than my initial designs
+- ThinkRchive now
+  uses [a custom Ktor powered server client](https://github.com/racka98/Thinkrchive-Server) as the
+  backend. The backend is hosted on [Heroku](https://www.heroku.com)
+
+- I mocked the designs for this app on Figma and the finished app looks better than my initial
+  designs
 
 ## ✅ TODO
 
@@ -81,8 +84,10 @@
 
 ## 🙇 Credits
 
-- Special thanks to [@theapache64](https://github.com/theapache64) for [readgen](https://github.com/theapache64/readgen)
-- Thanks to all amazing people at Twitter for inspiring me to continue the development of this project.
+- Special thanks to [@theapache64](https://github.com/theapache64)
+  for [readgen](https://github.com/theapache64/readgen)
+- Thanks to all amazing people at Twitter for inspiring me to continue the development of this
+  project.
 
 ## 🤝 Contributing
 
