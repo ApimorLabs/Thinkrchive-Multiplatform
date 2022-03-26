@@ -1,10 +1,8 @@
 package work.racka.thinkrchive.v2.common.features.list.container
 
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
+import domain.Thinkpad
+import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,28 +65,238 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     }
 
     @Test
-    fun onContainerCreation_IntentShouldProduceStateWithCorrectValues() = runTest {
+    fun onContainerCreation_WhenNetworkResponseIsSuccess_ProducesStateWithNetworkLoadingFalseSideEffect() =
+        runTest {
+            val thinkpadResponse = TestData.thinkpadResponseList
+            val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
+            val query = ""
+            val sortOption = 0
+
+            // Mocking
+            every { settingsRepo.sortFlow } returns flowOf(sortOption)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
+                Resource.Success(
+                    thinkpadResponse
+                )
+            )
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
+
+            // Testing
+            val testSubject = containerHost.test()
+            testSubject.runOnCreate()
+
+            verify { settingsRepo.sortFlow }
+            coVerify { repo.getAllThinkpadsFromNetwork() }
+            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify { repo.refreshThinkpadList(thinkpadResponse) }
+            testSubject.assert(ThinkpadListState.EmptyState) {
+                states(
+                    { copy(sortOption = sortOption) },
+                    { copy(thinkpadList = thinkpadData) }
+                )
+                postedSideEffects(
+                    ThinkpadListSideEffect.Network(isLoading = false)
+                )
+            }
+        }
+
+    // We also have to verify repo.refreshThinkpadList() is never called
+    @Test
+    fun onContainerCreation_WhenNetworkResponseIsLoading_ProducesStateWithNetworkLoadingTrueSideEffect() =
+        runTest {
+            val thinkpadResponse = TestData.thinkpadResponseList
+            val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
+            val query = ""
+            val sortOption = 0
+
+            // Mocking
+            every { settingsRepo.sortFlow } returns flowOf(sortOption)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(Resource.Loading())
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
+
+            // Testing
+            val testSubject = containerHost.test()
+            testSubject.runOnCreate()
+
+            verify { settingsRepo.sortFlow }
+            coVerify { repo.getAllThinkpadsFromNetwork() }
+            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
+            testSubject.assert(ThinkpadListState.EmptyState) {
+                states(
+                    { copy(sortOption = sortOption) },
+                    { copy(thinkpadList = thinkpadData) }
+                )
+                postedSideEffects(
+                    ThinkpadListSideEffect.Network(isLoading = true)
+                )
+            }
+        }
+
+    // We also have to verify repo.refreshThinkpadList() is never called
+    @Test
+    fun onContainerCreation_WhenNetworkResponseIsError_ProducesStateWithNetworkLoadingFalseAndErrorMsgSideEffect() =
+        runTest {
+            val thinkpadResponse = TestData.thinkpadResponseList
+            val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
+            val query = ""
+            val errorMsg = "This is an error message"
+            val sortOption = 0
+
+            // Mocking
+            every { settingsRepo.sortFlow } returns flowOf(sortOption)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(Resource.Error(errorMsg))
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
+
+            // Testing
+            val testSubject = containerHost.test()
+            testSubject.runOnCreate()
+
+            verify { settingsRepo.sortFlow }
+            coVerify { repo.getAllThinkpadsFromNetwork() }
+            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
+            testSubject.assert(ThinkpadListState.EmptyState) {
+                states(
+                    { copy(sortOption = sortOption) },
+                    { copy(thinkpadList = thinkpadData) }
+                )
+                postedSideEffects(
+                    ThinkpadListSideEffect.Network(isLoading = false, errorMsg = errorMsg)
+                )
+            }
+        }
+
+    @Test
+    fun getSortedThinkpadList_WhenCalled_RetrievesSortedThinkpadsFromDb() = runTest {
         val thinkpadResponse = TestData.thinkpadResponseList
         val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
         val query = ""
-        every { settingsRepo.sortFlow } returns flowOf(0)
-        coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
-            Resource.Success(
-                thinkpadResponse
+        val sortOption = 2
+
+        // Mocking
+        coEvery { repo.getThinkpadsOldestFirst(query) } returns flowOf(thinkpadData)
+
+        // Testing
+        val testSubject = containerHost
+            .test(
+                ThinkpadListState.State(
+                    thinkpadList = listOf(),
+                    sortOption = sortOption
+                )
             )
-        )
-        coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
-        coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
-        val testSubject = containerHost.test()
-        testSubject.runOnCreate()
-        testSubject.assert(ThinkpadListState.EmptyState) {
+        testSubject.testIntent {
+            getSortedThinkpadList(query)
+        }
+
+        coVerify(exactly = 0) { repo.getThinkpadsAlphaAscending(query) }
+        coVerify { repo.getThinkpadsOldestFirst(query) }
+        testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
             states(
-                { copy(sortOption = 0) },
+                { copy(sortOption = sortOption, thinkpadList = listOf()) },
                 { copy(thinkpadList = thinkpadData) }
-            )
-            postedSideEffects(
-                ThinkpadListSideEffect.Network(isLoading = false)
             )
         }
     }
+
+    @Test
+    fun getSortedThinkpadList_WhenSearchedItemFound_RetrievesSortedThinkpadsFromDbWithItem() =
+        runTest {
+            val thinkpadData = TestData.ascendingOrderThinkpad // Last Item is X250
+            val oneThinkpad = listOf(thinkpadData.last()) // Will only have the X250
+            val emptyQuery = ""
+            val query = "X250"
+            val sortOption = 0
+
+            // Mocking
+            // emptyQuery should return thinkpadData as is then query will return specific data (oneThinkpad)
+            coEvery { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(oneThinkpad)
+
+            // Testing
+            val testSubject = containerHost
+                .test(
+                    ThinkpadListState.State(
+                        thinkpadList = listOf(),
+                        sortOption = sortOption
+                    )
+                )
+            testSubject.testIntent { getSortedThinkpadList(emptyQuery) }
+            // New Search
+            testSubject.testIntent { getSortedThinkpadList(query) }
+
+            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
+            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
+            testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
+                states(
+                    { copy(thinkpadList = thinkpadData) },
+                    { copy(thinkpadList = oneThinkpad) }
+                )
+            }
+        }
+
+    @Test
+    fun getSortedThinkpadList_WhenSearchedItemNotFound_RetrievesEmptyThinkpadListFromDb() =
+        runTest {
+            val thinkpadData = TestData.ascendingOrderThinkpad // Last Item is X250
+            val emptyThinkpadList = emptyList<Thinkpad>() // Will only have the X250
+            val emptyQuery = ""
+            val query = "Definitely not a Thinkpad"
+            val sortOption = 0
+
+            // Mocking
+            // emptyQuery should return thinkpadData as is then query will return an empty list
+            coEvery { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(emptyThinkpadList)
+
+            // Testing
+            val testSubject = containerHost
+                .test(
+                    ThinkpadListState.State(
+                        thinkpadList = listOf(),
+                        sortOption = sortOption
+                    )
+                )
+            testSubject.testIntent { getSortedThinkpadList(emptyQuery) }
+            // New Search
+            testSubject.testIntent { getSortedThinkpadList(query) }
+
+            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
+            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
+            testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
+                states(
+                    { copy(thinkpadList = thinkpadData) },
+                    { copy(thinkpadList = emptyThinkpadList) }
+                )
+            }
+        }
+
+    @Test
+    fun sortSelected_WhenNewSortOptionSelected_RetrievesNewSortedThinkpadListFromDb() =
+        runTest {
+            val defaultSortOption = 0
+            val newSortOption = 2
+
+            // Testing
+            val testSubject = spyk(containerHost)
+                .test(
+                    ThinkpadListState.State(
+                        thinkpadList = listOf(),
+                        sortOption = defaultSortOption
+                    )
+                )
+            testSubject.testIntent { sortSelected(defaultSortOption) }
+            // New Search
+            testSubject.testIntent { sortSelected(newSortOption) }
+
+            testSubject.assert(ThinkpadListState.State(listOf(), defaultSortOption)) {
+                states(
+                    { copy(sortOption = defaultSortOption) },
+                    { copy(sortOption = newSortOption) }
+                )
+            }
+        }
 }

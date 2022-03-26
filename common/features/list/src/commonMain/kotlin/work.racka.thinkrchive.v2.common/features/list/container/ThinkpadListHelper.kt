@@ -7,6 +7,7 @@ class ThinkpadListHelper(
     val repository: ListRepository
 ) {
 
+    // Should remove hardcoded sort option values
     suspend fun getThinkpadListSorted(model: String, sortOption: Int) =
         when (sortOption) {
             0 -> repository.getThinkpadsAlphaAscending(model)
