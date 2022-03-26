@@ -1,8 +1,8 @@
 package work.racka.thinkrchive.v2.common.settings.repository
 
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 internal class MultiplatformSettingsImpl(
@@ -17,10 +17,10 @@ internal class MultiplatformSettingsImpl(
     private val _sortFlow: MutableStateFlow<Int> = MutableStateFlow(readSortSettings())
     private val _themeFlow: MutableStateFlow<Int> = MutableStateFlow(readThemeSettings())
 
-    override val themeFlow: StateFlow<Int>
+    override val themeFlow: Flow<Int>
         get() = _themeFlow
 
-    override val sortFlow: StateFlow<Int>
+    override val sortFlow: Flow<Int>
         get() = _sortFlow
 
     override fun saveThemeSettings(value: Int) {

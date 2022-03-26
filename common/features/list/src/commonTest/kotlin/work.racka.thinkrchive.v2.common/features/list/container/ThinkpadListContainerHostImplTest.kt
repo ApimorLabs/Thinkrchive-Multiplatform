@@ -8,8 +8,6 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -20,6 +18,7 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.orbitmvi.orbit.test
+import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.DataMappers.asDomainModel
 import util.Resource
@@ -72,7 +71,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
         val thinkpadResponse = TestData.thinkpadResponseList
         val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
         val query = ""
-        every { settingsRepo.sortFlow } returns MutableStateFlow(0).asStateFlow()
+        every { settingsRepo.sortFlow } returns flowOf(0)
         coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
             Resource.Success(
                 thinkpadResponse
@@ -86,6 +85,9 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             states(
                 { copy(sortOption = 0) },
                 { copy(thinkpadList = thinkpadData) }
+            )
+            postedSideEffects(
+                ThinkpadListSideEffect.Network(isLoading = false)
             )
         }
     }

@@ -1,10 +1,10 @@
 package work.racka.thinkrchive.v2.common.settings.repository
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface MultiplatformSettings {
-    val themeFlow: StateFlow<Int>
-    val sortFlow: StateFlow<Int>
+    val themeFlow: Flow<Int>
+    val sortFlow: Flow<Int>
     fun saveThemeSettings(value: Int)
     fun saveSortSettings(value: Int)
 }

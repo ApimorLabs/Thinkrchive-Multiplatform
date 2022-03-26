@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.navigation.ThinkrchiveApp
+import work.racka.thinkrchive.v2.android.ui.theme.Theme
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 @ExperimentalMaterial3Api
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val themeValue by settings.themeFlow.collectAsState()
+            val themeValue by settings.themeFlow
+                .collectAsState(Theme.FOLLOW_SYSTEM.themeValue)
             ThinkrchiveApp(themeValue)
             Timber.d("setContent called")
         }
