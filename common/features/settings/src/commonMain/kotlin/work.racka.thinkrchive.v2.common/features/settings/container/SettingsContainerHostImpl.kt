@@ -37,23 +37,23 @@ internal class SettingsContainerHostImpl(
 
     private fun readThemeSettings() = intent {
         settings.themeFlow.collectLatest { themeValue ->
-            postSideEffect(ThinkpadSettingsSideEffect.ApplyThemeOption(themeValue))
             reduce { state.copy(themeValue = themeValue) }
         }
     }
 
     private fun readSortSettings() = intent {
         settings.sortFlow.collectLatest { sortValue ->
-            postSideEffect(ThinkpadSettingsSideEffect.ApplySortOption(sortValue))
             reduce { state.copy(sortValue = sortValue) }
         }
     }
 
     override fun saveThemeSettings(themeValue: Int) = intent {
         settings.saveThemeSettings(themeValue)
+        postSideEffect(ThinkpadSettingsSideEffect.ApplyThemeOption(themeValue))
     }
 
     override fun saveSortSettings(sortValue: Int) = intent {
         settings.saveSortSettings(sortValue)
+        postSideEffect(ThinkpadSettingsSideEffect.ApplySortOption(sortValue))
     }
 }
