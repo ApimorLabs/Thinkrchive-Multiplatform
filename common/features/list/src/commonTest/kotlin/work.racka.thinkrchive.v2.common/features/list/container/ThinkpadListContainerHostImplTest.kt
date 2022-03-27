@@ -34,10 +34,10 @@ class ThinkpadListContainerHostImplTest : KoinTest {
     private val containerHost: ThinkpadListContainerHostImpl by inject()
 
     @RelaxedMockK
-    lateinit var repo: ListRepository
+    private lateinit var repo: ListRepository
 
     @RelaxedMockK
-    lateinit var settingsRepo: MultiplatformSettings
+    private lateinit var settingsRepo: MultiplatformSettings
 
     @BeforeTest
     fun setup() {

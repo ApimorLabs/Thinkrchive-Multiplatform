@@ -33,7 +33,7 @@ class ThinkpadDetailsContainerHostImpTest : KoinTest {
     private val containerHost: ThinkpadDetailsContainerHostImpl by inject()
 
     @RelaxedMockK
-    lateinit var repo: DetailsRepository
+    private lateinit var repo: DetailsRepository
 
     private val model: String = "some_thinkpad"
 

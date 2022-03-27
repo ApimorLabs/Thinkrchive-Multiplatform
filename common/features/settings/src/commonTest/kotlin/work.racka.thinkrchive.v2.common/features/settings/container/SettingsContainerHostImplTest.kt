@@ -31,7 +31,7 @@ class SettingsContainerHostImplTest : KoinTest {
     private val containerHost: SettingsContainerHostImpl by inject()
 
     @RelaxedMockK
-    lateinit var settingsRepo: MultiplatformSettings
+    private lateinit var settingsRepo: MultiplatformSettings
 
     @BeforeTest
     fun setup() {
