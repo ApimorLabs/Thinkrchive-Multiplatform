@@ -114,7 +114,7 @@ fun ThinkpadListScreenUI(
                         state = state,
                         refreshTriggerDistance = trigger,
                         scale = true,
-                        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+                        backgroundColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.primary
                     )
                 }

@@ -150,6 +150,7 @@ dependencies {
     // Accompanist
     with(Dependencies.Android.Accompanist) {
         implementation(swipeRefresh)
+        implementation(systemUiController)
         implementation(navigationAnimations)
     }
 

@@ -133,7 +133,7 @@ private suspend fun manageSideEffects(
                         val result = scaffoldState.snackbarHostState.showSnackbar(
                             message = sideEffect.msg,
                             actionLabel = "CONNECT",
-                            duration = SnackbarDuration.Indefinite
+                            duration = SnackbarDuration.Long
                         )
                         if (result == SnackbarResult.ActionPerformed) {
                             internetSettings()

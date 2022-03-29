@@ -4,13 +4,18 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.navigation.ThinkrchiveApp
@@ -35,6 +40,22 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val themeValue by settings.themeFlow
                 .collectAsState(Theme.FOLLOW_SYSTEM.themeValue)
+            val systemUiController = rememberSystemUiController()
+            val isDarkMode = isSystemInDarkTheme()
+            val useDarkIcons = derivedStateOf {
+                when (themeValue) {
+                    Theme.FOLLOW_SYSTEM.themeValue -> !isDarkMode
+                    Theme.DARK_THEME.themeValue -> false
+                    Theme.LIGHT_THEME.themeValue -> true
+                    else -> !isDarkMode
+                }
+            }
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    darkIcons = useDarkIcons.value,
+                    color = Color.Transparent
+                )
+            }
             ThinkrchiveApp(themeValue)
             Timber.d("setContent called")
         }
