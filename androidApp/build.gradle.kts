@@ -148,8 +148,9 @@ dependencies {
     implementation(Dependencies.Android.coilImage)
 
     // Accompanist
-    with(Dependencies.Android) {
-        implementation(accompanistNavigationAnimations)
+    with(Dependencies.Android.Accompanist) {
+        implementation(swipeRefresh)
+        implementation(navigationAnimations)
     }
 
     // Splash Screen

@@ -24,7 +24,6 @@ object Versions {
     const val coreKtx = "1.7.0"
 
     // Compose Base
-    const val composeKotlin = "1.6.10"
     const val compose = "1.2.0-alpha06"
     const val composeConstraintLayout = "1.0.0-beta02"
     const val composeMaterial3 = "1.0.0-alpha08"
@@ -65,12 +64,6 @@ object Versions {
     // Helpers
     const val accompanist = "0.24.5-alpha"
     const val coilImage = "1.4.0"
-
-    // * No longer in use * //
-    const val moshi = "1.13.0"
-    const val retrofit = "2.9.0"
-    const val retrosheet = "2.0.0-beta03"
-    // ******************** //
 
     // Database
     const val room = "2.4.1"

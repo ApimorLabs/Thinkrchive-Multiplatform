@@ -62,6 +62,7 @@ fun NavGraphBuilder.ThinkpadListScreen(
             modifier = modifier,
             thinkpadList = state.thinkpadList,
             networkLoading = sideEffect.isLoading,
+            onRefresh = { host.refreshThinkpadList() },
             onSearch = { query ->
                 host.getSortedThinkpadList(query)
             },

@@ -160,15 +160,10 @@ object Dependencies {
         val coilImage by lazy { "io.coil-kt:coil-compose:${Versions.coilImage}" }
 
         // Accompanist
-        @Deprecated("Switch to Compose Foundation Insets")
-        val accompanistInsets by lazy { "com.google.accompanist:accompanist-insets:${Versions.accompanist}" }
-        val accompanistNavigationAnimations by lazy { "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}" }
-
-        // Room
-        val roomRuntime by lazy { "androidx.room:room-runtime:${Versions.room}" }
-        val roomCompiler by lazy { "androidx.room:room-compiler:${Versions.room}" }
-        val roomKtx by lazy { "androidx.room:room-ktx:${Versions.room}" }
-        val roomTest by lazy { "androidx.room:room-testing:${Versions.room}" }
+        object Accompanist {
+            val navigationAnimations by lazy { "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}" }
+            val swipeRefresh by lazy { "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}" }
+        }
 
         // Preferences DataStore
         val prefDataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }

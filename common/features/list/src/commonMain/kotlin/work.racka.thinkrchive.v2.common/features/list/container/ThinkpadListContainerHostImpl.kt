@@ -70,7 +70,7 @@ internal class ThinkpadListContainerHostImpl(
                     postSideEffect(
                         ThinkpadListSideEffect.Network(isLoading = false)
                     )
-                    helper.refreshThinkpadList(thinkpads = resource.data!!)
+                    resource.data?.let { helper.refreshThinkpadList(it) }
                 }
                 is Resource.Error -> {
                     postSideEffect(

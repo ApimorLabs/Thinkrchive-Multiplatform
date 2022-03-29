@@ -26,11 +26,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import domain.Thinkpad
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.components.CustomSearchBar
-import work.racka.thinkrchive.v2.android.ui.components.FloatingScrollButtonAndLoadingIndicator
+import work.racka.thinkrchive.v2.android.ui.components.FloatingScrollToTopButton
 import work.racka.thinkrchive.v2.android.ui.components.HomeBottomSheet
 import work.racka.thinkrchive.v2.android.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
@@ -52,6 +55,7 @@ fun ThinkpadListScreenUI(
     onSettingsClicked: () -> Unit = { },
     onAboutClicked: () -> Unit = { },
     onDonateClicked: () -> Unit = { },
+    onRefresh: () -> Unit = { },
     currentSortOption: Int,
     thinkpadList: List<Thinkpad>,
     networkLoading: Boolean,
@@ -86,67 +90,85 @@ fun ThinkpadListScreenUI(
             sheetElevation = 0.dp,
             sheetBackgroundColor = Color.Transparent
         ) {
-            LazyColumn(
-                state = listState,
-                modifier = modifier,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Timber.d("thinkpadListScreen Contents called")
-                item {
-                    Spacer(modifier = Modifier.statusBarsPadding())
-                    CustomSearchBar(
-                        focusManager = focusManager,
-                        onSearch = {
-                            onSearch(it)
-                        },
-                        onDismissSearchClicked = {
-                            onSearch("")
-                        },
-                        onOptionsClicked = {
-                            scope.launch {
-                                sheetState.show()
-                            }
-                        },
-                        modifier = Modifier.padding(
-                            vertical = Dimens.SmallPadding.size
-                        )
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing = networkLoading),
+                onRefresh = { onRefresh() },
+                indicator = { state, trigger ->
+                    SwipeRefreshIndicator(
+                        modifier = Modifier
+                            .statusBarsPadding()
+                            .padding(vertical = Dimens.MediumPadding.size),
+                        state = state,
+                        refreshTriggerDistance = trigger,
+                        scale = true,
+                        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.primary
                     )
                 }
-                items(thinkpadList) {
-                    ThinkpadEntry(
-                        thinkpad = it,
-                        onEntryClick = { onEntryClick(it) },
-                        modifier = Modifier
-                            .padding(
-                                horizontal = Dimens.MediumPadding.size,
+            ) {
+                LazyColumn(
+                    state = listState,
+                    modifier = modifier,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Timber.d("thinkpadListScreen Contents called")
+                    item {
+                        Spacer(modifier = Modifier.statusBarsPadding())
+                        CustomSearchBar(
+                            focusManager = focusManager,
+                            onSearch = {
+                                onSearch(it)
+                            },
+                            onDismissSearchClicked = {
+                                onSearch("")
+                            },
+                            onOptionsClicked = {
+                                scope.launch {
+                                    sheetState.show()
+                                }
+                            },
+                            modifier = Modifier.padding(
                                 vertical = Dimens.SmallPadding.size
                             )
-                    )
-                }
-                item {
-                    if (networkError.isNotBlank()) {
-                        Text(
-                            text = networkError,
-                            color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
                         )
                     }
-                }
+                    items(thinkpadList) {
+                        ThinkpadEntry(
+                            thinkpad = it,
+                            onEntryClick = { onEntryClick(it) },
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = Dimens.MediumPadding.size,
+                                    vertical = Dimens.SmallPadding.size
+                                )
+                        )
+                    }
+                    item {
+                        if (networkError.isNotBlank()) {
+                            Text(
+                                text = networkError,
+                                color = MaterialTheme.colorScheme.error,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
 
-                // This must always stay at the bottom for navBar padding
-                item {
-                    Spacer(modifier = Modifier.navigationBarsPadding())
+                    // This must always stay at the bottom for navBar padding
+                    item {
+                        Spacer(modifier = Modifier.navigationBarsPadding())
+                    }
                 }
             }
 
-            FloatingScrollButtonAndLoadingIndicator(
-                listState = listState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding(),
-                scope = scope,
-                networkLoading = networkLoading
-            )
+            if (!networkLoading) {
+                FloatingScrollToTopButton(
+                    listState = listState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding(),
+                    scope = scope
+                )
+            }
         }
     }
 }
