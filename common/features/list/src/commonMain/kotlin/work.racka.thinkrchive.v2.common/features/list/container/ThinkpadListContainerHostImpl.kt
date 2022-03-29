@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.features.list.container
 
 import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
+import data.remote.response.ThinkpadResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,9 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
+import util.NetworkError
 import util.Resource
+import work.racka.thinkrchive.v2.common.features.list.util.Constants
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
 internal class ThinkpadListContainerHostImpl(
@@ -63,34 +66,56 @@ internal class ThinkpadListContainerHostImpl(
     // Also used by pull down to refresh.
     override fun refreshThinkpadList() = intent {
         logger.d { "Refresh Thinkpad Intent" }
-        val result = helper.repository.getAllThinkpadsFromNetwork()
+        resetSideEffect()
+        val result: Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
+            helper.repository.getAllThinkpadsFromNetwork()
         result.collect { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    postSideEffect(
-                        ThinkpadListSideEffect.Network(isLoading = false)
-                    )
+                    reduce { state.copy(networkLoading = false) }
                     resource.data?.let { helper.refreshThinkpadList(it) }
                 }
                 is Resource.Error -> {
-                    postSideEffect(
-                        ThinkpadListSideEffect.Network(
-                            isLoading = false,
-                            errorMsg = resource.message!!
-                        )
-                    )
+                    reduce { state.copy(networkLoading = false) }
+                    when (resource.errorCode) {
+                        NetworkError.StatusCodeError -> {
+                            postSideEffect(
+                                ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                                    msg = Constants.RESPONSE_CODE_ERROR,
+                                    networkError = resource.errorCode!!
+                                )
+                            )
+                        }
+                        NetworkError.SerializationError -> {
+                            postSideEffect(
+                                ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                                    msg = Constants.SERIALIZATION_ERROR,
+                                    networkError = resource.errorCode!!
+                                )
+                            )
+                        }
+                        NetworkError.NoInternetError -> {
+                            postSideEffect(
+                                ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                                    msg = Constants.NO_INTERNET_ERROR,
+                                    networkError = resource.errorCode!!
+                                )
+                            )
+                        }
+                        else -> {}
+                    }
                 }
                 is Resource.Loading -> {
-                    postSideEffect(
-                        ThinkpadListSideEffect.Network(isLoading = true)
-                    )
+                    reduce { state.copy(networkLoading = true) }
                 }
                 else -> {
-                    postSideEffect(
-                        ThinkpadListSideEffect.Network(isLoading = true)
-                    )
+                    reduce { state.copy(networkLoading = false) }
                 }
             }
         }
+    }
+
+    private fun resetSideEffect() = intent {
+        postSideEffect(ThinkpadListSideEffect.NoSideEffect)
     }
 }

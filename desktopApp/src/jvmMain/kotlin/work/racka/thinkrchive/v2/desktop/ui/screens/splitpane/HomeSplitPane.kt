@@ -43,8 +43,8 @@ fun HomeSplitPaneScreen(
 
     val listState by homePaneComponent.state.collectAsState()
     val listSideEffect = homePaneComponent.sideEffect
-        .collectAsState(initial = ThinkpadListSideEffect.Network())
-        .value as ThinkpadListSideEffect.Network
+        .collectAsState(initial = ThinkpadListSideEffect.NoSideEffect)
+        .value
 
     HorizontalSplitPane(
         splitPaneState = splitterState

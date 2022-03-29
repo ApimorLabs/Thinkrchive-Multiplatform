@@ -19,8 +19,10 @@ import org.orbitmvi.orbit.test
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.DataMappers.asDomainModel
+import util.NetworkError
 import util.Resource
 import work.racka.thinkrchive.v2.common.features.list.repository.ListRepository
+import work.racka.thinkrchive.v2.common.features.list.util.Constants
 import work.racka.thinkrchive.v2.common.features.list.util.TestData
 import work.racka.thinkrchive.v2.common.features.list.util.TestData.responseListToDbObjectList
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
@@ -96,7 +98,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
                     { copy(thinkpadList = thinkpadData) }
                 )
                 postedSideEffects(
-                    ThinkpadListSideEffect.Network(isLoading = false)
+                    ThinkpadListSideEffect.NoSideEffect
                 )
             }
         }
@@ -108,12 +110,14 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             val thinkpadResponse = TestData.thinkpadResponseList
             val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
             val query = ""
-            val sortOption = 0
+            val sortOption = 1
 
             // Mocking
             every { settingsRepo.sortFlow } returns flowOf(sortOption)
-            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(Resource.Loading())
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
+                Resource.Loading()
+            )
+            coEvery { repo.getThinkpadsNewestFirst(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -122,22 +126,24 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify { repo.getThinkpadsNewestFirst(query) }
             coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
+                    { copy(networkLoading = true) },
                     { copy(sortOption = sortOption) },
                     { copy(thinkpadList = thinkpadData) }
                 )
                 postedSideEffects(
-                    ThinkpadListSideEffect.Network(isLoading = true)
+                    ThinkpadListSideEffect.NoSideEffect
                 )
             }
         }
 
+    // We should receive NetworkError.NoInternetError
     // We also have to verify repo.refreshThinkpadList() is never called
     @Test
-    fun onContainerCreation_WhenNetworkResponseIsError_ProducesStateWithNetworkLoadingFalseAndErrorMsgSideEffect() =
+    fun onContainerCreation_WhenNetworkResponseIsNoInternetError_ProducesStateWithNetworkLoadingFalseAndShowErrorSideEffect() =
         runTest {
             val thinkpadResponse = TestData.thinkpadResponseList
             val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
@@ -147,7 +153,9 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             // Mocking
             every { settingsRepo.sortFlow } returns flowOf(sortOption)
-            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(Resource.Error(errorMsg))
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
+                Resource.Error(message = errorMsg, errorCode = NetworkError.NoInternetError)
+            )
             coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
@@ -165,7 +173,95 @@ class ThinkpadListContainerHostImplTest : KoinTest {
                     { copy(thinkpadList = thinkpadData) }
                 )
                 postedSideEffects(
-                    ThinkpadListSideEffect.Network(isLoading = false, errorMsg = errorMsg)
+                    ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                        msg = Constants.NO_INTERNET_ERROR,
+                        networkError = NetworkError.NoInternetError
+                    ),
+                    ThinkpadListSideEffect.NoSideEffect,
+                )
+            }
+        }
+
+    // We should receive NetworkError.SerializationError
+    // We also have to verify repo.refreshThinkpadList() is never called
+    @Test
+    fun onContainerCreation_WhenNetworkResponseIsSerializationError_ProducesStateWithNetworkLoadingFalseAndShowErrorSideEffect() =
+        runTest {
+            val thinkpadResponse = TestData.thinkpadResponseList
+            val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
+            val query = ""
+            val errorMsg = "This is an error message"
+            val sortOption = 0
+
+            // Mocking
+            every { settingsRepo.sortFlow } returns flowOf(sortOption)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
+                Resource.Error(message = errorMsg, errorCode = NetworkError.SerializationError)
+            )
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
+
+            // Testing
+            val testSubject = containerHost.test()
+            testSubject.runOnCreate()
+
+            verify { settingsRepo.sortFlow }
+            coVerify { repo.getAllThinkpadsFromNetwork() }
+            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
+            testSubject.assert(ThinkpadListState.EmptyState) {
+                states(
+                    { copy(sortOption = sortOption) },
+                    { copy(thinkpadList = thinkpadData) }
+                )
+                postedSideEffects(
+                    ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                        msg = Constants.SERIALIZATION_ERROR,
+                        networkError = NetworkError.SerializationError
+                    ),
+                    ThinkpadListSideEffect.NoSideEffect
+                )
+            }
+        }
+
+    // We should receive NetworkError.StatusCodeError
+    // We also have to verify repo.refreshThinkpadList() is never called
+    @Test
+    fun onContainerCreation_WhenNetworkResponseIsStatusCodeError_ProducesStateWithNetworkLoadingFalseAndShowErrorSideEffect() =
+        runTest {
+            val thinkpadResponse = TestData.thinkpadResponseList
+            val thinkpadData = thinkpadResponse.responseListToDbObjectList().asDomainModel()
+            val query = ""
+            val errorMsg = "This is an error message"
+            val sortOption = 0
+
+            // Mocking
+            every { settingsRepo.sortFlow } returns flowOf(sortOption)
+            coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
+                Resource.Error(message = errorMsg, errorCode = NetworkError.StatusCodeError)
+            )
+            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
+
+            // Testing
+            val testSubject = containerHost.test()
+            testSubject.runOnCreate()
+
+            verify { settingsRepo.sortFlow }
+            coVerify { repo.getAllThinkpadsFromNetwork() }
+            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
+            testSubject.assert(ThinkpadListState.EmptyState) {
+                states(
+                    { copy(sortOption = sortOption) },
+                    { copy(thinkpadList = thinkpadData) }
+                )
+                postedSideEffects(
+                    ThinkpadListSideEffect.ShowNetworkErrorSnackbar(
+                        msg = Constants.RESPONSE_CODE_ERROR,
+                        networkError = NetworkError.StatusCodeError
+                    ),
+                    ThinkpadListSideEffect.NoSideEffect
                 )
             }
         }

@@ -11,9 +11,9 @@ import util.Resource
 
 class Purchase {
 
-    private val _result: MutableStateFlow<Resource<CustomerInfo>> =
+    private val _result: MutableStateFlow<Resource<CustomerInfo, Any>> =
         MutableStateFlow(Resource.Loading())
-    val result: StateFlow<Resource<CustomerInfo>>
+    val result: StateFlow<Resource<CustomerInfo, Any>>
         get() = _result
 
     // This should only be called when initiating a purchase

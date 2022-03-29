@@ -4,12 +4,15 @@ import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
 import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
+import io.ktor.client.features.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.SerializationException
 import util.DataMappers.asDomainModel
+import util.NetworkError
 import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
@@ -24,7 +27,7 @@ internal class ListRepositoryImpl(
         withTag("ListRepository")
     }
 
-    override suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>>> =
+    override suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
         withContext(backgroundDispatcher) {
             flow {
                 logger.d { "getAllThinkpadsFromNetwork" }
@@ -34,11 +37,28 @@ internal class ListRepositoryImpl(
                     val response = try {
                         val response = thinkrchiveApi.getThinkpads()
                         replay = false
-                        Resource.Success(data = response)
+                        Resource.Success<List<ThinkpadResponse>, NetworkError>(data = response)
+                    } catch (e: ResponseException) {
+                        logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                        replay = false
+                        Resource.Error(
+                            message = "Unknown or Limited Request: ${e.message}",
+                            errorCode = NetworkError.StatusCodeError
+                        )
+                    } catch (e: SerializationException) {
+                        logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                        replay = false
+                        Resource.Error(
+                            message = "Wrong Data Received: ${e.message}",
+                            errorCode = NetworkError.SerializationError
+                        )
                     } catch (e: Exception) {
                         logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
                         replay = false
-                        Resource.Error(message = "An error occurred: ${e.message}")
+                        Resource.Error(
+                            message = "No Network: ${e.message}",
+                            errorCode = NetworkError.NoInternetError
+                        )
                     }
                     emit(response)
                 }

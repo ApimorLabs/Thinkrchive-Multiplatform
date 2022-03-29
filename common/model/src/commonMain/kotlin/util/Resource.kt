@@ -1,15 +1,17 @@
 package util
 
-sealed class Resource<T>(
+// T is for data to be held and V is for error codes (it can be an enum or class)
+sealed class Resource<T, V>(
     val data: T? = null,
-    val message: String? = null
+    val message: String? = null,
+    val errorCode: V? = null
 ) {
-    class Success<T>(data: T) : Resource<T>(data = data)
+    class Success<T, V>(data: T) : Resource<T, V>(data = data)
 
-    class Error<T>(
+    class Error<T, V>(
         message: String,
-        data: T? = null
-    ) : Resource<T>(message = message, data = data)
+        errorCode: V? = null
+    ) : Resource<T, V>(message = message, errorCode = errorCode)
 
-    class Loading<T>(data: T? = null) : Resource<T>(data)
+    class Loading<T, V>(data: T? = null) : Resource<T, V>(data)
 }

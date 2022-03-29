@@ -1,8 +1,12 @@
 package states.list
 
+import util.NetworkError
+
 sealed class ThinkpadListSideEffect {
-    data class Network(
-        val isLoading: Boolean = false,
-        val errorMsg: String = ""
+    object NoSideEffect : ThinkpadListSideEffect()
+
+    data class ShowNetworkErrorSnackbar(
+        val msg: String,
+        val networkError: NetworkError
     ) : ThinkpadListSideEffect()
 }

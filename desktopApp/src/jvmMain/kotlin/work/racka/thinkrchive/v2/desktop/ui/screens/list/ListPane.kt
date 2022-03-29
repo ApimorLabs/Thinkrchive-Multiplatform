@@ -7,7 +7,7 @@ import states.list.ThinkpadListState
 @Composable
 fun ListPane(
     state: ThinkpadListState.State,
-    sideEffect: ThinkpadListSideEffect.Network,
+    sideEffect: ThinkpadListSideEffect,
     onSearch: (String) -> Unit,
     onEntryClick: (model: String) -> Unit,
     onSortOptionClicked: (Int) -> Unit,
@@ -15,16 +15,20 @@ fun ListPane(
     onAboutClicked: () -> Unit,
     onDonateClicked: () -> Unit
 ) {
+    when (sideEffect) {
+        is ThinkpadListSideEffect.ShowNetworkErrorSnackbar -> {}
+        else -> {}
+    }
     ThinkpadListScreenUI(
         thinkpadList = state.thinkpadList,
-        networkLoading = sideEffect.isLoading,
+        networkLoading = state.networkLoading,
         onSearch = { query ->
             onSearch(query)
         },
         onEntryClick = { thinkpad ->
             onEntryClick(thinkpad.model)
         },
-        networkError = sideEffect.errorMsg,
+        networkError = "",
         currentSortOption = state.sortOption,
         onSortOptionClicked = { sort ->
             onSortOptionClicked(sort)

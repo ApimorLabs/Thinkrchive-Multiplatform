@@ -7,13 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,18 +33,20 @@ import work.racka.thinkrchive.v2.android.ui.components.FloatingScrollToTopButton
 import work.racka.thinkrchive.v2.android.ui.components.HomeBottomSheet
 import work.racka.thinkrchive.v2.android.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
+import work.racka.thinkrchive.v2.android.ui.theme.Shapes
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @Composable
 fun ThinkpadListScreenUI(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
     onEntryClick: (Thinkpad) -> Unit = { },
     onSearch: (String) -> Unit = { },
     onSortOptionClicked: (Int) -> Unit = { },
@@ -70,7 +68,22 @@ fun ThinkpadListScreenUI(
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = it) { data ->
+                Snackbar(
+                    modifier = Modifier
+                        .navigationBarsPadding(),
+                    snackbarData = data,
+                    backgroundColor = MaterialTheme.colorScheme.inverseSurface,
+                    contentColor = MaterialTheme.colorScheme.inverseOnSurface,
+                    actionColor = MaterialTheme.colorScheme.inversePrimary,
+                    shape = Shapes.large
+                )
+            }
+        },
+        backgroundColor = MaterialTheme.colorScheme.background
     ) {
         ModalBottomSheetLayout(
             sheetContent = {

@@ -1,20 +1,24 @@
 package work.racka.thinkrchive.v2.common.features.list.repository
 
 import app.cash.turbine.test
+import data.remote.response.ThinkpadResponse
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.serialization.SerializationException
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import util.NetworkError
 import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.features.list.util.TestData
@@ -85,7 +89,8 @@ class ListRepositoryTest : KoinTest {
     fun getAllThinkpadsFromNetwork_EmitsLoadingResourceThenSuccessResourceWithData() = runTest {
         val responseList = TestData.thinkpadResponseList
         coEvery { api.getThinkpads() } returns responseList
-        val data = repo.getAllThinkpadsFromNetwork()
+        val data: Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
+            repo.getAllThinkpadsFromNetwork()
         launch {
             data.test {
                 // Check if Resource.Loading is emitted
@@ -98,27 +103,61 @@ class ListRepositoryTest : KoinTest {
     }
 
     // Failure from the API
+    // Serialization Error
     @Test
-    fun getAllThinkpadsFromNetwork_EmitsLoadingResourceThenErrorResourceWithMsg() = runTest {
-        val expectedErrorMsg = "Failure to Get List from Server"
-        coEvery { api.getThinkpads() } throws IllegalStateException(expectedErrorMsg)
-        val data = repo.getAllThinkpadsFromNetwork()
-        // Verify ap
-        launch {
-            data.test {
-                // Check if Resource.Loading is emitted
-                assertTrue(awaitItem() is Resource.Loading)
+    fun getAllThinkpadsFromNetwork_WhenInvalidDataReturned_EmitsLoadingResourceThenErrorResourceWithMsg() =
+        runTest {
+            val expectedErrorMsg = "Mangled data received"
+            coEvery { api.getThinkpads() } throws SerializationException(expectedErrorMsg)
+            val data: Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
+                repo.getAllThinkpadsFromNetwork()
+            // Verify ap
+            launch {
+                data.test {
+                    // Check if Resource.Loading is emitted
+                    assertTrue(awaitItem() is Resource.Loading)
 
-                // Check if the Error Resource is returned with it's required message
-                val actualError = awaitItem()
-                val actualErrorMsg = actualError.message
-                assertTrue(actualError is Resource.Error)
-                assertNotNull(actualErrorMsg)
-                assertTrue(actualErrorMsg.contains(expectedErrorMsg))
-                awaitComplete()
+                    // Check if the Error Resource is returned with it's required message
+                    val actualError = awaitItem()
+                    val actualErrorMsg = actualError.message
+
+                    assertTrue(actualError is Resource.Error)
+                    assertNotNull(actualErrorMsg)
+                    assertTrue(actualErrorMsg.contains(expectedErrorMsg))
+                    assertEquals(actualError.errorCode, NetworkError.SerializationError)
+                    awaitComplete()
+                }
             }
         }
-    }
+
+    // Network Error
+    @Test
+    fun getAllThinkpadsFromNetwork_WhenNoNetwork_EmitsLoadingResourceThenErrorResourceWithMsg() =
+        runTest {
+            val expectedErrorMsg = "Failure to Get List from Server"
+            coEvery { api.getThinkpads() } throws Exception(expectedErrorMsg)
+            val data: Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
+                repo.getAllThinkpadsFromNetwork()
+            // Verify ap
+            launch {
+                data.test {
+                    // Check if Resource.Loading is emitted
+                    assertTrue(awaitItem() is Resource.Loading)
+
+                    // Check if the Error Resource is returned with it's required message
+                    val actualError = awaitItem()
+                    val actualErrorMsg = actualError.message
+
+                    assertTrue(actualError is Resource.Error)
+                    assertNotNull(actualErrorMsg)
+                    assertTrue(actualErrorMsg.contains(expectedErrorMsg))
+                    assertEquals(actualError.errorCode, NetworkError.NoInternetError)
+                    awaitComplete()
+                }
+            }
+        }
+
+    // TODO: Need to Test for ResponseException
 
     @Test
     fun getThinkpadsAlphaAscending_VerifyCallsTheDaoAndDataIsPassed() = runTest {

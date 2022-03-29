@@ -34,6 +34,11 @@ kotlin {
         implementation(project(":common:persistence:settings"))
         implementation(project(":common:network"))
 
+        with(Dependencies.Ktor) {
+            implementation(ktorCore)
+            implementation(ktorSerialization)
+        }
+
         implementation(Dependencies.Kotlin.Coroutines.core)
 
         implementation(Dependencies.OrbitMVI.core)
