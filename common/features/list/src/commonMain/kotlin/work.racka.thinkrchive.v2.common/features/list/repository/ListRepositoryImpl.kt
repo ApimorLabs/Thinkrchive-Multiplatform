@@ -31,37 +31,30 @@ internal class ListRepositoryImpl(
         withContext(backgroundDispatcher) {
             flow {
                 logger.d { "getAllThinkpadsFromNetwork" }
-                var replay = true
                 emit(Resource.Loading())
-                while (replay) {
-                    val response = try {
-                        val response = thinkrchiveApi.getThinkpads()
-                        replay = false
-                        Resource.Success<List<ThinkpadResponse>, NetworkError>(data = response)
-                    } catch (e: ResponseException) {
-                        logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                        replay = false
-                        Resource.Error(
-                            message = "Unknown or Limited Request: ${e.message}",
-                            errorCode = NetworkError.StatusCodeError
-                        )
-                    } catch (e: SerializationException) {
-                        logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                        replay = false
-                        Resource.Error(
-                            message = "Wrong Data Received: ${e.message}",
-                            errorCode = NetworkError.SerializationError
-                        )
-                    } catch (e: Exception) {
-                        logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                        replay = false
-                        Resource.Error(
-                            message = "No Network: ${e.message}",
-                            errorCode = NetworkError.NoInternetError
-                        )
-                    }
-                    emit(response)
+                val response = try {
+                    val response = thinkrchiveApi.getThinkpads()
+                    Resource.Success<List<ThinkpadResponse>, NetworkError>(data = response)
+                } catch (e: ResponseException) {
+                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                    Resource.Error(
+                        message = "Unknown or Limited Request: ${e.message}",
+                        errorCode = NetworkError.StatusCodeError
+                    )
+                } catch (e: SerializationException) {
+                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                    Resource.Error(
+                        message = "Wrong Data Received: ${e.message}",
+                        errorCode = NetworkError.SerializationError
+                    )
+                } catch (e: Exception) {
+                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                    Resource.Error(
+                        message = "No Network: ${e.message}",
+                        errorCode = NetworkError.NoInternetError
+                    )
                 }
+                emit(response)
             }
         }
 
