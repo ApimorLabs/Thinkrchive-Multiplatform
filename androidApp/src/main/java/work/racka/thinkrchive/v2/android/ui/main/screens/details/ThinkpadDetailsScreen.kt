@@ -3,11 +3,15 @@ package work.racka.thinkrchive.v2.android.ui.main.screens.details
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -82,20 +86,31 @@ fun NavGraphBuilder.ThinkpadDetailsScreen(
             is ThinkpadDetailsSideEffect.EmptySideEffect -> {}
         }
 
-        if (state is ThinkpadDetailsState.State) {
-            val thinkpad =
-                (state as ThinkpadDetailsState.State).thinkpad
+        when (state) {
+            is ThinkpadDetailsState.State -> {
+                val thinkpad =
+                    (state as ThinkpadDetailsState.State).thinkpad
 
-            ThinkpadDetailsScreenUI(
-                modifier = modifier,
-                thinkpad = thinkpad,
-                onBackButtonPressed = {
-                    navController.popBackStack()
-                },
-                onExternalLinkClicked = {
-                    viewModel.host.openPsrefLink()
+                ThinkpadDetailsScreenUI(
+                    modifier = modifier,
+                    thinkpad = thinkpad,
+                    onBackButtonPressed = {
+                        navController.popBackStack()
+                    },
+                    onExternalLinkClicked = {
+                        viewModel.host.openPsrefLink()
+                    }
+                )
+            }
+            is ThinkpadDetailsState.EmptyState -> {
+                Box(
+                    modifier = modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
-            )
+            }
         }
     }
 }
