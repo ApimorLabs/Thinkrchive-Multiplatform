@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.statusBarsPadding
 import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.Shapes
@@ -217,16 +215,14 @@ private fun SubtitleTextPreview() {
 @Preview
 @Composable
 private fun ThinkpadEntryPreview() {
-    ProvideWindowInsets {
-        ThinkRchiveTheme {
-            Constants.ThinkpadsListPreview[0].apply {
-                ThinkpadEntry(
-                    thinkpad = this,
-                    modifier = Modifier
-                        .padding(Dimens.MediumPadding.size)
-                        .statusBarsPadding()
-                )
-            }
+    ThinkRchiveTheme {
+        Constants.ThinkpadsListPreview[0].apply {
+            ThinkpadEntry(
+                thinkpad = this,
+                modifier = Modifier
+                    .padding(Dimens.MediumPadding.size)
+                    .statusBarsPadding()
+            )
         }
     }
 }

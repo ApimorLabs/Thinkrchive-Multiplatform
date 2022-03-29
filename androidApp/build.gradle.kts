@@ -149,7 +149,6 @@ dependencies {
 
     // Accompanist
     with(Dependencies.Android) {
-        implementation(accompanistInsets)
         implementation(accompanistNavigationAnimations)
     }
 

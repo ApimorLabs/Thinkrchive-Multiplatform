@@ -63,7 +63,7 @@ object Versions {
     const val kermit = "1.0.0"
 
     // Helpers
-    const val accompanist = "0.24.1-alpha"
+    const val accompanist = "0.24.5-alpha"
     const val coilImage = "1.4.0"
 
     // * No longer in use * //

@@ -160,6 +160,7 @@ object Dependencies {
         val coilImage by lazy { "io.coil-kt:coil-compose:${Versions.coilImage}" }
 
         // Accompanist
+        @Deprecated("Switch to Compose Foundation Insets")
         val accompanistInsets by lazy { "com.google.accompanist:accompanist-insets:${Versions.accompanist}" }
         val accompanistNavigationAnimations by lazy { "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}" }
 

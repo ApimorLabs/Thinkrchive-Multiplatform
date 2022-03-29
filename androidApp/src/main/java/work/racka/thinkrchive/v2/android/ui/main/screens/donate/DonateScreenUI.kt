@@ -53,7 +53,7 @@ fun DonateScreenUI(
     }
 
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         topBar = {
             CollapsingToolbarBase(

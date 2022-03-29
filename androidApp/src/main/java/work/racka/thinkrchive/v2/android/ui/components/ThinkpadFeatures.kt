@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import domain.Thinkpad
 import work.racka.thinkrchive.v2.android.R
@@ -53,17 +52,6 @@ fun ThinkpadFeatures(
             scaleX = animatedProgress.value,
             scaleY = animatedProgress.value
         )
-
-    val divider = " - "
-    val marketPrice by remember(thinkpad) {
-        derivedStateOf {
-            buildAnnotatedString {
-                append("$${thinkpad.marketPriceStart}")
-                append(divider)
-                append("$${thinkpad.marketPriceEnd}")
-            }.text
-        }
-    }
 
     var maxLines by remember {
         mutableStateOf(1)
