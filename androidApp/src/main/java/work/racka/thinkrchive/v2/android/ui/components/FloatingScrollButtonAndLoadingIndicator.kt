@@ -4,21 +4,20 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowUpward
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.statusBarsPadding
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
@@ -26,10 +25,11 @@ import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 
 @ExperimentalAnimationApi
 @Composable
-fun ScrollToTopButton(
+fun FloatingScrollButtonAndLoadingIndicator(
     modifier: Modifier = Modifier,
     listState: LazyListState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    networkLoading: Boolean
 ) {
     val showScrollButton by remember {
         derivedStateOf {
@@ -38,14 +38,38 @@ fun ScrollToTopButton(
     }
 
     AnimatedVisibility(
-        visible = showScrollButton,
+        visible = networkLoading,
         enter = scaleIn(),
         exit = scaleOut()
     ) {
         Box(
             modifier = modifier
-                .padding(vertical = Dimens.MediumPadding.size)
-                .statusBarsPadding(),
+                .padding(vertical = Dimens.MediumPadding.size),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(Dimens.SmallPadding.size)
+                        .size(24.dp)
+                )
+            }
+        }
+    }
+
+    AnimatedVisibility(
+        visible = showScrollButton && !networkLoading,
+        enter = scaleIn(),
+        exit = scaleOut()
+    ) {
+        Box(
+            modifier = modifier
+                .padding(vertical = Dimens.MediumPadding.size),
             contentAlignment = Alignment.Center
         ) {
             FloatingActionButton(
@@ -84,9 +108,10 @@ fun ScrollToTopButton(
 @Composable
 fun ScrollButtonPreview() {
     ThinkRchiveTheme {
-        ScrollToTopButton(
+        FloatingScrollButtonAndLoadingIndicator(
             listState = rememberLazyListState(),
-            scope = rememberCoroutineScope()
+            scope = rememberCoroutineScope(),
+            networkLoading = false
         )
     }
 }

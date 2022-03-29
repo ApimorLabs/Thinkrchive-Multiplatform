@@ -10,7 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,8 +35,8 @@ import domain.Thinkpad
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.components.CustomSearchBar
+import work.racka.thinkrchive.v2.android.ui.components.FloatingScrollButtonAndLoadingIndicator
 import work.racka.thinkrchive.v2.android.ui.components.HomeBottomSheet
-import work.racka.thinkrchive.v2.android.ui.components.ScrollToTopButton
 import work.racka.thinkrchive.v2.android.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
@@ -126,11 +129,6 @@ fun ThinkpadListScreenUI(
                     )
                 }
                 item {
-                    if (networkLoading) {
-                        CircularProgressIndicator()
-                    }
-                }
-                item {
                     if (networkError.isNotBlank()) {
                         Text(
                             text = networkError,
@@ -145,10 +143,14 @@ fun ThinkpadListScreenUI(
                     Spacer(modifier = Modifier.navigationBarsPadding())
                 }
             }
-            ScrollToTopButton(
+
+            FloatingScrollButtonAndLoadingIndicator(
                 listState = listState,
-                modifier = Modifier.fillMaxWidth(),
-                scope = scope
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding(),
+                scope = scope,
+                networkLoading = networkLoading
             )
         }
     }

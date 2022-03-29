@@ -63,9 +63,21 @@ compose.desktop {
     application {
         mainClass = "work.racka.thinkrchive.v2.desktop.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "jvm"
+
+            packageName = "Thinkrchive"
             packageVersion = "1.0.0"
+            description = "An Thinkpad archive application"
+            copyright = "© 2022 RackaApps. All rights reserved."
+            vendor = "RackaApps"
+
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+
+            windows {
+                // Wondering what the heck is this? See : https://wixtoolset.org/documentation/manual/v3/howtos/general/generate_guids.html
+                upgradeUuid = "A61E85D8-FA98-417D-9F8E-9B5F1CB2DFDD"
+                menuGroup = packageName
+                perUserInstall = true
+            }
         }
     }
 }
