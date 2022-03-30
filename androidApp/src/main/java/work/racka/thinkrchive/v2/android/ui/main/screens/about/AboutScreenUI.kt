@@ -35,7 +35,7 @@ import work.racka.thinkrchive.v2.android.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreenUI(
     modifier: Modifier = Modifier,

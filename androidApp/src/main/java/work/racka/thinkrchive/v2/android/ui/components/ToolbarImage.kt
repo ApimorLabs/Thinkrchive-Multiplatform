@@ -16,7 +16,7 @@ import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 
 // Must always be used inside a BoxScope for proper alignment
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ToolbarImage(
     modifier: Modifier = Modifier,

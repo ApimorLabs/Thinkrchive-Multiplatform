@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FloatingScrollToTopButton(
     modifier: Modifier = Modifier,

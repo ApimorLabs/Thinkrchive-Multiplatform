@@ -1,14 +1,12 @@
 package work.racka.thinkrchive.v2.android.ui.main.screens.list
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,11 +35,7 @@ import work.racka.thinkrchive.v2.android.ui.theme.Shapes
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
 
-
-@OptIn(ExperimentalMaterialApi::class)
-@ExperimentalMaterial3Api
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ThinkpadListScreenUI(
     modifier: Modifier = Modifier,
@@ -91,7 +85,10 @@ fun ThinkpadListScreenUI(
                     sheetState = sheetState,
                     scope = scope,
                     onSortOptionClicked = {
-                        onSortOptionClicked(it)
+                        scope.launch {
+                            sheetState.hide()
+                            onSortOptionClicked(it)
+                        }
                     },
                     currentSortOption = currentSortOption,
                     onSettingsClicked = onSettingsClicked,
@@ -137,7 +134,7 @@ fun ThinkpadListScreenUI(
                             },
                             onOptionsClicked = {
                                 scope.launch {
-                                    sheetState.show()
+                                    sheetState.animateTo(ModalBottomSheetValue.Expanded)
                                 }
                             },
                             modifier = Modifier.padding(
@@ -186,10 +183,6 @@ fun ThinkpadListScreenUI(
     }
 }
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 @Preview(
     uiMode = Configuration.UI_MODE_TYPE_NORMAL,
     device = Devices.PIXEL_4

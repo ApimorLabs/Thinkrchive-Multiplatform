@@ -1,11 +1,8 @@
 package work.racka.thinkrchive.v2.android.ui.main.screens.about
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
@@ -15,11 +12,8 @@ import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
 import work.racka.thinkrchive.v2.common.features.about.viewmodel.AboutViewModel
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-fun NavGraphBuilder.AboutScreen(
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.aboutScreen(
     navController: NavHostController
 ) {
     composable(

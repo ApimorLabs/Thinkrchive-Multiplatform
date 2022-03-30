@@ -1,7 +1,6 @@
 package work.racka.thinkrchive.v2.android.ui.main.screens.details
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -30,8 +29,7 @@ import work.racka.thinkrchive.v2.android.ui.components.ToolbarImage
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
 
-@ExperimentalMaterial3Api
-@ExperimentalAnimationApi
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThinkpadDetailsScreenUI(
     modifier: Modifier = Modifier,
@@ -95,8 +93,6 @@ fun ThinkpadDetailsScreenUI(
 }
 
 
-@ExperimentalMaterial3Api
-@ExperimentalAnimationApi
 @Preview(
     uiMode = Configuration.UI_MODE_TYPE_NORMAL,
     device = Devices.PIXEL_4

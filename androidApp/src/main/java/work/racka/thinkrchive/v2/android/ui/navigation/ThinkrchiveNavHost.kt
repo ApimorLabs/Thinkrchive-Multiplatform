@@ -1,25 +1,19 @@
 package work.racka.thinkrchive.v2.android.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import timber.log.Timber
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
-import work.racka.thinkrchive.v2.android.ui.main.screens.about.AboutScreen
-import work.racka.thinkrchive.v2.android.ui.main.screens.details.ThinkpadDetailsScreen
-import work.racka.thinkrchive.v2.android.ui.main.screens.donate.DonateScreen
-import work.racka.thinkrchive.v2.android.ui.main.screens.list.ThinkpadListScreen
-import work.racka.thinkrchive.v2.android.ui.main.screens.settings.SettingsScreen
+import work.racka.thinkrchive.v2.android.ui.main.screens.about.aboutScreen
+import work.racka.thinkrchive.v2.android.ui.main.screens.details.thinkpadDetailsScreen
+import work.racka.thinkrchive.v2.android.ui.main.screens.donate.donateScreen
+import work.racka.thinkrchive.v2.android.ui.main.screens.list.thinkpadListScreen
+import work.racka.thinkrchive.v2.android.ui.main.screens.settings.settingsScreen
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ThinkrchiveNavHost(
     modifier: Modifier = Modifier,
@@ -34,18 +28,18 @@ fun ThinkrchiveNavHost(
         Timber.d("thinkpadNavHost called")
 
         // Main List Screen
-        ThinkpadListScreen(modifier = modifier, navController = navController)
+        thinkpadListScreen(modifier = modifier, navController = navController)
 
         // Details Screen
-        ThinkpadDetailsScreen(modifier = modifier, navController = navController)
+        thinkpadDetailsScreen(modifier = modifier, navController = navController)
 
         // Settings Screen
-        SettingsScreen(navController = navController)
+        settingsScreen(navController = navController)
 
         // About Screen
-        AboutScreen(navController = navController)
+        aboutScreen(navController = navController)
 
         // Donate Screen
-        DonateScreen(navController = navController)
+        donateScreen(navController = navController)
     }
 }

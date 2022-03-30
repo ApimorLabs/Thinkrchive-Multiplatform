@@ -45,7 +45,7 @@ import work.racka.thinkrchive.v2.android.R
 import work.racka.thinkrchive.v2.android.ui.theme.Dimens
 import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomSearchBar(
     modifier: Modifier = Modifier,

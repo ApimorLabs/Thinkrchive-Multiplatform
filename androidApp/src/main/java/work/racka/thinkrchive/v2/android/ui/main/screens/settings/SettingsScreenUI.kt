@@ -43,8 +43,7 @@ import work.racka.thinkrchive.v2.android.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.v2.android.utils.Constants
 import work.racka.thinkrchive.v2.android.utils.Sort
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreenUI(
     modifier: Modifier = Modifier,
@@ -186,8 +185,6 @@ fun SettingsScreenUI(
     }
 }
 
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
 @Preview(
     uiMode = Configuration.UI_MODE_TYPE_NORMAL,
     device = Devices.PIXEL_4

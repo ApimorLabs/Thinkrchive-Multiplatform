@@ -2,13 +2,10 @@ package work.racka.thinkrchive.v2.android.ui.main.screens.donate
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -25,11 +22,8 @@ import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
 import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewModel
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-fun NavGraphBuilder.DonateScreen(
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.donateScreen(
     navController: NavHostController
 ) {
     composable(
