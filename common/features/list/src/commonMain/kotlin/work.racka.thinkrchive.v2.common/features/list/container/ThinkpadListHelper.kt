@@ -8,7 +8,7 @@ class ThinkpadListHelper(
 ) {
 
     // Should remove hardcoded sort option values
-    suspend fun getThinkpadListSorted(model: String, sortOption: Int) =
+    fun getThinkpadListSorted(model: String, sortOption: Int) =
         when (sortOption) {
             0 -> repository.getThinkpadsAlphaAscending(model)
             1 -> repository.getThinkpadsNewestFirst(model)

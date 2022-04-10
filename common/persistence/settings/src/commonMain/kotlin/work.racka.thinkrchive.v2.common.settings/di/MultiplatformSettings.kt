@@ -6,7 +6,7 @@ import org.koin.dsl.module
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettingsImpl
 
-object Settings {
+object MultiplatformSettings {
 
     fun KoinApplication.settingsModules() =
         this.apply {

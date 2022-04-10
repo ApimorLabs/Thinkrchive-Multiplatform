@@ -8,6 +8,7 @@ import io.ktor.client.features.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
@@ -28,80 +29,66 @@ internal class ListRepositoryImpl(
     }
 
     override suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
-        withContext(backgroundDispatcher) {
-            flow {
-                logger.d { "getAllThinkpadsFromNetwork" }
-                emit(Resource.Loading())
-                val response = try {
-                    val response = thinkrchiveApi.getThinkpads()
-                    Resource.Success<List<ThinkpadResponse>, NetworkError>(data = response)
-                } catch (e: ResponseException) {
-                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                    Resource.Error(
-                        message = "Unknown or Limited Request: ${e.message}",
-                        errorCode = NetworkError.StatusCodeError
-                    )
-                } catch (e: SerializationException) {
-                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                    Resource.Error(
-                        message = "Wrong Data Received: ${e.message}",
-                        errorCode = NetworkError.SerializationError
-                    )
-                } catch (e: Exception) {
-                    logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
-                    Resource.Error(
-                        message = "No Network: ${e.message}",
-                        errorCode = NetworkError.NoInternetError
-                    )
-                }
-                emit(response)
+        flow {
+            logger.d { "getAllThinkpadsFromNetwork" }
+            emit(Resource.Loading())
+            val response = try {
+                val response = thinkrchiveApi.getThinkpads()
+                Resource.Success<List<ThinkpadResponse>, NetworkError>(data = response)
+            } catch (e: ResponseException) {
+                logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                Resource.Error(
+                    message = "Unknown or Limited Request: ${e.message}",
+                    errorCode = NetworkError.StatusCodeError
+                )
+            } catch (e: SerializationException) {
+                logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                Resource.Error(
+                    message = "Wrong Data Received: ${e.message}",
+                    errorCode = NetworkError.SerializationError
+                )
+            } catch (e: Exception) {
+                logger.w(e) { "Exception during getAllThinkpadsFromNetwork: $e" }
+                Resource.Error(
+                    message = "No Network: ${e.message}",
+                    errorCode = NetworkError.NoInternetError
+                )
             }
-        }
+            emit(response)
+        }.flowOn(backgroundDispatcher)
 
     override suspend fun refreshThinkpadList(response: List<ThinkpadResponse>) =
         withContext(backgroundDispatcher) {
             thinkpadDao.insertAllThinkpads(response)
         }
 
-    override suspend fun getAllThinkpads(): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getAllThinkpads().map {
-                it.asDomainModel()
-            }
-        }
+    override fun getAllThinkpads(): Flow<List<Thinkpad>> =
+        thinkpadDao.getAllThinkpads().map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 
-    override suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpadsAlphaAscending(thinkpadModel).map {
-                it.asDomainModel()
-            }
-        }
+    override fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDao.getThinkpadsAlphaAscending(thinkpadModel).map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 
-    override suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpadsNewestFirst(thinkpadModel).map {
-                it.asDomainModel()
-            }
-        }
+    override fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDao.getThinkpadsNewestFirst(thinkpadModel).map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 
-    override suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpadsOldestFirst(thinkpadModel).map {
-                it.asDomainModel()
-            }
-        }
+    override fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDao.getThinkpadsOldestFirst(thinkpadModel).map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 
-    override suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpadsLowPriceFirst(thinkpadModel).map {
-                it.asDomainModel()
-            }
-        }
+    override fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDao.getThinkpadsLowPriceFirst(thinkpadModel).map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 
-    override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
-        withContext(backgroundDispatcher) {
-            thinkpadDao.getThinkpadsHighPriceFirst(thinkpadModel).map {
-                it.asDomainModel()
-            }
-        }
+    override fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+        thinkpadDao.getThinkpadsHighPriceFirst(thinkpadModel).map {
+            it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
 }

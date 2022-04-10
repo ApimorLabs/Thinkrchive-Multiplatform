@@ -5,7 +5,7 @@ import org.koin.dsl.KoinAppDeclaration
 import work.racka.thinkrchive.v2.common.billing.di.Billing
 import work.racka.thinkrchive.v2.common.database.di.Database
 import work.racka.thinkrchive.v2.common.network.di.Network
-import work.racka.thinkrchive.v2.common.settings.di.Settings
+import work.racka.thinkrchive.v2.common.settings.di.MultiplatformSettings
 
 object KoinMain {
     // This should be used in every target as a starting point for Koin
@@ -26,7 +26,7 @@ object KoinMain {
         with(Database) {
             databaseModules()
         }
-        with(Settings) {
+        with(MultiplatformSettings) {
             settingsModules()
         }
         with(Billing) {

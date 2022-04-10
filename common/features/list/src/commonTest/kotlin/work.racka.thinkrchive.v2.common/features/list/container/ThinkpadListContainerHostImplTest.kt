@@ -81,7 +81,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
                     thinkpadResponse
                 )
             )
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -90,7 +90,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            verify { repo.getThinkpadsAlphaAscending(query) }
             coVerify { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
@@ -117,7 +117,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
                 Resource.Loading()
             )
-            coEvery { repo.getThinkpadsNewestFirst(query) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsNewestFirst(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -126,7 +126,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsNewestFirst(query) }
+            verify { repo.getThinkpadsNewestFirst(query) }
             coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
@@ -156,7 +156,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
                 Resource.Error(message = errorMsg, errorCode = NetworkError.NoInternetError)
             )
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -165,7 +165,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            verify { repo.getThinkpadsAlphaAscending(query) }
             coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
@@ -198,7 +198,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
                 Resource.Error(message = errorMsg, errorCode = NetworkError.SerializationError)
             )
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -207,7 +207,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            verify { repo.getThinkpadsAlphaAscending(query) }
             coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
@@ -240,7 +240,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             coEvery { repo.getAllThinkpadsFromNetwork() } returns flowOf(
                 Resource.Error(message = errorMsg, errorCode = NetworkError.StatusCodeError)
             )
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(thinkpadData)
             coEvery { repo.refreshThinkpadList(thinkpadResponse) } returns Unit
 
             // Testing
@@ -249,7 +249,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             verify { settingsRepo.sortFlow }
             coVerify { repo.getAllThinkpadsFromNetwork() }
-            coVerify { repo.getThinkpadsAlphaAscending(query) }
+            verify { repo.getThinkpadsAlphaAscending(query) }
             coVerify(exactly = 0) { repo.refreshThinkpadList(thinkpadResponse) }
             testSubject.assert(ThinkpadListState.EmptyState) {
                 states(
@@ -274,7 +274,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
         val sortOption = 2
 
         // Mocking
-        coEvery { repo.getThinkpadsOldestFirst(query) } returns flowOf(thinkpadData)
+        every { repo.getThinkpadsOldestFirst(query) } returns flowOf(thinkpadData)
 
         // Testing
         val testSubject = containerHost
@@ -288,8 +288,8 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             getSortedThinkpadList(query)
         }
 
-        coVerify(exactly = 0) { repo.getThinkpadsAlphaAscending(query) }
-        coVerify { repo.getThinkpadsOldestFirst(query) }
+        verify(exactly = 0) { repo.getThinkpadsAlphaAscending(query) }
+        verify { repo.getThinkpadsOldestFirst(query) }
         testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
             states(
                 { copy(sortOption = sortOption, thinkpadList = listOf()) },
@@ -309,8 +309,8 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             // Mocking
             // emptyQuery should return thinkpadData as is then query will return specific data (oneThinkpad)
-            coEvery { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(oneThinkpad)
+            every { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(oneThinkpad)
 
             // Testing
             val testSubject = containerHost
@@ -324,8 +324,8 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             // New Search
             testSubject.testIntent { getSortedThinkpadList(query) }
 
-            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
-            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
+            verify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
+            verify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
             testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
                 states(
                     { copy(thinkpadList = thinkpadData) },
@@ -345,8 +345,8 @@ class ThinkpadListContainerHostImplTest : KoinTest {
 
             // Mocking
             // emptyQuery should return thinkpadData as is then query will return an empty list
-            coEvery { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
-            coEvery { repo.getThinkpadsAlphaAscending(query) } returns flowOf(emptyThinkpadList)
+            every { repo.getThinkpadsAlphaAscending(emptyQuery) } returns flowOf(thinkpadData)
+            every { repo.getThinkpadsAlphaAscending(query) } returns flowOf(emptyThinkpadList)
 
             // Testing
             val testSubject = containerHost
@@ -360,8 +360,8 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             // New Search
             testSubject.testIntent { getSortedThinkpadList(query) }
 
-            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
-            coVerify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
+            verify(exactly = 1) { repo.getThinkpadsAlphaAscending(emptyQuery) }
+            verify(exactly = 1) { repo.getThinkpadsAlphaAscending(query) }
             testSubject.assert(ThinkpadListState.State(listOf(), sortOption)) {
                 states(
                     { copy(thinkpadList = thinkpadData) },

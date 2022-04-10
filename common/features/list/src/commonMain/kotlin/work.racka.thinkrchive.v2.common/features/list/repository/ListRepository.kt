@@ -9,10 +9,10 @@ import util.Resource
 interface ListRepository {
     suspend fun getAllThinkpadsFromNetwork(): Flow<Resource<List<ThinkpadResponse>, NetworkError>>
     suspend fun refreshThinkpadList(response: List<ThinkpadResponse>)
-    suspend fun getAllThinkpads(): Flow<List<Thinkpad>>
-    suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>>
-    suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
-    suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
-    suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
-    suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    fun getAllThinkpads(): Flow<List<Thinkpad>>
+    fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>>
+    fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
 }
