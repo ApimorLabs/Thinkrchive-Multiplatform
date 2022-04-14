@@ -3,6 +3,7 @@ package work.racka.thinkrchive.v2.common.settings.repository
 import com.russhwolf.settings.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 internal class MultiplatformSettingsImpl(
     private val settings: Settings
@@ -17,10 +18,10 @@ internal class MultiplatformSettingsImpl(
     private val _themeFlow: MutableSharedFlow<Int> = MutableSharedFlow(replay = 1)
 
     override val themeFlow: Flow<Int>
-        get() = _themeFlow
+        get() = _themeFlow.asSharedFlow()
 
     override val sortFlow: Flow<Int>
-        get() = _sortFlow
+        get() = _sortFlow.asSharedFlow()
 
     init {
         initializeSettings()
