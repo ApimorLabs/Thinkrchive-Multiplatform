@@ -46,6 +46,7 @@ class MultiplatformSettingsTest : KoinTest {
         launch {
             data.test {
                 val actual = expectMostRecentItem()
+                println(actual)
                 assertEquals(expect, actual)
             }
         }
@@ -58,6 +59,7 @@ class MultiplatformSettingsTest : KoinTest {
         launch {
             data.test {
                 val actual = expectMostRecentItem()
+                println(actual)
                 assertEquals(expect, actual)
             }
         }
@@ -71,6 +73,7 @@ class MultiplatformSettingsTest : KoinTest {
         launch {
             data.test {
                 val actual = expectMostRecentItem()
+                println(actual)
                 assertEquals(expect, actual)
             }
         }
@@ -84,6 +87,7 @@ class MultiplatformSettingsTest : KoinTest {
         launch {
             data.test {
                 val actual = expectMostRecentItem()
+                println(actual)
                 assertEquals(expect, actual)
             }
         }

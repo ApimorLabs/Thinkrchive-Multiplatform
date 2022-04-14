@@ -76,10 +76,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getAllThinkpads()
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getAllThinkpads() }
                 assertEquals(expect, actual)
+                awaitComplete()
             }
         }
     }
@@ -168,10 +169,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getThinkpadsAlphaAscending(query)
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getThinkpadsAlphaAscending(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
             }
         }
     }
@@ -185,10 +187,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getThinkpadsNewestFirst(query)
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getThinkpadsNewestFirst(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
             }
         }
     }
@@ -202,10 +205,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getThinkpadsOldestFirst(query)
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getThinkpadsOldestFirst(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
             }
         }
     }
@@ -236,10 +240,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getThinkpadsHighPriceFirst(query)
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getThinkpadsHighPriceFirst(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
             }
         }
     }

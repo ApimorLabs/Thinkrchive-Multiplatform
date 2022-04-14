@@ -2,8 +2,7 @@ package work.racka.thinkrchive.v2.common.settings.repository
 
 import com.russhwolf.settings.Settings
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 internal class MultiplatformSettingsImpl(
     private val settings: Settings
@@ -14,8 +13,8 @@ internal class MultiplatformSettingsImpl(
         const val SORT_OPTION = "SORT_OPTION"
     }
 
-    private val _sortFlow: MutableStateFlow<Int> = MutableStateFlow(readSortSettings())
-    private val _themeFlow: MutableStateFlow<Int> = MutableStateFlow(readThemeSettings())
+    private val _sortFlow: MutableSharedFlow<Int> = MutableSharedFlow(replay = 1)
+    private val _themeFlow: MutableSharedFlow<Int> = MutableSharedFlow(replay = 1)
 
     override val themeFlow: Flow<Int>
         get() = _themeFlow
@@ -23,12 +22,21 @@ internal class MultiplatformSettingsImpl(
     override val sortFlow: Flow<Int>
         get() = _sortFlow
 
+    init {
+        initializeSettings()
+    }
+
+    private fun initializeSettings() {
+        _sortFlow.tryEmit(readSortSettings())
+        _themeFlow.tryEmit(readThemeSettings())
+    }
+
     override fun saveThemeSettings(value: Int) {
         settings.putInt(
             key = Keys.THEME_OPTION,
             value = value
         )
-        _themeFlow.update { readThemeSettings() }
+        _themeFlow.tryEmit(readThemeSettings())
     }
 
     override fun saveSortSettings(value: Int) {
@@ -36,7 +44,7 @@ internal class MultiplatformSettingsImpl(
             key = Keys.SORT_OPTION,
             value = value
         )
-        _sortFlow.update { readSortSettings() }
+        _sortFlow.tryEmit(readSortSettings())
     }
 
     private fun readThemeSettings(): Int =

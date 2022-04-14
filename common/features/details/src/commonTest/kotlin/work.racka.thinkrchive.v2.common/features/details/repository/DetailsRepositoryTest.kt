@@ -65,9 +65,10 @@ class DetailsRepositoryTest : KoinTest {
         coVerify { dao.getThinkpad(model) }
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
                 assertNotNull(actual)
                 assertEquals(expect, actual)
+                awaitComplete()
             }
         }
     }
@@ -80,8 +81,9 @@ class DetailsRepositoryTest : KoinTest {
         coVerify { dao.getThinkpad(model) }
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
                 assertNull(actual)
+                awaitComplete()
             }
         }
     }
