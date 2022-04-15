@@ -223,10 +223,11 @@ class ListRepositoryTest : KoinTest {
         val data = repo.getThinkpadsLowPriceFirst(query)
         launch {
             data.test {
-                val actual = expectMostRecentItem()
+                val actual = awaitItem()
 
                 verify { dao.getThinkpadsLowPriceFirst(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
             }
         }
     }

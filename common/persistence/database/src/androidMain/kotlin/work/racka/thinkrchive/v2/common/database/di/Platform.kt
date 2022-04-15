@@ -14,7 +14,11 @@ internal actual object Platform {
                 context = get(),
                 name = Constants.THINKPAD_DATABASE
             )
-            ThinkrchiveDatabaseWrapper(ThinkpadDatabase(driver))
+            ThinkrchiveDatabaseWrapper(
+                ThinkpadDatabase(
+                    driver = driver
+                )
+            )
         }
     }
 }

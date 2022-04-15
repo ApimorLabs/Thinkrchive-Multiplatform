@@ -32,7 +32,7 @@ kotlin {
                 implementation(compose.ui)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.desktop.components.splitPane)
-                implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.0.0-rc11")
+                implementation(compose.materialIconsExtended)
 
                 implementation(Dependencies.OrbitMVI.core)
 

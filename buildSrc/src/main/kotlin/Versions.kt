@@ -10,7 +10,7 @@ object Versions {
     const val composeDesktop = "1.1.1"
 
     // Squareup
-    const val sqlDelight = "1.5.0"
+    const val sqlDelight = "1.5.3"
 
     // Architecture
     const val mviKotlin = "3.0.0-beta01"
@@ -24,7 +24,7 @@ object Versions {
     const val coreKtx = "1.7.0"
 
     // Compose Base
-    const val compose = "1.2.0-alpha06"
+    const val compose = "1.2.0-alpha07"
     const val composeConstraintLayout = "1.0.0-beta02"
     const val composeMaterial3 = "1.0.0-alpha08"
     const val activityCompose = "1.4.0"

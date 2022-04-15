@@ -10,7 +10,11 @@ internal actual object Platform {
         single {
             val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
                 .also { ThinkpadDatabase.Schema.create(it) }
-            ThinkrchiveDatabaseWrapper(ThinkpadDatabase(driver))
+            ThinkrchiveDatabaseWrapper(
+                ThinkpadDatabase(
+                    driver = driver
+                )
+            )
         }
     }
 }
