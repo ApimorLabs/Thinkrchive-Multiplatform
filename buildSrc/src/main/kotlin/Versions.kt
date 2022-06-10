@@ -1,13 +1,13 @@
 object Versions {
     // Kotlin
-    const val kotlin = "1.6.10"
+    const val kotlin = "1.6.21"
 
     // Networking & JSON
     const val ktor = "2.0.2"
     const val kotlinSerialization = "1.3.2"
 
     // Jetbrains
-    const val composeDesktop = "1.1.1"
+    const val composeDesktop = "1.2.0-alpha01-dev686"
 
     // Squareup
     const val sqlDelight = "1.5.3"
@@ -24,9 +24,9 @@ object Versions {
     const val coreKtx = "1.7.0"
 
     // Compose Base
-    const val compose = "1.2.0-alpha07"
-    const val composeConstraintLayout = "1.0.0-beta02"
-    const val composeMaterial3 = "1.0.0-alpha08"
+    const val compose = "1.2.0-beta02"
+    const val composeConstraintLayout = "1.0.0"
+    const val composeMaterial3 = "1.0.0-alpha12"
     const val activityCompose = "1.4.0"
 
     // Navigation
@@ -34,12 +34,12 @@ object Versions {
 
     // Lifecycle components
     const val lifecycleViewModelCompose = "2.4.0"
-    const val lifecycleRuntimeKtx = "2.4.0"
+    const val lifecycleRuntimeKtx = "2.4.1"
 
     // Dependency Injection
     const val hilt = "2.40.5"
     const val hiltNavigationCompose = "1.0.0"
-    const val koin = "3.1.5"
+    const val koin = "3.1.6"
 
     // Testing
     const val junit = "4.13.2"
