@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
@@ -30,13 +31,19 @@ android {
 kotlin {
     android()
     jvm("desktop")
+    js(IR) {
+        binaries.executable()
+        useCommonJs()
+        browser()
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:model"))
 
         with(Dependencies.Ktor) {
             implementation(ktorCore)
-            implementation(ktorSerialization)
+            implementation(contentNegotiation)
+            implementation(json)
             implementation(ktorLogging)
         }
 
@@ -68,6 +75,14 @@ kotlin {
     sourceSets["desktopMain"].dependencies {
         implementation(Dependencies.Ktor.ktorJavaEngine)
         implementation(Dependencies.Log.slf4j)
+    }
+
+    sourceSets["jsMain"].dependencies {
+        implementation(Dependencies.Ktor.jsEngine)
+    }
+
+    sourceSets["jsTest"].dependencies {
+
     }
 }
 

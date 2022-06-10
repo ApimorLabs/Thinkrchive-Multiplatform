@@ -1,9 +1,9 @@
 package work.racka.thinkrchive.v2.common.network.di
 
 import io.ktor.client.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.serialization.kotlinx.json.*
 import org.koin.core.KoinApplication
 import org.koin.dsl.module
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
@@ -25,9 +25,8 @@ object Network {
             HttpClient(
                 engine = get()
             ) {
-                install(JsonFeature) {
-                    serializer = KotlinxSerializer()
-                }
+
+                install(ContentNegotiation) { json() }
 
                 if (enableNetworkLogs) {
                     install(Logging) {

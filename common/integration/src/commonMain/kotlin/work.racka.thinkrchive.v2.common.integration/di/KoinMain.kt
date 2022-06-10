@@ -32,8 +32,5 @@ object KoinMain {
         with(Billing) {
             billingModules()
         }
-        with(Integration) {
-            integrationModules()
-        }
     }
 }

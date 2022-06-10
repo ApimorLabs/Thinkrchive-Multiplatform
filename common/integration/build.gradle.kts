@@ -28,6 +28,12 @@ kotlin {
     android()
     jvm("desktop")
 
+    js(IR) {
+        binaries.executable()
+        useCommonJs()
+        browser()
+    }
+
     sourceSets["commonMain"].dependencies {
         // Base Common Modules
         implementation(project(":common:billing"))

@@ -3,7 +3,7 @@ object Versions {
     const val kotlin = "1.6.10"
 
     // Networking & JSON
-    const val ktor = "1.6.7"
+    const val ktor = "2.0.2"
     const val kotlinSerialization = "1.3.2"
 
     // Jetbrains

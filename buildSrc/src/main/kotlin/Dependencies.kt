@@ -33,7 +33,8 @@ object Dependencies {
         val ktorAndroidEngine by lazy { "io.ktor:ktor-client-android:${Versions.ktor}" }
         val ktorOkHttpEngine by lazy { "io.ktor:ktor-client-okhttp:${Versions.ktor}" }
         val ktorJavaEngine by lazy { "io.ktor:ktor-client-java:${Versions.ktor}" }
-        val ktorSerialization by lazy { "io.ktor:ktor-client-serialization:${Versions.ktor}" }
+        val jsEngine by lazy { "io.ktor:ktor-client-js:${Versions.ktor}" }
+        val ktorSerialization by lazy { "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}" }
         val ktorLogging by lazy { "io.ktor:ktor-client-logging:${Versions.ktor}" }
         val clientJson by lazy { "io.ktor:ktor-client-json:${Versions.ktor}" }
         val json by lazy { "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}" }
