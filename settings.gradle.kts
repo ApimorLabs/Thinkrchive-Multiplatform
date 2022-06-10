@@ -2,6 +2,7 @@ rootProject.name = "Thinkrchive"
 include(
     ":androidApp",
     ":desktopApp",
+    ":web-kt-js",
     ":common:features:about",
     ":common:features:settings",
     ":common:features:list",
