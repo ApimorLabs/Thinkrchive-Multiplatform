@@ -29,7 +29,3 @@ allprojects {
         maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-coroutines/maven")
     }
 }
-
-task("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}

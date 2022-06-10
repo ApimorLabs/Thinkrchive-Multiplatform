@@ -39,6 +39,12 @@ kotlin {
     android()
     jvm("desktop")
 
+    js(IR) {
+        binaries.executable()
+        useCommonJs()
+        browser()
+    }
+
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:network"))
         implementation(project(":common:model"))
@@ -82,6 +88,14 @@ kotlin {
 
     sourceSets["desktopTest"].dependencies {
 
+    }
+
+    sourceSets["jsMain"].dependencies {
+        implementation(Dependencies.Squareup.SQLDelight.jsDriver)
+    }
+
+    sourceSets["jsTest"].dependencies {
+        implementation(Dependencies.Squareup.SQLDelight.jsDriver)
     }
 }
 

@@ -86,6 +86,7 @@ object Dependencies {
             val coroutineExtensions by lazy { "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}" }
             val androidDriver by lazy { "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}" }
             val sqliteDriver by lazy { "com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}" }
+            val jsDriver by lazy { "com.squareup.sqldelight:sqljs-driver:${Versions.sqlDelight}" }
         }
     }
 
