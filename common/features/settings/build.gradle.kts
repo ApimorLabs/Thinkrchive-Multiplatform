@@ -27,6 +27,11 @@ android {
 kotlin {
     android()
     jvm("desktop")
+    js(IR) {
+        binaries.executable()
+        useCommonJs()
+        browser()
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:model"))

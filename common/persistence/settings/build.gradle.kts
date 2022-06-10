@@ -4,6 +4,11 @@ plugins {
 
 kotlin {
     jvm("desktop")
+    js(IR) {
+        binaries.executable()
+        useCommonJs()
+        browser()
+    }
 
     sourceSets["commonMain"].dependencies {
         with(Dependencies.RusshWolf.MultiplatformSettings) {

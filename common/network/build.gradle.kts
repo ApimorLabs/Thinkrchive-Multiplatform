@@ -41,9 +41,9 @@ kotlin {
         implementation(project(":common:model"))
 
         with(Dependencies.Ktor) {
-            implementation(ktorCore)
+            api(ktorCore) // Referenced as api so we can access their Exceptions in other modules
+            api(json) // Referenced as api so we can access their Exceptions in other modules
             implementation(contentNegotiation)
-            implementation(json)
             implementation(ktorLogging)
         }
 

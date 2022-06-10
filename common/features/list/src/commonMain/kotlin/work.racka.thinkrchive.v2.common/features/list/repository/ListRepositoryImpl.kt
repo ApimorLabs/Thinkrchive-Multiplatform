@@ -4,7 +4,7 @@ import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
 import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
