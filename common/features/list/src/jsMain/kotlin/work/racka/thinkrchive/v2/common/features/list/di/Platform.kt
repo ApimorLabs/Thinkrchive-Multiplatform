@@ -4,6 +4,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 internal actual object Platform {
-    actual fun platformSettingsModule(): Module = module {
+    actual fun platformListModule(): Module = module {
     }
 }

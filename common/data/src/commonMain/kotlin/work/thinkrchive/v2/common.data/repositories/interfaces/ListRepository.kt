@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.common.features.list.repository
+package work.thinkrchive.v2.common.data.repositories.interfaces
 
 import data.remote.response.ThinkpadResponse
 import domain.Thinkpad
@@ -15,4 +15,5 @@ interface ListRepository {
     suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>>
     suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
     suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>>
+    suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad?>
 }

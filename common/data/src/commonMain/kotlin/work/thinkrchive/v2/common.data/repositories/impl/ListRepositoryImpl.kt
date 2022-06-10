@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.v2.common.features.list.repository
+package work.thinkrchive.v2.common.data.repositories.impl
 
 import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Logger
@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
-import util.DataMappers.asDomainModel
 import util.NetworkError
 import util.Resource
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
+import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository
 
 internal class ListRepositoryImpl(
     private val thinkrchiveApi: ThinkrchiveApi,
@@ -90,5 +90,10 @@ internal class ListRepositoryImpl(
     override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsHighPriceFirst(thinkpadModel).map {
             it.asDomainModel()
+        }.flowOn(backgroundDispatcher)
+
+    override suspend fun getThinkpad(thinkpadModel: String): Flow<Thinkpad?> =
+        thinkpadDao.getThinkpad(thinkpadModel).map {
+            it?.asThinkpad()
         }.flowOn(backgroundDispatcher)
 }

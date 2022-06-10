@@ -1,9 +1,9 @@
-package work.racka.thinkrchive.v2.common.features.list.container
+package work.thinkrchive.v2.common.data.repositories.helpers
 
 import data.remote.response.ThinkpadResponse
-import work.racka.thinkrchive.v2.common.features.list.repository.ListRepository
+import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository
 
-class ThinkpadListHelper(
+class ListRepositoryHelper(
     val repository: ListRepository
 ) {
 

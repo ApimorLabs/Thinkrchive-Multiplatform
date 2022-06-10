@@ -35,8 +35,7 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:model"))
-        implementation(project(":common:persistence:database"))
-        implementation(project(":common:network"))
+        implementation(project(":common:data"))
 
         implementation(Dependencies.Kotlin.Coroutines.core)
 
@@ -46,6 +45,8 @@ kotlin {
             api(core)
             api(test)
         }
+
+        implementation(Dependencies.Log.kermit)
     }
 
     sourceSets["commonTest"].dependencies {

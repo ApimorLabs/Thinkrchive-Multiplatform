@@ -1,6 +1,5 @@
-package work.racka.thinkrchive.v2.common.features.list.repository
+package work.thinkrchive.v2.common.data.repositories
 
-import app.cash.turbine.test
 import data.remote.response.ThinkpadResponse
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
@@ -245,6 +244,39 @@ class ListRepositoryTest : KoinTest {
 
                 verify { dao.getThinkpadsHighPriceFirst(query) }
                 assertEquals(expected, actual)
+                awaitComplete()
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpad_WhenModelFoundInDb_ReturnsFlowOfTheThinkpad() = runTest {
+        val model = "some_thinkpad"
+        val thinkpadDb = TestData.ascendingOrderThinkpadsDbObject.first()
+        val expect = thinkpadDb.asThinkpad()
+        coEvery { dao.getThinkpad(model) } returns flowOf(thinkpadDb)
+        val data = repo.getThinkpad(model)
+        coVerify { dao.getThinkpad(model) }
+        launch {
+            data.test {
+                val actual = awaitItem()
+                assertNotNull(actual)
+                assertEquals(expect, actual)
+                awaitComplete()
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpad_WhenModelNotFoundInDb_ReturnsFlowOfNull() = runTest {
+        val model = "definitely_not_a_thinkpad"
+        coEvery { dao.getThinkpad(model) } returns flowOf(null)
+        val data = repo.getThinkpad(model)
+        coVerify { dao.getThinkpad(model) }
+        launch {
+            data.test {
+                val actual = awaitItem()
+                assertNull(actual)
                 awaitComplete()
             }
         }

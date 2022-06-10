@@ -3,11 +3,11 @@ package work.racka.thinkrchive.v2.common.features.list.viewmodel
 import kotlinx.coroutines.CoroutineScope
 import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHost
 import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHostImpl
-import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListHelper
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
+import work.thinkrchive.v2.common.data.repositories.helpers.ListRepositoryHelper
 
 actual class ThinkpadListViewModel(
-    helper: ThinkpadListHelper,
+    helper: ListRepositoryHelper,
     settingsRepo: MultiplatformSettings,
     scope: CoroutineScope
 ) {

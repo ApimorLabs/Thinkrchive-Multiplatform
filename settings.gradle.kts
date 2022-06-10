@@ -2,7 +2,7 @@ rootProject.name = "Thinkrchive"
 include(
     ":androidApp",
     ":desktopApp",
-    ":web-kt-js",
+    ":common:data",
     ":common:features:about",
     ":common:features:settings",
     ":common:features:list",
@@ -13,5 +13,6 @@ include(
     ":common:network",
     ":common:model",
     ":common:integration",
-    ":common:billing"
+    ":common:billing",
+    ":web-kt-js"
 )

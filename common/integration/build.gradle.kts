@@ -36,6 +36,7 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         // Base Common Modules
         implementation(project(":common:billing"))
+        implementation(project(":common:data"))
         implementation(project(":common:model"))
         implementation(project(":common:network"))
         implementation(project(":common:persistence:database"))

@@ -35,10 +35,9 @@ kotlin {
     }
 
     sourceSets["commonMain"].dependencies {
+        implementation(project(":common:data"))
         implementation(project(":common:model"))
-        implementation(project(":common:persistence:database"))
         implementation(project(":common:persistence:settings"))
-        implementation(project(":common:network"))
 
         implementation(Dependencies.Kotlin.Coroutines.core)
 

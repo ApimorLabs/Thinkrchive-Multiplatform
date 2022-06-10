@@ -5,7 +5,7 @@ import org.koin.dsl.module
 import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListViewModel
 
 internal actual object Platform {
-    actual fun platformSettingsModule() = module {
+    actual fun platformListModule() = module {
         viewModel {
             ThinkpadListViewModel(
                 helper = get(),

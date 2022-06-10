@@ -20,9 +20,9 @@ import org.koin.test.inject
 import org.orbitmvi.orbit.test
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
-import work.racka.thinkrchive.v2.common.features.details.repository.DetailsRepository
 import work.racka.thinkrchive.v2.common.features.details.util.Constants
 import work.racka.thinkrchive.v2.common.features.details.util.TestData
+import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -33,7 +33,7 @@ class ThinkpadDetailsContainerHostImpTest : KoinTest {
     private val containerHost: ThinkpadDetailsContainerHostImpl by inject()
 
     @RelaxedMockK
-    private lateinit var repo: DetailsRepository
+    private lateinit var repo: ListRepository
 
     private val model: String = "some_thinkpad"
 

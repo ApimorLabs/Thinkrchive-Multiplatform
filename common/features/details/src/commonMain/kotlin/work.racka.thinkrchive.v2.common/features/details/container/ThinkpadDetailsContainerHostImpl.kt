@@ -8,17 +8,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
-import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
-import work.racka.thinkrchive.v2.common.features.details.repository.DetailsRepository
 import work.racka.thinkrchive.v2.common.features.details.util.Constants
+import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository
 
 internal class ThinkpadDetailsContainerHostImpl(
-    private val repository: DetailsRepository,
+    private val repository: ListRepository,
     private val model: String?,
     scope: CoroutineScope
 ) : ThinkpadDetailsContainerHost, ContainerHost<ThinkpadDetailsState, ThinkpadDetailsSideEffect> {

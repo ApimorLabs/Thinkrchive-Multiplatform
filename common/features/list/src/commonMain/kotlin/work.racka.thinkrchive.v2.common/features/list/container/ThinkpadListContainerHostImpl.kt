@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.ContainerHost
-import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -18,9 +17,10 @@ import util.NetworkError
 import util.Resource
 import work.racka.thinkrchive.v2.common.features.list.util.Constants
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
+import work.thinkrchive.v2.common.data.repositories.helpers.ListRepositoryHelper
 
 internal class ThinkpadListContainerHostImpl(
-    private val helper: ThinkpadListHelper,
+    private val helper: ListRepositoryHelper,
     private val settingsRepo: MultiplatformSettings,
     scope: CoroutineScope
 ) : ThinkpadListContainerHost, ContainerHost<ThinkpadListState.State, ThinkpadListSideEffect> {

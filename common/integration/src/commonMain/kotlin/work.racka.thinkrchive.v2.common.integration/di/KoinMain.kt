@@ -6,6 +6,7 @@ import work.racka.thinkrchive.v2.common.billing.di.Billing
 import work.racka.thinkrchive.v2.common.database.di.Database
 import work.racka.thinkrchive.v2.common.network.di.Network
 import work.racka.thinkrchive.v2.common.settings.di.MultiplatformSettings
+import work.thinkrchive.v2.common.data.di.Data
 
 object KoinMain {
     // This should be used in every target as a starting point for Koin
@@ -20,6 +21,10 @@ object KoinMain {
         }
 
         // All non feature Modules
+        with(Data) {
+            dataModules()
+        }
+
         with(Network) {
             networkModules()
         }
