@@ -62,32 +62,32 @@ internal class ListRepositoryImpl(
             thinkpadDao.insertAllThinkpads(response)
         }
 
-    override fun getAllThinkpads(): Flow<List<Thinkpad>> =
+    override suspend fun getAllThinkpads(): Flow<List<Thinkpad>> =
         thinkpadDao.getAllThinkpads().map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)
 
-    override fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>> =
+    override suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsAlphaAscending(thinkpadModel).map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)
 
-    override fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+    override suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsNewestFirst(thinkpadModel).map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)
 
-    override fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+    override suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsOldestFirst(thinkpadModel).map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)
 
-    override fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+    override suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsLowPriceFirst(thinkpadModel).map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)
 
-    override fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
+    override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<Thinkpad>> =
         thinkpadDao.getThinkpadsHighPriceFirst(thinkpadModel).map {
             it.asDomainModel()
         }.flowOn(backgroundDispatcher)

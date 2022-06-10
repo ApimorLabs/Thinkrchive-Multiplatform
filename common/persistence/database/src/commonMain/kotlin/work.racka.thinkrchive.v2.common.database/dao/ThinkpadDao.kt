@@ -5,12 +5,12 @@ import data.remote.response.ThinkpadResponse
 import kotlinx.coroutines.flow.Flow
 
 interface ThinkpadDao {
-    fun insertAllThinkpads(response: List<ThinkpadResponse>)
-    fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?>
-    fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
-    fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun insertAllThinkpads(response: List<ThinkpadResponse>)
+    suspend fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?>
+    suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
+    suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>>
 }

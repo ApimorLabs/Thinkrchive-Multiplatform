@@ -26,7 +26,7 @@ object Database {
         single<ThinkpadDao> {
             ThinkpadDaoImpl(
                 coroutineScope = get(),
-                thinkpadDatabaseWrapper = get()
+                dbProvider = get()
             )
         }
     }

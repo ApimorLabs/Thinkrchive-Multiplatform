@@ -8,7 +8,7 @@ import data.remote.response.ThinkpadResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import work.racka.thinkrchive.v2.common.database.ThinkrchiveDatabaseProvider
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getAllThinkpadsFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadFromDb
 import work.racka.thinkrchive.v2.common.database.util.Helpers.getThinkpadsAlphaAscendingFromDb
@@ -20,43 +20,52 @@ import work.racka.thinkrchive.v2.common.database.util.Helpers.insertAllThinkpads
 
 internal class ThinkpadDaoImpl(
     private val coroutineScope: CoroutineScope = MainScope(),
-    thinkpadDatabaseWrapper: ThinkrchiveDatabaseWrapper
+    private val dbProvider: ThinkrchiveDatabaseProvider,
 ) : ThinkpadDao {
-    private val thinkpadDatabaseQueries = thinkpadDatabaseWrapper
-        .instance?.thinkpadDatabaseQueries
 
-    override fun insertAllThinkpads(response: List<ThinkpadResponse>) {
-        thinkpadDatabaseQueries?.insertAllThinkpadsToDb(response)
+    override suspend fun insertAllThinkpads(response: List<ThinkpadResponse>) = dbProvider { db ->
+        db.thinkpadDatabaseQueries.insertAllThinkpadsToDb(response)
     }
 
-    override fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getAllThinkpadsFromDb()
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
-
-    override fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?> {
-        return thinkpadDatabaseQueries?.getThinkpadFromDb(thinkpadModel)
-            ?.asFlow()
-            ?.mapToOne(context = coroutineScope.coroutineContext)
-            ?: flowOf(null)
+    override suspend fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>> = dbProvider { db ->
+        db.thinkpadDatabaseQueries.getAllThinkpadsFromDb()
+            .asFlow().mapToList()
     }
 
-    override fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getThinkpadsAlphaAscendingFromDb("%$thinkpadModel%")
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+    override suspend fun getThinkpad(thinkpadModel: String): Flow<ThinkpadDatabaseObject?> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadFromDb(thinkpadModel)
+                .asFlow()
+                .mapToOne(context = coroutineScope.coroutineContext)
+        }
 
-    override fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getThinkpadsNewestFromDb("%$thinkpadModel%")
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+    override suspend fun getThinkpadsAlphaAscending(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadsAlphaAscendingFromDb("%$thinkpadModel%")
+                .asFlow().mapToList()
+        }
 
-    override fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getThinkpadsOldestFromDb("%$thinkpadModel%")
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+    override suspend fun getThinkpadsNewestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadsNewestFromDb("%$thinkpadModel%")
+                .asFlow().mapToList()
+        }
 
-    override fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getThinkpadsLowPriceFromDb("%$thinkpadModel%")
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+    override suspend fun getThinkpadsOldestFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadsOldestFromDb("%$thinkpadModel%")
+                .asFlow().mapToList()
+        }
 
-    override fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
-        thinkpadDatabaseQueries?.getThinkpadsHighPriceFromDb("%$thinkpadModel%")
-            ?.asFlow()?.mapToList() ?: flowOf(emptyList())
+    override suspend fun getThinkpadsLowPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadsLowPriceFromDb("%$thinkpadModel%")
+                .asFlow().mapToList()
+        }
+
+    override suspend fun getThinkpadsHighPriceFirst(thinkpadModel: String): Flow<List<ThinkpadDatabaseObject>> =
+        dbProvider { db ->
+            db.thinkpadDatabaseQueries.getThinkpadsHighPriceFromDb("%$thinkpadModel%")
+                .asFlow().mapToList()
+        }
 }
