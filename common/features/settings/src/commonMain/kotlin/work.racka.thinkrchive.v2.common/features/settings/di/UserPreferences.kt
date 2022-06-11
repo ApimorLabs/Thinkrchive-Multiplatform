@@ -18,14 +18,12 @@ object UserPreferences {
         }
 
     private fun commonModule() = module {
-        factory {
-            CoroutineScope(Dispatchers.Default + SupervisorJob())
-        }
 
         factory {
+            val scope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
             AppSettings(
                 settings = get(),
-                scope = get()
+                scope = scope
             )
         }
     }

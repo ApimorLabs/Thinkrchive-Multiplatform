@@ -28,9 +28,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ThinkpadDetailsContainerHostImpTest : KoinTest {
+class ThinkpadDetailsImpTest : KoinTest {
 
-    private val containerHost: ThinkpadDetailsContainerHostImpl by inject()
+    private val containerHost: ThinkpadDetailsImpl by inject()
 
     @RelaxedMockK
     private lateinit var repo: ListRepository
@@ -45,7 +45,7 @@ class ThinkpadDetailsContainerHostImpTest : KoinTest {
             modules(
                 module {
                     single {
-                        ThinkpadDetailsContainerHostImpl(
+                        ThinkpadDetailsImpl(
                             repository = repo,
                             model = model,
                             scope = CoroutineScope(Dispatchers.Default)
@@ -97,7 +97,7 @@ class ThinkpadDetailsContainerHostImpTest : KoinTest {
 
     @Test
     fun getThinkpad_WithThinkpadModelConstructorInHostAsNull() = runTest {
-        val containerHost = ThinkpadDetailsContainerHostImpl(
+        val containerHost = ThinkpadDetailsImpl(
             repository = repo,
             model = null, // This changes from the the default value by setup()
             scope = this

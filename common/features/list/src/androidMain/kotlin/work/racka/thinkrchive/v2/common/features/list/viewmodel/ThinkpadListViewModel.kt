@@ -2,8 +2,8 @@ package work.racka.thinkrchive.v2.common.features.list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHost
-import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerHostImpl
+import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainer
+import work.racka.thinkrchive.v2.common.features.list.container.ThinkpadListContainerImpl
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 import work.thinkrchive.v2.common.data.repositories.helpers.ListRepositoryHelper
 
@@ -12,8 +12,8 @@ actual class ThinkpadListViewModel(
     settingsRepo: MultiplatformSettings,
 ) : ViewModel() {
 
-    val host: ThinkpadListContainerHost by lazy {
-        ThinkpadListContainerHostImpl(
+    val host: ThinkpadListContainer by lazy {
+        ThinkpadListContainerImpl(
             helper = helper,
             settingsRepo = settingsRepo,
             scope = viewModelScope

@@ -32,9 +32,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ThinkpadListContainerHostImplTest : KoinTest {
+class ThinkpadListContainerImplTest : KoinTest {
 
-    private val containerHost: ThinkpadListContainerHostImpl by inject()
+    private val containerHost: ThinkpadListContainerImpl by inject()
 
     @RelaxedMockK
     private lateinit var repo: ListRepository
@@ -50,7 +50,7 @@ class ThinkpadListContainerHostImplTest : KoinTest {
             modules(
                 module {
                     single {
-                        ThinkpadListContainerHostImpl(
+                        ThinkpadListContainerImpl(
                             helper = ListRepositoryHelper(repo),
                             settingsRepo = settingsRepo,
                             scope = CoroutineScope(Dispatchers.Default)

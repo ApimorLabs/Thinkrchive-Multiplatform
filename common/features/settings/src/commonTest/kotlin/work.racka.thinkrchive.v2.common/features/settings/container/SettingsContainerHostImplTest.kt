@@ -17,7 +17,6 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.orbitmvi.orbit.test
 import states.settings.ThinkpadSettingsSideEffect
 import states.settings.ThinkpadSettingsState
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
@@ -28,7 +27,7 @@ import kotlin.test.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class SettingsContainerHostImplTest : KoinTest {
 
-    private val containerHost: SettingsContainerHostImpl by inject()
+    private val container: SettingsContainerImpl by inject()
 
     @RelaxedMockK
     private lateinit var settingsRepo: MultiplatformSettings
@@ -41,7 +40,7 @@ class SettingsContainerHostImplTest : KoinTest {
             modules(
                 module {
                     single {
-                        SettingsContainerHostImpl(
+                        SettingsContainerImpl(
                             settings = settingsRepo,
                             scope = CoroutineScope(Dispatchers.Default)
                         )
@@ -66,7 +65,7 @@ class SettingsContainerHostImplTest : KoinTest {
 
             //Testing
             val testSubject =
-                containerHost.test() // DefaultState for ThinkpadSettingsState is provided
+                container.test() // DefaultState for ThinkpadSettingsState is provided
             testSubject.runOnCreate()
 
             verify { settingsRepo.themeFlow }
@@ -86,7 +85,7 @@ class SettingsContainerHostImplTest : KoinTest {
 
             //Testing
             val testSubject =
-                containerHost.test() // DefaultState for ThinkpadSettingsState is provided
+                container.test() // DefaultState for ThinkpadSettingsState is provided
             testSubject.runOnCreate()
 
             verify { settingsRepo.sortFlow }
@@ -105,7 +104,7 @@ class SettingsContainerHostImplTest : KoinTest {
 
             //Testing
             val testSubject =
-                containerHost.test() // DefaultState for ThinkpadSettingsState is provided
+                container.test() // DefaultState for ThinkpadSettingsState is provided
 
             // Save first themeValue
             testSubject.testIntent { saveThemeSettings(expectedThemeValue1) }
@@ -128,7 +127,7 @@ class SettingsContainerHostImplTest : KoinTest {
 
             //Testing
             val testSubject =
-                containerHost.test() // DefaultState for ThinkpadSettingsState is provided
+                container.test() // DefaultState for ThinkpadSettingsState is provided
 
             testSubject.testIntent { saveSortSettings(expectedSortValue1) }
             // Save 2nd sortValue

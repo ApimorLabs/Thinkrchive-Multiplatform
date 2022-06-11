@@ -38,9 +38,6 @@ kotlin {
         implementation(project(":common:data"))
 
         implementation(Dependencies.Kotlin.Coroutines.core)
-
-        implementation(Dependencies.OrbitMVI.core)
-
         with(Dependencies.Koin) {
             api(core)
             api(test)
@@ -50,11 +47,6 @@ kotlin {
     }
 
     sourceSets["commonTest"].dependencies {
-        implementation(Dependencies.Mockk.core)
-        implementation(Dependencies.Mockk.commonMultiplatform)
-
-        implementation(Dependencies.OrbitMVI.test)
-
         implementation(Dependencies.Android.turbine)
         implementation(Dependencies.Koin.test)
         implementation(Dependencies.Kotlin.Coroutines.test)

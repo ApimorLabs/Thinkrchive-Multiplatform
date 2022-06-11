@@ -11,7 +11,7 @@ internal actual object Platform {
             ThinkpadListViewModel(
                 helper = get(),
                 settingsRepo = get(),
-                scope = CoroutineScope(Dispatchers.Main)
+                scope = CoroutineScope(Dispatchers.Main.immediate)
             )
         }
     }

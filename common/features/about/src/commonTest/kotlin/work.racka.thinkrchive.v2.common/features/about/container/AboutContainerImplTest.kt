@@ -27,9 +27,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class AboutContainerHostImplTest : KoinTest {
+class AboutContainerImplTest : KoinTest {
 
-    private val containerHost: AboutContainerHostImpl by inject()
+    private val containerHost: AboutContainerImpl by inject()
 
     @RelaxedMockK
     private lateinit var aboutData: AboutData
@@ -42,7 +42,7 @@ class AboutContainerHostImplTest : KoinTest {
             modules(
                 module {
                     single {
-                        AboutContainerHostImpl(
+                        AboutContainerImpl(
                             aboutData = aboutData,
                             scope = CoroutineScope(Dispatchers.Default)
                         )

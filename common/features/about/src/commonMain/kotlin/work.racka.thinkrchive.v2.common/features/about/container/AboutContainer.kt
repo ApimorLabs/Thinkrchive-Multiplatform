@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import states.about.AboutSideEffect
 import states.about.AboutState
 
-interface AboutContainerHost {
+interface AboutContainer {
     val state: StateFlow<AboutState.State>
     val sideEffect: Flow<AboutSideEffect>
     fun update()

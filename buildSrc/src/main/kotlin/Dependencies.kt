@@ -12,7 +12,7 @@ object Dependencies {
         val serializationCore by lazy { "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinSerialization}" }
 
         object Coroutines {
-            private const val VERSION = "1.6.0"
+            private const val VERSION = "1.6.1"
             val core by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION" }
             val android by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION" }
             val swing by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION" }

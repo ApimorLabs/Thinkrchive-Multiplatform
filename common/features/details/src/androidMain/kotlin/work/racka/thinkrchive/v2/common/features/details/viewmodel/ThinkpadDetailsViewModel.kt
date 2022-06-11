@@ -2,8 +2,8 @@ package work.racka.thinkrchive.v2.common.features.details.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import work.racka.thinkrchive.v2.common.features.details.container.ThinkpadDetailsContainerHost
-import work.racka.thinkrchive.v2.common.features.details.container.ThinkpadDetailsContainerHostImpl
+import work.racka.thinkrchive.v2.common.features.details.container.ThinkpadDetails
+import work.racka.thinkrchive.v2.common.features.details.container.ThinkpadDetailsImpl
 import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository
 
 actual class ThinkpadDetailsViewModel(
@@ -11,7 +11,7 @@ actual class ThinkpadDetailsViewModel(
     model: String?
 ) : ViewModel() {
 
-    val host: ThinkpadDetailsContainerHost = ThinkpadDetailsContainerHostImpl(
+    val host: ThinkpadDetails = ThinkpadDetailsImpl(
         repository = repository,
         model = model,
         scope = viewModelScope

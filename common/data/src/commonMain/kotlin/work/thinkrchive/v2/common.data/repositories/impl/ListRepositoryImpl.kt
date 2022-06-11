@@ -14,6 +14,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import util.NetworkError
 import util.Resource
+import util.asDomainModel
+import util.asThinkpad
 import work.racka.thinkrchive.v2.common.database.dao.ThinkpadDao
 import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
 import work.thinkrchive.v2.common.data.repositories.interfaces.ListRepository

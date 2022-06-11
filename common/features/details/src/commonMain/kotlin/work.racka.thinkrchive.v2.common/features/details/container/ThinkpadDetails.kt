@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
 
-interface ThinkpadDetailsContainerHost {
+interface ThinkpadDetails {
     val state: StateFlow<ThinkpadDetailsState>
     val sideEffect: Flow<ThinkpadDetailsSideEffect>
     fun getThinkpad()

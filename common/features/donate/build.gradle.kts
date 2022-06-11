@@ -38,9 +38,6 @@ kotlin {
         implementation(project(":common:billing"))
 
         implementation(Dependencies.Kotlin.Coroutines.core)
-
-        implementation(Dependencies.OrbitMVI.core)
-
         with(Dependencies.Koin) {
             api(core)
             api(test)

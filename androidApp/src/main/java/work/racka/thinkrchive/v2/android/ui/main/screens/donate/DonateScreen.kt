@@ -73,7 +73,6 @@ fun NavGraphBuilder.donateScreen(
         when (sideEffect) {
             is DonateSideEffect.LaunchPurchaseFlow -> {
                 purchase.initiatePurchase(currentActivity, sideEffect.item as Package)
-                viewModel.host.detachSideEffect()
             }
             is DonateSideEffect.Error -> {
                 ShowToastInCompose(message = sideEffect.errorMsg)

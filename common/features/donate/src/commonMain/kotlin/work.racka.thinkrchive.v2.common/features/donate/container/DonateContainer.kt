@@ -5,10 +5,9 @@ import kotlinx.coroutines.flow.StateFlow
 import states.donate.DonateSideEffect
 import states.donate.DonateState
 
-interface DonateContainerHost {
+interface DonateContainer {
     val state: StateFlow<DonateState.State>
     val sideEffect: Flow<DonateSideEffect>
     fun purchase(index: Int)
     fun processPurchase(success: Boolean, errorMsg: String = "")
-    fun detachSideEffect()
 }

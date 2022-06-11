@@ -13,7 +13,5 @@ object Donate {
             )
         }
 
-    private fun commonModule() = module {
-
-    }
+    private fun commonModule() = module { }
 }

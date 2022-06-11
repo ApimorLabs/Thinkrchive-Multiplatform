@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import states.settings.ThinkpadSettingsSideEffect
 import states.settings.ThinkpadSettingsState
 
-interface SettingsContainerHost {
+interface SettingsContainer {
     val state: StateFlow<ThinkpadSettingsState.State>
     val sideEffect: Flow<ThinkpadSettingsSideEffect>
     fun saveThemeSettings(themeValue: Int)
