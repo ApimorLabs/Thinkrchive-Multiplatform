@@ -1,16 +1,44 @@
 package work.thinkrchive.v2.web_kt_js.glass_website.panes
 
 import csstype.*
+import domain.Thinkpad
 import emotion.styled.styled
-import react.FC
-import react.Props
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import org.koin.core.component.get
+import react.*
 import react.dom.html.InputType
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.input
-import work.thinkrchive.v2.web_kt_js.glass_website.components.CardComponent
+import util.asThinkpad
+import work.racka.thinkrchive.v2.common.network.remote.ThinkrchiveApi
+import work.thinkrchive.v2.web_kt_js.AppDependenciesContext
+import work.thinkrchive.v2.web_kt_js.ui.components.ThinkpadListComponent
 
 val GamesPane = FC<Props> {
+    var data: List<Thinkpad> by useState(emptyList())
+    var selectedModel: Thinkpad? by useState(null)
+
+    val appDependencies = useContext(AppDependenciesContext)
+
+    useEffect {
+        val scope = MainScope()
+        val api: ThinkrchiveApi = appDependencies.get()
+        scope.launch {
+            try {
+                val result = api.getThinkpads().map { it.asThinkpad() }
+                println(result)
+                data = result
+            } catch (e: Exception) {
+                println("Network error")
+            }
+        }
+
+        cleanup { scope.cancel() }
+    }
+
     StyledGamesPaneDiv {
         // Status
         div {
@@ -21,23 +49,10 @@ val GamesPane = FC<Props> {
             }
         }
         // Cards
-        CardComponent {
-            imgSrc = "images/assassins.png"
-            gameName = "Assassins Creed: Valhala"
-            gameVersion = "PS5 Version"
-            percentage = 20
-        }
-        CardComponent {
-            imgSrc = "images/sackboy.png"
-            gameName = "Sackboy: A Great Adventure"
-            gameVersion = "PS5 Version"
-            percentage = 60
-        }
-        CardComponent {
-            imgSrc = "images/spiderman.png"
-            gameName = "Spiderman Miles Morales"
-            gameVersion = "PS5 Version"
-            percentage = 80
+        ThinkpadListComponent {
+            thinkpadList = data
+            selectedThinkpad = selectedModel
+            onSelectThinkpad = { }
         }
     }
 }

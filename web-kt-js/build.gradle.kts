@@ -12,6 +12,8 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common:network"))
+    implementation(project(":common:model"))
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:$kotlinEmotion")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react:$reactVersion")

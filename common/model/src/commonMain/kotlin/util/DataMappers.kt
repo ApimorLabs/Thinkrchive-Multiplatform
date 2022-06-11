@@ -40,6 +40,37 @@ fun List<ThinkpadResponse>.asDatabaseModel(): List<ThinkpadDatabaseObject> {
     }
 }
 
+fun ThinkpadResponse.asThinkpad() = Thinkpad(
+    model = this.model,
+    imageUrl = this.imageUrl,
+    releaseDate = this.releaseDate,
+    series = this.series,
+    marketPriceStart = this.marketPriceStart,
+    marketPriceEnd = this.marketPriceEnd,
+    processorPlatforms = this.processorPlatforms,
+    processors = this.processors,
+    graphics = this.graphics,
+    maxRam = this.maxRam,
+    displayRes = this.displayRes,
+    touchScreen = this.touchScreen,
+    screenSize = this.screenSize,
+    backlitKb = this.backlitKb,
+    fingerPrintReader = this.fingerPrintReader,
+    kbType = this.kbType,
+    dualBatt = this.dualBatt,
+    internalBatt = this.internalBatt,
+    externalBatt = this.externalBatt,
+    psrefLink = this.psrefLink,
+    biosVersion = this.biosVersion,
+    knownIssues = this.knownIssues,
+    knownIssuesLinks = this.knownIssuesLinks,
+    displaysSupported = this.displaysSupported,
+    otherMods = this.otherMods,
+    otherModsLinks = this.otherModsLinks,
+    biosLockIn = this.biosLockIn,
+    ports = this.ports
+)
+
 // Converts database objects to domain model object that will be displayed on the UI
 fun List<ThinkpadDatabaseObject>.asDomainModel(): List<Thinkpad> =
     map {
