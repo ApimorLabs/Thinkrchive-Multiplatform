@@ -1,6 +1,7 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation.components.about
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.java.KoinJavaComponent.inject
@@ -27,5 +28,11 @@ class AboutComponentImpl(
 
     override fun update() {
         viewModel.host.update()
+    }
+
+    init {
+        lifecycle.doOnDestroy {
+            viewModel.destroy()
+        }
     }
 }

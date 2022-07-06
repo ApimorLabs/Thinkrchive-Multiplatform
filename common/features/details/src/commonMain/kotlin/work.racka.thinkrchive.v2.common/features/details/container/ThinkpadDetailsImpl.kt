@@ -24,6 +24,10 @@ internal class ThinkpadDetailsImpl(
     override val sideEffect: Flow<ThinkpadDetailsSideEffect>
         get() = _sideEffect.receiveAsFlow()
 
+    init {
+        getThinkpad()
+    }
+
     override fun getThinkpad() {
         scope.launch {
             when (model) {

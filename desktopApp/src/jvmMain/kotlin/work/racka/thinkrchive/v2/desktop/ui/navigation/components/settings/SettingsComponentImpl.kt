@@ -1,6 +1,7 @@
 package work.racka.thinkrchive.v2.desktop.ui.navigation.components.settings
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.java.KoinJavaComponent.inject
 import states.settings.ThinkpadSettingsState
@@ -25,5 +26,11 @@ class SettingsComponentImpl(
 
     override fun saveSortSettings(sortValue: Int) {
         settings.host.saveSortSettings(sortValue)
+    }
+
+    init {
+        lifecycle.doOnDestroy {
+            println("Settings Destroyed")
+        }
     }
 }

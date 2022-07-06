@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,6 +56,7 @@ fun HomeSplitPaneScreen(
                 state = listState,
                 sideEffect = listSideEffect,
                 onEntryClick = {
+                    logger.d { "Thinkpad Clicked: $it" }
                     homePaneComponent.updatePaneState(PaneConfig.Details(it))
                 },
                 onSearch = { query ->
@@ -94,6 +96,7 @@ fun HomeSplitPaneScreen(
                     }
                     else -> {
                         // Show Empty Composable
+                        Text(text = "Nothing to Show")
                     }
                 }
             }

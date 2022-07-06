@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.desktop.ui.navigation.components.home
 
 import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,5 +55,11 @@ class HomePaneComponentImpl(
 
     override fun donateClicked() {
         onDonateClicked()
+    }
+
+    init {
+        lifecycle.doOnDestroy {
+            viewModel.destroy()
+        }
     }
 }
