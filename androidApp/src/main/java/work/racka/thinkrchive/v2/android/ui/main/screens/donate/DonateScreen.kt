@@ -13,14 +13,14 @@ import com.google.accompanist.navigation.animation.composable
 import com.revenuecat.purchases.Package
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.viewModel
 import states.donate.DonateSideEffect
 import timber.log.Timber
 import util.Resource
+import work.racka.common.mvvm.koin.compose.commonViewModel
 import work.racka.thinkrchive.v2.android.billing.revenuecat.Purchase
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
-import work.racka.thinkrchive.v2.common.features.donate.viewmodel.DonateViewModel
+import work.racka.thinkrchive.v2.common.all_features.donate.viewmodel.DonateViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.donateScreen(
@@ -43,9 +43,9 @@ fun NavGraphBuilder.donateScreen(
     ) {
         val currentActivity = LocalContext.current as Activity
 
-        val viewModel: DonateViewModel by viewModel()
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
+        val viewModel: DonateViewModel by commonViewModel()
+        val state by viewModel.state.collectAsState()
+        val sideEffect = viewModel.sideEffect
             .collectAsState(initial = DonateSideEffect.Nothing)
             .value
 
@@ -60,10 +60,10 @@ fun NavGraphBuilder.donateScreen(
                     when (it) {
                         is Resource.Loading -> {}
                         is Resource.Success -> {
-                            viewModel.host.processPurchase(true)
+                            viewModel.processPurchase(true)
                         }
                         is Resource.Error -> {
-                            viewModel.host.processPurchase(false, it.message!!)
+                            viewModel.processPurchase(false, it.message!!)
                         }
                     }
                 }
@@ -92,7 +92,7 @@ fun NavGraphBuilder.donateScreen(
                 navController.popBackStack()
             },
             onProductClicked = {
-                viewModel.host.purchase(it)
+                viewModel.purchase(it)
             }
         )
     }

@@ -38,6 +38,8 @@ kotlin {
         implementation(project(":common:data"))
         implementation(project(":common:model"))
         implementation(project(":common:mvvm-core"))
+
+        implementation(project(":common:billing"))
         implementation(project(":common:persistence:settings"))
         implementation(Dependencies.Kotlin.Coroutines.core)
         with(Dependencies.Koin) {
@@ -55,7 +57,7 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
-
+        implementation(Dependencies.Revenuecat.android)
     }
 
     sourceSets["androidTest"].dependencies {
@@ -66,5 +68,8 @@ kotlin {
 
     sourceSets["desktopTest"].dependencies {
 
+    }
+
+    sourceSets["jsMain"].dependencies {
     }
 }

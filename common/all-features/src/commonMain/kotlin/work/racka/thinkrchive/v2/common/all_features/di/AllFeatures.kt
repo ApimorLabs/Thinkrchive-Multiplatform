@@ -8,7 +8,7 @@ import work.racka.thinkrchive.v2.common.all_features.list.viewmodel.ThinkpadList
 object AllFeatures {
 
     fun KoinApplication.installModules() = apply {
-        modules(commonModule())
+        modules(commonModule(), Platform.platformFeaturesModule())
     }
 
     private fun commonModule() = module {
