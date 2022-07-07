@@ -16,13 +16,13 @@ import work.racka.thinkrchive.v2.desktop.ui.navigation.NavHostComponent
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
+    KoinMain.initKoin()
     val lifecycle = LifecycleRegistry()
     val root = NavHostComponent(DefaultComponentContext(lifecycle))
 
     application {
         val logger = Logger.withTag("Main Function")
         logger.d { "Main Function Called" }
-        KoinMain.initKoin()
 
         val windowState = rememberWindowState(size = DpSize(1000.dp, 600.dp))
         LifecycleController(lifecycleRegistry = lifecycle, windowState = windowState)

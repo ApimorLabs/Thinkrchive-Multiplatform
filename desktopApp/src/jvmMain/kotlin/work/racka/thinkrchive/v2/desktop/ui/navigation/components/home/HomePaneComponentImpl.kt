@@ -6,10 +6,10 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.koin.java.KoinJavaComponent.inject
 import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
-import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListViewModel
+import work.racka.common.mvvm.koin.decompose.commonViewModel
+import work.racka.thinkrchive.v2.common.all_features.list.viewmodel.ThinkpadListViewModel
 import work.racka.thinkrchive.v2.desktop.ui.screens.splitpane.PaneConfig
 
 class HomePaneComponentImpl(
@@ -20,15 +20,15 @@ class HomePaneComponentImpl(
 ) : HomePaneComponent, ComponentContext by componentContext {
     private val logger = Logger.withTag("HomePaneComponent").d { "Component created" }
 
-    private val viewModel: ThinkpadListViewModel by inject(ThinkpadListViewModel::class.java)
+    private val viewModel: ThinkpadListViewModel by commonViewModel()
 
     private val _paneState: MutableStateFlow<PaneConfig> = MutableStateFlow(PaneConfig.Blank)
 
     override val state: StateFlow<ThinkpadListState.State>
-        get() = viewModel.hostDesktop.state
+        get() = viewModel.state
 
     override val sideEffect: Flow<ThinkpadListSideEffect>
-        get() = viewModel.hostDesktop.sideEffect
+        get() = viewModel.sideEffect
 
     override val paneState: StateFlow<PaneConfig>
         get() = _paneState
@@ -38,11 +38,11 @@ class HomePaneComponentImpl(
     }
 
     override fun search(query: String) {
-        viewModel.hostDesktop.getSortedThinkpadList(query)
+        viewModel.getSortedThinkpadList(query)
     }
 
     override fun sortOptionClicked(sort: Int) {
-        viewModel.hostDesktop.sortSelected(sort)
+        viewModel.sortSelected(sort)
     }
 
     override fun settingsClicked() {

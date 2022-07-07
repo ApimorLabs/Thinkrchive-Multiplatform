@@ -27,6 +27,7 @@ android {
 kotlin {
     android()
     jvm("desktop")
+
     js(IR) {
         binaries.executable()
         useCommonJs()
@@ -34,33 +35,36 @@ kotlin {
     }
 
     sourceSets["commonMain"].dependencies {
-        // Base Common Modules
-        implementation(project(":common:all-features"))
-        implementation(project(":common:billing"))
         implementation(project(":common:data"))
         implementation(project(":common:model"))
-        implementation(project(":common:network"))
-        implementation(project(":common:persistence:database"))
+        implementation(project(":common:mvvm-core"))
         implementation(project(":common:persistence:settings"))
-
-        // Feature Modules
-        implementation(project(":common:features:about"))
-        implementation(project(":common:features:settings"))
-        implementation(project(":common:features:list"))
-        implementation(project(":common:features:details"))
-        implementation(project(":common:features:donate"))
-
-        implementation(Dependencies.Log.kermit)
-
+        implementation(Dependencies.Kotlin.Coroutines.core)
         with(Dependencies.Koin) {
-            api(core)
-            api(test)
+            implementation(core)
+            implementation(test)
         }
     }
 
+    sourceSets["commonTest"].dependencies {
+        implementation(Dependencies.Android.turbine)
+        implementation(Dependencies.Koin.test)
+        implementation(Dependencies.Kotlin.Coroutines.test)
+        implementation(kotlin("test-common"))
+        implementation(kotlin("test-annotations-common"))
+    }
+
     sourceSets["androidMain"].dependencies {
+
+    }
+
+    sourceSets["androidTest"].dependencies {
     }
 
     sourceSets["desktopMain"].dependencies {
+    }
+
+    sourceSets["desktopTest"].dependencies {
+
     }
 }

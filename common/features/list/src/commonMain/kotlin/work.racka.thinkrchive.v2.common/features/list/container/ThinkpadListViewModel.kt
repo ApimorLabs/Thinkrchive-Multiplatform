@@ -1,7 +1,6 @@
 package work.racka.thinkrchive.v2.common.features.list.container
 
 import data.remote.response.ThinkpadResponse
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -9,23 +8,23 @@ import states.list.ThinkpadListSideEffect
 import states.list.ThinkpadListState
 import util.NetworkError
 import util.Resource
+import work.racka.common.mvvm.viewmodel.CommonViewModel
 import work.racka.thinkrchive.v2.common.features.list.util.Constants
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 import work.thinkrchive.v2.common.data.repositories.helpers.ListRepositoryHelper
 
-internal class ThinkpadListContainerImpl(
+class ThinkpadListViewModel(
     private val helper: ListRepositoryHelper,
     private val settingsRepo: MultiplatformSettings,
-    private val scope: CoroutineScope
-) : ThinkpadListContainer {
+) : CommonViewModel() {
 
     private val _state: MutableStateFlow<ThinkpadListState.State> =
         MutableStateFlow(ThinkpadListState.EmptyState)
-    override val state: StateFlow<ThinkpadListState.State>
+    val state: StateFlow<ThinkpadListState.State>
         get() = _state
 
     private val _sideEffect = Channel<ThinkpadListSideEffect>(capacity = Channel.UNLIMITED)
-    override val sideEffect: Flow<ThinkpadListSideEffect>
+    val sideEffect: Flow<ThinkpadListSideEffect>
         get() = _sideEffect.receiveAsFlow()
 
     init {
@@ -34,7 +33,7 @@ internal class ThinkpadListContainerImpl(
     }
 
     private fun getUserSortOption() {
-        scope.launch {
+        vmScope.launch {
             settingsRepo.sortFlow.collectLatest { sortOption ->
                 _state.update { it.copy(sortOption = sortOption) }
                 getSortedThinkpadList()
@@ -42,16 +41,16 @@ internal class ThinkpadListContainerImpl(
         }
     }
 
-    override fun sortSelected(sortOption: Int) {
-        scope.launch {
+    fun sortSelected(sortOption: Int) {
+        vmScope.launch {
             _state.update { it.copy(sortOption = sortOption) }
             getSortedThinkpadList()
         }
     }
 
     // An empty string on model retrieves all Thinkpads in the database
-    override fun getSortedThinkpadList(model: String) {
-        scope.launch {
+    fun getSortedThinkpadList(model: String = "") {
+        vmScope.launch {
             val list = helper.getThinkpadListSorted(model, state.value.sortOption)
             list.collect { thinkpadList ->
                 _state.update { it.copy(thinkpadList = thinkpadList) }
@@ -61,8 +60,8 @@ internal class ThinkpadListContainerImpl(
 
     // Retrieves new data from the network and inserts it into the database
     // Also used by pull down to refresh.
-    override fun refreshThinkpadList() {
-        scope.launch {
+    fun refreshThinkpadList() {
+        vmScope.launch {
             val result: Flow<Resource<List<ThinkpadResponse>, NetworkError>> =
                 helper.repository.getAllThinkpadsFromNetwork()
             result.collect { resource ->

@@ -2,6 +2,7 @@ package work.racka.thinkrchive.v2.common.integration.di
 
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import work.racka.thinkrchive.v2.common.all_features.di.AllFeatures
 import work.racka.thinkrchive.v2.common.billing.di.Billing
 import work.racka.thinkrchive.v2.common.database.di.Database
 import work.racka.thinkrchive.v2.common.network.di.Network
@@ -15,12 +16,13 @@ object KoinMain {
     ) = startKoin {
         appDeclaration()
 
-        // Feature modules
+        // Features
+        AllFeatures.run { installModules() }
         with(FeatureModules) {
             featureModules()
         }
 
-        // All non feature Modules
+        // Non feature Modules
         with(Data) {
             dataModules()
         }

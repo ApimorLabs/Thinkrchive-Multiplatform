@@ -17,7 +17,9 @@ kotlin {
     sourceSets {
         val jvmMain by getting {
             dependencies {
+                implementation(project(":common:all-features"))
                 implementation(project(":common:model"))
+                implementation(project(":common:mvvm-core"))
                 implementation(project(":common:integration"))
                 implementation(project(":common:persistence:settings"))
 

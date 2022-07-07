@@ -12,8 +12,10 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common:all-features"))
     implementation(project(":common:network"))
     implementation(project(":common:model"))
+    implementation(project(":common:mvvm-core"))
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:$kotlinEmotion")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react:$reactVersion")

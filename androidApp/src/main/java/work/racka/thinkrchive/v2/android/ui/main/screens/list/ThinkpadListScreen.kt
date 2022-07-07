@@ -15,16 +15,16 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 import states.list.ThinkpadListSideEffect
 import timber.log.Timber
 import util.NetworkError
+import work.racka.common.mvvm.koin.compose.commonViewModel
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
-import work.racka.thinkrchive.v2.common.features.list.viewmodel.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.all_features.list.viewmodel.ThinkpadListViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.thinkpadListScreen(
@@ -52,15 +52,14 @@ fun NavGraphBuilder.thinkpadListScreen(
             scaleOutPopExitTransition()
         }
     ) {
-        val viewModel: ThinkpadListViewModel = getViewModel()
+        val viewModel: ThinkpadListViewModel by commonViewModel()
 
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
 
         Timber.d("thinkpadListScreen NavHost called")
-        val host = viewModel.host
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
+        val state by viewModel.state.collectAsState()
+        val sideEffect = viewModel.sideEffect
             .collectAsState(initial = ThinkpadListSideEffect.NoSideEffect)
             .value
 
@@ -72,7 +71,7 @@ fun NavGraphBuilder.thinkpadListScreen(
                 scope = scope,
                 internetSettings = {},
                 refresh = {
-                    host.refreshThinkpadList()
+                    viewModel.refreshThinkpadList()
                 }
             )
         }
@@ -82,9 +81,9 @@ fun NavGraphBuilder.thinkpadListScreen(
             scaffoldState = scaffoldState,
             thinkpadList = state.thinkpadList,
             networkLoading = state.networkLoading,
-            onRefresh = { host.refreshThinkpadList() },
+            onRefresh = { viewModel.refreshThinkpadList() },
             onSearch = { query ->
-                host.getSortedThinkpadList(query)
+                viewModel.getSortedThinkpadList(query)
             },
             onEntryClick = { thinkpad ->
                 navController.navigate(
@@ -94,7 +93,7 @@ fun NavGraphBuilder.thinkpadListScreen(
             networkError = "",
             currentSortOption = state.sortOption,
             onSortOptionClicked = { sort ->
-                host.sortSelected(sort)
+                viewModel.sortSelected(sort)
             },
             onSettingsClicked = {
                 navController.navigate(

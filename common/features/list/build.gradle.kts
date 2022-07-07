@@ -37,6 +37,7 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation(project(":common:data"))
         implementation(project(":common:model"))
+        implementation(project(":common:mvvm-core"))
         implementation(project(":common:persistence:settings"))
         implementation(Dependencies.Kotlin.Coroutines.core)
         with(Dependencies.Koin) {
