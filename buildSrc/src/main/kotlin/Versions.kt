@@ -33,8 +33,8 @@ object Versions {
     const val composeNavigation = "2.4.0"
 
     // Lifecycle components
-    const val lifecycleViewModelCompose = "2.4.0"
-    const val lifecycleRuntimeKtx = "2.4.1"
+    const val lifecycleViewModelCompose = "2.5.0"
+    const val lifecycle = "2.5.0"
 
     // Dependency Injection
     const val hilt = "2.40.5"

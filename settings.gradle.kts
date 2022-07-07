@@ -10,8 +10,9 @@ include(
     ":common:features:donate",
     ":common:persistence:database",
     ":common:persistence:settings",
-    ":common:network",
     ":common:model",
+    ":common:mvvm-core",
+    ":common:network",
     ":common:integration",
     ":common:billing",
     ":web-kt-js"

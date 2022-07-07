@@ -110,9 +110,10 @@ object Dependencies {
         val coreKtx by lazy { "androidx.core:core-ktx:${Versions.coreKtx}" }
         val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}" }
         val material by lazy { "com.google.android.material:material:${Versions.material}" }
+        val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}" }
 
         // Lifecycle components
-        val lifecycleRuntimeKtx by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntimeKtx}" }
+        val lifecycleRuntimeKtx by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}" }
 
         // Testing
         val junit by lazy { "junit:junit:${Versions.junit}" }
@@ -138,7 +139,7 @@ object Dependencies {
         val composeAnimation by lazy { "androidx.compose.animation:animation:${Versions.compose}" }
         val composePreview by lazy { "androidx.compose.ui:ui-tooling-preview:${Versions.compose}" }
         val composeActivity by lazy { "androidx.activity:activity-compose:${Versions.activityCompose}" }
-        val composeViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleViewModelCompose}" }
+        val composeViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycle}" }
         val composeNavigation by lazy { "androidx.navigation:navigation-compose:${Versions.composeNavigation}" }
         val composeMaterialIconsCore by lazy { "androidx.compose.material:material-icons-core:${Versions.compose}" }
         val composeMaterialIconsExtended by lazy { "androidx.compose.material:material-icons-extended:${Versions.compose}" }
