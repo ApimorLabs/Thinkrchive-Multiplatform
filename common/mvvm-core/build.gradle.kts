@@ -38,11 +38,16 @@ android {
 kotlin {
     android()
     jvm("desktop")
+    js(BOTH) {
+        useCommonJs()
+        browser()
+    }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(Dependencies.Koin.core)
+                implementation(Dependencies.Kotlin.Coroutines.core)
                 implementation(Dependencies.ArkIvanov.Decompose.decompose)
             }
         }
@@ -72,5 +77,11 @@ kotlin {
         }
 
         val desktopTest by getting
+
+        val jsMain by getting {
+            dependencies {
+
+            }
+        }
     }
 }
