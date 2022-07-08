@@ -2,6 +2,7 @@ package work.racka.common.mvvm.koin.decompose
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
+import kotlinx.coroutines.isActive
 import work.racka.common.mvvm.viewmodel.CommonViewModel
 
 class DecomposeVMLazy<VM : CommonViewModel>(
@@ -17,6 +18,7 @@ class DecomposeVMLazy<VM : CommonViewModel>(
     init {
         lifecycle.doOnDestroy {
             value.destroy()
+            println("Is scope Active: ${value.vmScope.coroutineContext.isActive}")
         }
     }
 }
