@@ -8,7 +8,7 @@ import states.settings.ThinkpadSettingsState
 import work.racka.common.mvvm.viewmodel.CommonViewModel
 import work.racka.thinkrchive.v2.common.settings.repository.MultiplatformSettings
 
-internal class SettingsViewModel(
+class SettingsViewModel(
     private val settings: MultiplatformSettings
 ) : CommonViewModel() {
 

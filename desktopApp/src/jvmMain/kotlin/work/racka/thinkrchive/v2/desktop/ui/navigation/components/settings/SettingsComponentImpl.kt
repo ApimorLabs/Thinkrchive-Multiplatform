@@ -3,29 +3,30 @@ package work.racka.thinkrchive.v2.desktop.ui.navigation.components.settings
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.flow.StateFlow
-import org.koin.java.KoinJavaComponent.inject
 import states.settings.ThinkpadSettingsState
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.common.mvvm.koin.decompose.commonViewModel
+import work.racka.thinkrchive.v2.common.all_features.settings.viewmodel.SettingsViewModel
 
 class SettingsComponentImpl(
     componentContext: ComponentContext,
     private val onBackClicked: () -> Unit
 ) : SettingsComponent, ComponentContext by componentContext {
-    private val settings: AppSettings by inject(AppSettings::class.java)
+
+    private val settings: SettingsViewModel by commonViewModel()
 
     override val state: StateFlow<ThinkpadSettingsState.State>
-        get() = settings.host.state
+        get() = settings.state
 
     override fun backClicked() {
         onBackClicked()
     }
 
     override fun saveThemeSettings(themeValue: Int) {
-        settings.host.saveThemeSettings(themeValue)
+        settings.saveThemeSettings(themeValue)
     }
 
     override fun saveSortSettings(sortValue: Int) {
-        settings.host.saveSortSettings(sortValue)
+        settings.saveSortSettings(sortValue)
     }
 
     init {

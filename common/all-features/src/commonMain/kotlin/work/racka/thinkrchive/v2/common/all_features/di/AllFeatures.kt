@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import work.racka.common.mvvm.koin.vm.commonViewModel
 import work.racka.thinkrchive.v2.common.all_features.details.viewmodel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.v2.common.all_features.list.viewmodel.ThinkpadListViewModel
+import work.racka.thinkrchive.v2.common.all_features.settings.viewmodel.SettingsViewModel
 
 object AllFeatures {
 
@@ -24,6 +25,12 @@ object AllFeatures {
             ThinkpadDetailsViewModel(
                 repository = get(),
                 model = model
+            )
+        }
+
+        commonViewModel {
+            SettingsViewModel(
+                settings = get()
             )
         }
     }

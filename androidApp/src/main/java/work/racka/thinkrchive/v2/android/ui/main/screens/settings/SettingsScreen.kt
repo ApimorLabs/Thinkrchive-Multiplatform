@@ -6,13 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.inject
+import work.racka.common.mvvm.koin.compose.commonViewModel
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.scaleInEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutExitTransition
 import work.racka.thinkrchive.v2.android.utils.scaleOutPopExitTransition
-import work.racka.thinkrchive.v2.common.features.settings.AppSettings
+import work.racka.thinkrchive.v2.common.all_features.settings.viewmodel.SettingsViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsScreen(
@@ -35,18 +35,18 @@ fun NavGraphBuilder.settingsScreen(
         }
     ) {
 
-        val settings: AppSettings by inject()
-        val state by settings.host.state.collectAsState()
+        val settings: SettingsViewModel by commonViewModel()
+        val state by settings.state.collectAsState()
 
         SettingsScreenUI(
             currentTheme = state.themeValue,
             currentSortOption = state.sortValue,
             onThemeOptionClicked = {
-                settings.host.saveThemeSettings(it)
+                settings.saveThemeSettings(it)
                 //viewModel.saveThemeSetting(it)
             },
             onSortOptionClicked = {
-                settings.host.saveSortSettings(it)
+                settings.saveSortSettings(it)
                 //viewModel.saveSortOptionSetting(it)
             },
             onBackButtonPressed = {
