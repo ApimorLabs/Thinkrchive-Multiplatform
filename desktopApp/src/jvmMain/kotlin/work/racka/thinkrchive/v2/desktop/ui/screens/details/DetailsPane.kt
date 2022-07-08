@@ -7,7 +7,7 @@ import org.koin.core.parameter.parametersOf
 import org.koin.java.KoinJavaComponent.inject
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
-import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
+import work.racka.thinkrchive.v2.common.all_features.details.viewmodel.ThinkpadDetailsViewModel
 
 class DetailsPane(
     private val onCloseClicked: () -> Unit,
@@ -20,8 +20,8 @@ class DetailsPane(
 
     @Composable
     fun render() {
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
+        val state by viewModel.state.collectAsState()
+        val sideEffect = viewModel.sideEffect
             .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)
             .value
 
@@ -43,7 +43,7 @@ class DetailsPane(
                 thinkpad = thinkpad,
                 onCloseButtonClicked = onCloseClicked,
                 onExternalLinkClicked = {
-                    viewModel.host.openPsrefLink()
+                    viewModel.openPsrefLink()
                 }
             )
         }

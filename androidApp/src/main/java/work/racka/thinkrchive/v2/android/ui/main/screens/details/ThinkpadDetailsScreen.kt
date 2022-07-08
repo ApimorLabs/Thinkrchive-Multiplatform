@@ -17,13 +17,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.composable
-import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 import states.details.ThinkpadDetailsSideEffect
 import states.details.ThinkpadDetailsState
+import work.racka.common.mvvm.koin.compose.commonViewModel
 import work.racka.thinkrchive.v2.android.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.v2.android.utils.*
-import work.racka.thinkrchive.v2.common.features.details.viewmodel.ThinkpadDetailsViewModel
+import work.racka.thinkrchive.v2.common.all_features.details.viewmodel.ThinkpadDetailsViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.thinkpadDetailsScreen(
@@ -53,13 +53,13 @@ fun NavGraphBuilder.thinkpadDetailsScreen(
         }
     ) { backStackEntry ->
 
-        val viewModel: ThinkpadDetailsViewModel by viewModel {
+        val viewModel: ThinkpadDetailsViewModel by commonViewModel {
             val thinkpadModel = backStackEntry.arguments?.getString("thinkpad")
             parametersOf(thinkpadModel)
         }
 
-        val state by viewModel.host.state.collectAsState()
-        val sideEffect = viewModel.host.sideEffect
+        val state by viewModel.state.collectAsState()
+        val sideEffect = viewModel.sideEffect
             .collectAsState(initial = ThinkpadDetailsSideEffect.EmptySideEffect)
             .value
 
@@ -92,7 +92,7 @@ fun NavGraphBuilder.thinkpadDetailsScreen(
                         navController.popBackStack()
                     },
                     onExternalLinkClicked = {
-                        viewModel.host.openPsrefLink()
+                        viewModel.openPsrefLink()
                     }
                 )
             }
