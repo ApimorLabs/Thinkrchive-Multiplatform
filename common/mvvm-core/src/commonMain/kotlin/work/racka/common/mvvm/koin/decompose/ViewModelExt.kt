@@ -30,7 +30,10 @@ inline fun <reified T : CommonViewModel> ComponentContext.commonViewModel(
     qualifier: Qualifier? = null,
     scope: Scope = GlobalContext.get().scopeRegistry.rootScope,
     noinline parameters: ParametersDefinition? = null,
-): Lazy<T> = DecomposeVMLazy(
-    vmProducer = { scope.get(qualifier, parameters) },
-    componentContext = this
-)
+): Lazy<T> {
+    val vm = scope.get<T>(qualifier, parameters)
+    return DecomposeVMLazy(
+        vmProducer = { vm },
+        componentContext = this
+    )
+}

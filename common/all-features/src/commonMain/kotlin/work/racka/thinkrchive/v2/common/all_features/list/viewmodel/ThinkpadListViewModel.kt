@@ -30,6 +30,7 @@ class ThinkpadListViewModel(
     init {
         refreshThinkpadList()
         getUserSortOption()
+        println("List ViewModel Created")
     }
 
     private fun getUserSortOption() {
