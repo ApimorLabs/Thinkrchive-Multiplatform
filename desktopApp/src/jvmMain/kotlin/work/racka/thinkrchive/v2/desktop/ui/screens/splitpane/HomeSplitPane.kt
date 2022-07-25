@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
@@ -26,8 +25,8 @@ import work.racka.thinkrchive.v2.desktop.ui.navigation.components.home.HomePaneC
 import work.racka.thinkrchive.v2.desktop.ui.screens.details.DetailsPane
 import work.racka.thinkrchive.v2.desktop.ui.screens.list.ListPane
 import java.awt.Cursor
+import kotlin.coroutines.EmptyCoroutineContext
 
-@OptIn(ExperimentalComposeUiApi::class)
 private fun Modifier.cursorForHorizontalResize(): Modifier =
     pointerHoverIcon(PointerIcon(Cursor(Cursor.E_RESIZE_CURSOR)))
 
@@ -38,13 +37,13 @@ fun HomeSplitPaneScreen(
 ) {
     val logger = Logger.withTag("HomeSplitPaneScreen")
     val splitterState = rememberSplitPaneState()
-    val paneState = homePaneComponent.paneState.collectAsState()
+    val paneState = homePaneComponent.paneState.collectAsState(EmptyCoroutineContext)
 
     logger.d { "HomeSplitPaneScreen called" }
 
-    val listState by homePaneComponent.state.collectAsState()
+    val listState by homePaneComponent.state.collectAsState(EmptyCoroutineContext)
     val listSideEffect = homePaneComponent.sideEffect
-        .collectAsState(initial = ThinkpadListSideEffect.NoSideEffect)
+        .collectAsState(initial = ThinkpadListSideEffect.NoSideEffect, EmptyCoroutineContext)
         .value
 
     HorizontalSplitPane(
@@ -94,6 +93,7 @@ fun HomeSplitPaneScreen(
                         }
                         detailsPane.render()
                     }
+
                     else -> {
                         // Show Empty Composable
                         Text(text = "Nothing to Show")
