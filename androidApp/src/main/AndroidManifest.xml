@@ -15,8 +15,8 @@
         android:theme="@style/Theme.AppSplash">
 
         <activity
-            android:name=".ui.work.thinkrchive.v2.web_kt_js.main.MainActivity"
-            android:exported="true">
+                android:name=".ui.main.MainActivity"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
